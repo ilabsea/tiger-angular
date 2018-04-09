@@ -5,11 +5,14 @@ import { MatButtonModule, MatCheckboxModule } from '@angular/material';
 import { MatInputModule } from '@angular/material/input';
 
 import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
 
+import { ScenesComponent }   from './components/scenes/scenes.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ScenesComponent
   ],
   imports: [
     BrowserModule,
@@ -17,6 +20,7 @@ import { AppComponent } from './app.component';
     MatButtonModule,
     MatCheckboxModule,
     MatInputModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -5,10 +5,8 @@ import { ScenesComponent }   from './components/scenes/scenes.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: '/scenes', pathMatch: 'full' },
-  { path: 'scenes', component: ScenesComponent },
-  // { path: 'detail/:id', component: HeroDetailComponent },
-  // { path: 'heroes', component: HeroesComponent }
+  { path: '', redirectTo: 'stories/1/scenes', pathMatch: 'full' },
+  { path: 'stories/:id/scenes', component: ScenesComponent },
 ];
 
 @NgModule({

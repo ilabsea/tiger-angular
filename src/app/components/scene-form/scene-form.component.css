@@ -1,0 +1,17 @@
+.dialog-wrapper {
+  width: 500px;
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.mat-dialog-actions {
+  flex-direction: row-reverse;
+}

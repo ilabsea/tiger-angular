@@ -1,5 +1,6 @@
 import { Component, ViewChild, ngOnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { ActivatedRoute } from '@angular/router';
 import { SceneFormComponent } from '../scene-form/scene-form.component';
 import { Scene } from '../../models/scene';
 import { SceneService } from '../../services/scene.service';
@@ -19,8 +20,13 @@ export class ScenesComponent implements ngOnInit {
   displayedColumns = ['name', 'description', 'image', 'actions'];
   dataSource: Scene[]=[];
   loading: boolean = true;
+  story_id: string = this.route.snapshot.paramMap.get('id');
 
-  constructor(public dialog: MatDialog, private sceneService: SceneService) {
+  constructor(
+    public dialog: MatDialog,
+    private sceneService: SceneService,
+    private route: ActivatedRoute
+  ) {
     let that = this;
   }
 
@@ -29,7 +35,7 @@ export class ScenesComponent implements ngOnInit {
   }
 
   getScenes(): void {
-    this.sceneService.getScenes()
+    this.sceneService.getScenes(this.story_id)
       .subscribe(scenes => {
         this.loading = false;
         this.dataSource = scenes
@@ -48,15 +54,15 @@ export class ScenesComponent implements ngOnInit {
     var result = confirm("Are you sure you want to delete this scene?");
 
     if (result) {
-      this.sceneService.deleteScene(scene.id).subscribe(
-      res => {
-        this.dataSource.splice(this.dataSource.indexOf(scene), 1);
-        this.dataSource = this.dataSource.slice();
-      },
-      err => {
-        console.log("Error occured");
-      }
-    );
+      this.sceneService.deleteScene(this.story_id, scene.id).subscribe(
+        res => {
+          this.dataSource.splice(this.dataSource.indexOf(scene), 1);
+          this.dataSource = this.dataSource.slice();
+        },
+        err => {
+          console.log("Error occured");
+        }
+      );
     }
   }
 

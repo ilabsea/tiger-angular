@@ -53,7 +53,7 @@ export class SceneFormComponent {
   }
 
   _update() {
-    this.sceneService.updateScene(this.data.id, this._buildData()).subscribe(
+    this.sceneService.updateScene(this.data.story_id, this.data.id, this._buildData()).subscribe(
       res => {
         this.dialogRef.close(res);
       },
@@ -64,7 +64,7 @@ export class SceneFormComponent {
   }
 
   _create() {
-    this.sceneService.createScene(this._buildData()).subscribe(
+    this.sceneService.createScene(this.data.story_id, this._buildData()).subscribe(
       res => {
         this.dialogRef.close(res);
       },

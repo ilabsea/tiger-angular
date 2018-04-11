@@ -21,3 +21,15 @@ mat-toolbar {
   right: 24px;
   bottom: 24px;
 }
+
+.mat-drawer-content {
+  display: flex;
+}
+
+.no-item-available {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}

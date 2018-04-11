@@ -3,20 +3,23 @@
 <div mat-dialog-content>
   <div class="example-form">
     <mat-form-field class="example-full-width">
-      <input matInput placeholder="Name" [(ngModel)]="data.name">
+      <input matInput placeholder="Name" [formControl]='name' required>
+      <mat-error *ngIf="name.hasError('required')">Can't be blank</mat-error>
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
-      <input matInput placeholder="Description" [(ngModel)]="data.description">
+      <input matInput placeholder="Description" [formControl]='description' required>
+      <mat-error *ngIf="description.hasError('required')">Can't be blank</mat-error>
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
-      <input matInput placeholder="Image" [(ngModel)]="data.image">
+      <input matInput placeholder="Image" [formControl]='image' required>
+      <mat-error *ngIf="image.hasError('required')">Can't be blank</mat-error>
     </mat-form-field>
   </div>
 </div>
 
 <div mat-dialog-actions>
-  <button mat-raised-button color="primary" [mat-dialog-close]="data" cdkFocusInitial>Save</button>
-  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-raised-button color="primary" (click)='handleSubmit()' cdkFocusInitial>Save</button>
+  <button mat-button [mat-dialog-close]=''>Cancel</button>
 </div>

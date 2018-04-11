@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule, MatCheckboxModule } from '@angular/material';
@@ -10,6 +11,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
+
+import { SceneService } from './services/scene.service';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -26,6 +29,7 @@ import { SceneFormComponent } from './components/scene-form/scene-form.component
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     NoopAnimationsModule,
     MatButtonModule,
     MatCheckboxModule,
@@ -36,9 +40,12 @@ import { SceneFormComponent } from './components/scene-form/scene-form.component
     MatTableModule,
     MatDialogModule,
     AppRoutingModule,
+    HttpClientModule,
   ],
   entryComponents: [SceneFormComponent],
-  providers: [],
+  providers: [
+    SceneService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

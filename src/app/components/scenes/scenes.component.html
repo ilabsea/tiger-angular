@@ -11,7 +11,17 @@
       <span>Story Scenes</span>
     </mat-toolbar>
 
-    <div class="content-wrapper">
+    <section class="mat-typography no-item-available" *ngIf="!dataSource.length">
+      <h3 class='mat-h2'>No Story Scene Available.</h3>
+
+      <div class="small-text">
+        Use
+        <strong>+</strong>
+        button at the bottom-right corner.
+      </div>
+    </section>
+
+    <div class="content-wrapper" *ngIf="dataSource.length">
       <mat-table #table [dataSource]="dataSource">
         <!-- Name Column -->
         <ng-container matColumnDef="name">
@@ -28,6 +38,19 @@
         <ng-container matColumnDef="image">
           <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.image}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button mat-icon-button (click)='openDialog(element)'>
+              <mat-icon>edit</mat-icon>
+            </button>
+
+            <button mat-icon-button>
+              <mat-icon (click)='remove(element)'>delete</mat-icon>
+            </button>
+          </mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

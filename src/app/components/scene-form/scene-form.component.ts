@@ -1,5 +1,7 @@
-import { Component, Inject, ngOnInit } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { FormControl, Validators } from '@angular/forms';
+import { SceneService } from '../../services/scene.service';
 
 @Component({
   selector: 'app-scene-form',
@@ -7,25 +9,60 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   styleUrls: ['./scene-form.component.css']
 })
 
-export class SceneFormComponent implements ngOnInit {
-  // public name: string;
-  // public description: string;
-  // public imgage: string;
+export class SceneFormComponent {
+  name = new FormControl(this.data.name, [Validators.required]);
+  description = new FormControl(this.data.description, [Validators.required]);
+  image = new FormControl(this.data.image, [Validators.required]);
 
   constructor(
     public dialogRef: MatDialogRef<SceneFormComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {
-
-    // console.log('data===============', data);
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private sceneService: SceneService) {
   }
 
-  ngOnInit() {
-    // will log the entire data object
-    console.log('data===============', this.data)
+  handleSubmit(): void {
+    if (this.name.invalid || this.description.invalid || this.image.invalid) {
+      return;
+    }
+
+    if (this.data.id) {
+      return this._update();
+    }
+
+    this._create();
   }
 
-  onNoClick(): void {
-    this.dialogRef.close();
+  _update() {
+    this.sceneService.updateScene(this.data.id, this._buildData()).subscribe(
+      res => {
+        this.dialogRef.close(res);
+      },
+      err => {
+        console.log("Error occured");
+      }
+    );
   }
 
+  _create() {
+    this.sceneService.createScene(this._buildData()).subscribe(
+      res => {
+        this.dialogRef.close(res);
+      },
+      err => {
+        console.log("Error occured");
+      }
+    );
+  }
+
+  _buildData() {
+    return {
+      scene: {
+        id: this.data.id,
+        name: this.name.value,
+        description: this.description.value,
+        image: this.image.value,
+        story_id: this.data.story_id
+      }
+    }
+  }
 }

@@ -33,3 +33,12 @@ mat-toolbar {
   align-items: center;
   justify-content: center;
 }
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+.thumbnail img {
+  max-width: 40px;
+  max-height: 40px;
+}

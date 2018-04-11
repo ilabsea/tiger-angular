@@ -18,6 +18,7 @@ export class ScenesComponent implements ngOnInit {
   image: string;
   displayedColumns = ['name', 'description', 'image', 'actions'];
   dataSource: Scene[]=[];
+  loading: boolean = true;
 
   constructor(public dialog: MatDialog, private sceneService: SceneService) {
     let that = this;
@@ -29,7 +30,10 @@ export class ScenesComponent implements ngOnInit {
 
   getScenes(): void {
     this.sceneService.getScenes()
-      .subscribe(scenes => this.dataSource = scenes);
+      .subscribe(scenes => {
+        this.loading = false;
+        this.dataSource = scenes
+      });
   }
 
   close() {

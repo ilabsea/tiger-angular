@@ -3,33 +3,30 @@
     <p><button mat-button (click)="close('toggle button')">Toggle</button></p>
   </mat-sidenav>
 
-  <mat-sidenav-content>
+  <mat-sidenav-content *ngIf='!loading'>
     <mat-toolbar color="primary">
       <button mat-icon-button (click)="sidenav.open()">
         <mat-icon>menu</mat-icon>
       </button>
+
       <span>Story Scenes</span>
+      <span class="spacer"></span>
     </mat-toolbar>
 
     <section class="mat-typography no-item-available" *ngIf="!dataSource.length">
-      <h3 class='mat-h2'>No Story Scene Available.</h3>
-
-      <div class="small-text">
-        Use
-        <strong>+</strong>
-        button at the bottom-right corner.
+      <h3 class='mat-title'>No Story Scene Available.</h3>
+      <div class="mat-body-1">
+        Use <strong>+</strong> button at the bottom-right corner.
       </div>
     </section>
 
     <div class="content-wrapper" *ngIf="dataSource.length">
       <mat-table #table [dataSource]="dataSource">
-        <!-- Name Column -->
         <ng-container matColumnDef="name">
           <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
         </ng-container>
 
-        <!-- Weight Column -->
         <ng-container matColumnDef="description">
           <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
           <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
@@ -37,7 +34,11 @@
 
         <ng-container matColumnDef="image">
           <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.image}} </mat-cell>
+          <mat-cell *matCellDef="let element">
+            <div class="thumbnail" *ngIf='!!element.image'>
+              <img [src]="'http://192.168.1.107:3000' + element.image.url" />
+            </div>
+          </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="actions">

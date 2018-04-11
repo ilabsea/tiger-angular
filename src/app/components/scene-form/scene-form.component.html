@@ -12,14 +12,25 @@
       <mat-error *ngIf="description.hasError('required')">Can't be blank</mat-error>
     </mat-form-field>
 
-    <mat-form-field class="example-full-width">
-      <input matInput placeholder="Image" [formControl]='image' required>
-      <mat-error *ngIf="image.hasError('required')">Can't be blank</mat-error>
-    </mat-form-field>
+    <div class="example-full-width">
+      <div class="img-wrapper">
+        <div class="thumbnail">
+          <img *ngIf='!!this.previewUrl' [src]="this.previewUrl" />
+          <mat-icon *ngIf='!this.previewUrl' class='default-image'>image</mat-icon>
+        </div>
+
+        <button mat-raised-button (click)='imgFileInput.click()'>
+          <mat-icon>camera</mat-icon>
+          <span>Choose image*</span>
+        </button>
+      </div>
+
+      <input hidden type='file' #imgFileInput (change)="handleFileInput($event.target.files)"/>
+    </div>
   </div>
 </div>
 
 <div mat-dialog-actions>
-  <button mat-raised-button color="primary" (click)='handleSubmit()' cdkFocusInitial>Save</button>
+  <button mat-raised-button color='primary' (click)='handleSubmit()' cdkFocusInitial>Save</button>
   <button mat-button [mat-dialog-close]=''>Cancel</button>
 </div>

@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { SceneService } from './services/scene.service';
 import { SceneActionService } from './services/scene_action.service';
@@ -42,6 +43,7 @@ import { SceneActionsComponent } from './components/scene-actions/scene-actions.
     MatIconModule,
     MatTableModule,
     MatDialogModule,
+    MatProgressSpinnerModule,
     AppRoutingModule,
     HttpClientModule,
   ],

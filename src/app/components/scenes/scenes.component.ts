@@ -1,4 +1,4 @@
-import { Component, ViewChild, ngOnInit } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { SceneFormComponent } from '../scene-form/scene-form.component';
@@ -11,7 +11,7 @@ import { SceneService } from '../../services/scene.service';
   styleUrls: ['./scenes.component.css']
 })
 
-export class ScenesComponent implements ngOnInit {
+export class ScenesComponent implements OnInit {
   @ViewChild('sidenav') sidenav: MatSidenav;
 
   name: string;

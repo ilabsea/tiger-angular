@@ -13,18 +13,21 @@ import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 
 import { SceneService } from './services/scene.service';
+import { SceneActionService } from './services/scene_action.service';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
 import { ScenesComponent }   from './components/scenes/scenes.component';
 import { SceneFormComponent } from './components/scene-form/scene-form.component';
+import { SceneActionsComponent } from './components/scene-actions/scene-actions.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ScenesComponent,
-    SceneFormComponent
+    SceneFormComponent,
+    SceneActionsComponent
   ],
   imports: [
     BrowserModule,
@@ -44,7 +47,8 @@ import { SceneFormComponent } from './components/scene-form/scene-form.component
   ],
   entryComponents: [SceneFormComponent],
   providers: [
-    SceneService
+    SceneService,
+    SceneActionService
   ],
   bootstrap: [AppComponent]
 })

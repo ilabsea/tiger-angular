@@ -1,0 +1,57 @@
+<div class="mat-elevation-z8">
+  <h3 class="table-header">List user</h3>
+  <mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+      <mat-cell *matCellDef="let user">{{user.email}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="role">
+      <mat-header-cell *matHeaderCellDef> Role </mat-header-cell>
+      <mat-cell *matCellDef="let user">{{user.role}}</mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+      <mat-cell *matCellDef="let user">{{user.status}}</mat-cell>
+    </ng-container>
+
+    <!-- <ng-container matColumnDef="options">
+              <mat-header-cell *matHeaderCellDef></mat-header-cell>
+              <mat-cell *matCellDef="let user">
+                <button mat-button (click)="viewUser(user.id)">View</button>
+                <button mat-button color='primary' (click)="editUser(user.id)">Edit</button>
+                <button mat-button color='warn' (click)="deleteUser(user.id)">Delete</button>
+              </mat-cell>
+    </ng-container> -->
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>
+        <button mat-icon-button color="primary" (click)="addUser()">
+          <mat-icon aria-label="icon-button with a heart icon">add</mat-icon>
+        </button>
+      </mat-header-cell>
+
+      <mat-cell *matCellDef="let row; let i=index;">
+        <button mat-icon-button color="accent" (click)="editUser(user.id)">
+          <mat-icon aria-label="Edit">edit</mat-icon>
+        </button>
+
+        <button mat-icon-button color="accent" (click)="deleteUser(user.id)">
+          <mat-icon aria-label="Delete">delete</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator [length]="length"
+                [pageSize]="pageSize"
+                [pageIndex]="pageNumber"
+                [pageSizeOptions]="[50, 100, 200, 500]"
+                (page)="pageEvent = getNextData($event)">
+  </mat-paginator>
+
+</div>

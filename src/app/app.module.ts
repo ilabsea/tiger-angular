@@ -12,6 +12,10 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatTableModule } from '@angular/material/table';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import { MatMenuModule } from '@angular/material/menu';
+
+import { TreeModule } from 'angular-tree-component';
 
 import { SceneService } from './services/scene.service';
 import { SceneActionService } from './services/scene_action.service';
@@ -22,13 +26,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { ScenesComponent }   from './components/scenes/scenes.component';
 import { SceneFormComponent } from './components/scene-form/scene-form.component';
 import { SceneActionsComponent } from './components/scene-actions/scene-actions.component';
+import { SceneActionDialogComponent } from './components/scene-action-dialog/scene-action-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ScenesComponent,
     SceneFormComponent,
-    SceneActionsComponent
+    SceneActionsComponent,
+    SceneActionDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -44,10 +50,16 @@ import { SceneActionsComponent } from './components/scene-actions/scene-actions.
     MatTableModule,
     MatDialogModule,
     MatProgressSpinnerModule,
+    MatSelectModule,
+    MatMenuModule,
+    TreeModule,
     AppRoutingModule,
     HttpClientModule,
   ],
-  entryComponents: [SceneFormComponent],
+  entryComponents: [
+    SceneFormComponent,
+    SceneActionDialogComponent
+  ],
   providers: [
     SceneService,
     SceneActionService

@@ -1,0 +1,64 @@
+.content-wrapper {
+  background-color: #fff;
+}
+
+.thumbnail img {
+  max-width: 40px;
+  max-height: 40px;
+}
+
+.tree-wrapper .node-wrapper {
+  display: flex !important;
+  flex-grow: 1;
+  align-items: center !important;
+}
+
+.tree-wrapper .tree-node-wrapper {
+  display: flex !important;
+}
+
+.tree-wrapper .node-content-wrapper, tree-node-content {
+  display: flex !important;
+  flex-grow: 1 !important;
+}
+
+.tree-wrapper .angular-tree-component {
+  background-color: red;
+}
+
+/*-------------*/
+.header-row, .row {
+  display: flex;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  align-items: center;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+.header-row {
+  min-height: 56px;
+}
+
+.row {
+  border-bottom-color: rgba(0,0,0,.12);
+  min-height: 50px;
+  min-width: 600px;
+}
+
+.header-cell, .cell {
+  flex: 1;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+.header-cell {
+  color: rgba(0,0,0,.54);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.cell {
+  color: rgba(0,0,0,.87);
+  font-size: 14px;
+}

@@ -1,6 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
+import { MatSidenav } from '@angular/material/sidenav';
 import { SceneFormComponent } from '../scene-form/scene-form.component';
 import { Scene } from '../../models/scene';
 import { SceneService } from '../../services/scene.service';
@@ -26,16 +27,14 @@ export class ScenesComponent implements OnInit {
     public dialog: MatDialog,
     private sceneService: SceneService,
     private route: ActivatedRoute
-  ) {
-    let that = this;
-  }
+  ) {}
 
   ngOnInit() {
     this.getScenes();
   }
 
   getScenes(): void {
-    this.sceneService.getScenes(this.story_id)
+    this.sceneService.getAll(this.story_id)
       .subscribe(scenes => {
         this.loading = false;
         this.dataSource = scenes
@@ -54,7 +53,7 @@ export class ScenesComponent implements OnInit {
     var result = confirm("Are you sure you want to delete this scene?");
 
     if (result) {
-      this.sceneService.deleteScene(this.story_id, scene.id).subscribe(
+      this.sceneService.delete(this.story_id, scene.id).subscribe(
         res => {
           this.dataSource.splice(this.dataSource.indexOf(scene), 1);
           this.dataSource = this.dataSource.slice();

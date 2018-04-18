@@ -37,6 +37,6 @@ export class SceneActionService {
 
   updateOrder(story_id, body) {
     let endpoint = this.API_URL + 'stories/' + story_id + '/scene_actions/update_order';
-    return this.http.put(endpoint, body, httpOptions);
+    return this.http.put(endpoint, { data: body }, httpOptions);
   }
 }

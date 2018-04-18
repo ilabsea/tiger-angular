@@ -1,0 +1,7 @@
+.mat-dialog-actions {
+  flex-direction: row-reverse;
+}
+
+.example-full-width {
+  width: 100%;
+}

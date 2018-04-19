@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Authorization': 'fmzwAmmx1hRLhF5DtUEM'
+    'Authorization': 'ooPQFGQzFF94jWcwiEDD'
   })
 };
 

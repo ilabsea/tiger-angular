@@ -22,7 +22,7 @@ export class SceneFormComponent {
     private sceneService: SceneService) {
 
     if(!!this.data.image) {
-      this.previewUrl = 'http://192.168.1.107:3000' + this.data.image.url;
+      this.previewUrl = 'http://192.168.1.107:3000' + this.data.image;
     }
   }
 

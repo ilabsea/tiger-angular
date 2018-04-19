@@ -5,7 +5,6 @@ import { TREE_ACTIONS, KEYS, IActionMapping } from 'angular-tree-component';
 import { MatSidenav } from '@angular/material/sidenav';
 import { SceneActionDialogComponent } from '../scene-action-dialog/scene-action-dialog.component';
 import { SceneActionService } from '../../services/scene_action.service';
-import { SceneService } from '../../services/scene.service';
 
 const defaultActionMapping: IActionMapping = {
   mouse: {
@@ -37,20 +36,21 @@ export class SceneActionsComponent implements OnInit {
   dataSource: any=[];
   loading: boolean = true;
   story_id: string = this.route.snapshot.paramMap.get('id');
+  scene_id: string = this.route.snapshot.paramMap.get('scene_id');
   scenes: any = [];
 
   options = {
     allowDrag: true,
-    allowDrop: true,
-    childrenField: 'nodes',
-    actionMapping: defaultActionMapping,
+    allowDrop: (element, { parent, index }) {
+      return parent.hasChildren;
+    },
+    actionMapping: defaultActionMapping
   };
 
   constructor(
     public dialog: MatDialog,
     private sceneActionService: SceneActionService,
-    private route: ActivatedRoute,
-    private sceneService: SceneService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
@@ -58,21 +58,17 @@ export class SceneActionsComponent implements OnInit {
   }
 
   onMoveNode($event) {
-    this.sceneActionService.updateOrder(this.story_id, this.dataSource)
+    this.sceneActionService.updateOrder(this.story_id, this.scene_id, this.dataSource)
       .subscribe(res => {
         this.dataSource = res;
       });
-  }
-
-  edit(obj) {
-    console.log('edit', obj)
   }
 
   delete(obj) {
     var result = confirm("Are you sure you want to delete this action button?");
 
     if (result) {
-      this.sceneActionService.delete(this.story_id, obj.id).subscribe(
+      this.sceneActionService.delete(this.story_id, this.scene_id, obj.id).subscribe(
         res => {
           this.loading = true;
           this._getSceneActions();
@@ -84,17 +80,25 @@ export class SceneActionsComponent implements OnInit {
     }
   }
 
-  addSub(obj) {
-    console.log('addSub', obj)
+  openDialog(obj) {
+    if (!!obj) {
+      this._showDialog(obj, this._updateView)
+    } else {
+      this._showDialog({}, this._appendView);
+    }
   }
 
-  openDialog() {
-    this._showDialog(this._appendView);
-  }
-  _showDialog(callback = null) {
+  _showDialog(obj, callback = null) {
     let dialogRef = this.dialog.open(SceneActionDialogComponent, {
       width: '500px',
-      data: { story_id: this.story_id, scenes: this.scenes }
+      data: {
+        id: obj.id,
+        name: obj.name,
+        link_scene_id: obj.link_scene_id,
+        story_id: this.story_id,
+        scene_id: this.scene_id,
+        scenes: this.scenes
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -105,20 +109,21 @@ export class SceneActionsComponent implements OnInit {
     });
   }
 
+  _updateView = (result) => {
+    let index = this.dataSource.findIndex(item => item.id == result.id);
+    this.dataSource[index] = result;
+  }
+
   _appendView = (result) =>  {
     this.dataSource.push(result);
   }
 
   _getSceneActions() {
-    this.sceneActionService.getAll(this.story_id)
+    this.sceneActionService.getAll(this.story_id, this.scene_id)
       .subscribe(res => {
         this.loading = false;
-        this.dataSource = res.data;
-        this.scenes = res.meta.scenes;
+        this.dataSource = res['data'];
+        this.scenes = res['meta']['scenes'];
       });
-  }
-
-  onUpdateData (treeComponent, $event) {
-    treeComponent.treeModel.expandAll();
   }
 }

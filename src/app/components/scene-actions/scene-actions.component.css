@@ -7,25 +7,6 @@
   max-height: 40px;
 }
 
-.tree-wrapper .node-wrapper {
-  display: flex !important;
-  flex-grow: 1;
-  align-items: center !important;
-}
-
-.tree-wrapper .tree-node-wrapper {
-  display: flex !important;
-}
-
-.tree-wrapper .node-content-wrapper, tree-node-content {
-  display: flex !important;
-  flex-grow: 1 !important;
-}
-
-.tree-wrapper .angular-tree-component {
-  background-color: red;
-}
-
 /*-------------*/
 .header-row, .row {
   display: flex;

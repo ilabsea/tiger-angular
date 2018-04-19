@@ -18,7 +18,7 @@ export class ScenesComponent implements OnInit {
   name: string;
   description: string;
   image: string;
-  displayedColumns = ['name', 'description', 'image', 'actions'];
+  displayedColumns = ['name', 'description', 'image', 'actions', 'method'];
   dataSource: Scene[]=[];
   loading: boolean = true;
   story_id: string = this.route.snapshot.paramMap.get('id');
@@ -37,7 +37,8 @@ export class ScenesComponent implements OnInit {
     this.sceneService.getAll(this.story_id)
       .subscribe(scenes => {
         this.loading = false;
-        this.dataSource = scenes
+        this.dataSource = scenes;
+        console.log(scenes);
       });
   }
 

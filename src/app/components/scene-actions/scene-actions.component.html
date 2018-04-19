@@ -11,6 +11,7 @@
 
       <span>Story Scene Actions</span>
       <span class='spacer'></span>
+      <a mat-button routerLink="/stories/{{story_id}}/scenes" routerLinkActive="active">Done</a>
     </mat-toolbar>
 
     <section class="mat-typography flex-center" *ngIf='!dataSource.length || loading'>
@@ -24,7 +25,7 @@
       <mat-spinner diameter='40' *ngIf='loading' color='accent'></mat-spinner>
     </section>
 
-    <div class="content-wrapper table" [hidden]="!dataSource.length && !loading">
+    <div class="content-wrapper table" [hidden]="!dataSource.length || loading">
       <!-- <div class="header-row">
         <div class="header-cell">Title</div>
         <div class="header-cell">Map to</div>
@@ -38,16 +39,15 @@
         [nodes]="dataSource"
         [options]="options"
         (moveNode)="onMoveNode($event)"
-        (updateData)= "onUpdateData(tree, $event)"
         class='tree-wrapper'>
         <ng-template #treeNodeTemplate let-node let-index="index">
           <div class="row">
               <div class='cell'>{{ node.data.name }} </div>
-              <strong class='cell'> Point to </strong>
+              <strong class='cell'> Link to </strong>
               <div class='cell' style="display: flex; align-items: center;">
-                <div style='margin-right: 10px;'>{{node.data.scene.name}}</div>
+                <div style='margin-right: 10px;'>{{node.data.link_scene.name}}</div>
                 <div class=" thumbnail">
-                  <img [src]="'http://192.168.1.107:3000' + node.data.scene.image.url" />
+                  <img [src]="'http://192.168.1.107:3000' + node.data.link_scene.image" />
                 </div>
               </div>
 
@@ -56,9 +56,8 @@
                   <mat-icon>more_vert</mat-icon>
                 </button>
                 <mat-menu #menu="matMenu">
-                  <button mat-menu-item (click)="edit(node.data)">Edit</button>
+                  <button mat-menu-item (click)="openDialog(node.data)">Edit</button>
                   <button mat-menu-item (click)="delete(node.data)">Delete</button>
-                  <button mat-menu-item (click)="addSub(node.data)">Add Sub</button>
                 </mat-menu>
               </div>
           </div>

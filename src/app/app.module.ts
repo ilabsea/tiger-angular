@@ -34,7 +34,7 @@ import { SceneActionDialogComponent } from './components/scene-action-dialog/sce
     ScenesComponent,
     SceneFormComponent,
     SceneActionsComponent,
-    SceneActionDialogComponent
+    SceneActionDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -58,7 +58,7 @@ import { SceneActionDialogComponent } from './components/scene-action-dialog/sce
   ],
   entryComponents: [
     SceneFormComponent,
-    SceneActionDialogComponent
+    SceneActionDialogComponent,
   ],
   providers: [
     SceneService,

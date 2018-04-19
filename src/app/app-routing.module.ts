@@ -7,7 +7,7 @@ import { SceneActionsComponent }   from './components/scene-actions/scene-action
 const routes: Routes = [
   { path: '', redirectTo: 'stories/1/scenes', pathMatch: 'full' },
   { path: 'stories/:id/scenes', component: ScenesComponent },
-  { path: 'stories/:id/scene_actions', component: SceneActionsComponent },
+  { path: 'stories/:id/scenes/:scene_id/scene_actions', component: SceneActionsComponent },
 ];
 
 @NgModule({

@@ -10,49 +10,48 @@ import { SceneActionService } from '../../services/scene_action.service';
 })
 export class SceneActionDialogComponent {
   name = new FormControl(this.data.name, [Validators.required]);
-  scene_id = new FormControl(this.data.scene_id, [Validators.required]);
-  // scenes: any = [{name: 'Scene1'}];
+  link_scene_id = new FormControl(this.data.link_scene_id, [Validators.required]);
 
   constructor(
     public dialogRef: MatDialogRef<SceneActionDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private sceneActionService: SceneActionService) {
-
-
   }
 
   handleSubmit(): void {
-    if (this.name.invalid || this.scene_id.invalid) {
+    if (this.name.invalid || this.link_scene_id.invalid) {
       return;
     }
 
-    // if (this.data.id) {
-    //   return this._update();
-    // }
+    if (this.data.id) {
+      return this._update();
+    }
 
     this._create();
   }
 
-  // _update() {
-  //   this.sceneService.update(this.data.story_id, this.data.id, this._buildData()).subscribe(
-  //     res => {
-  //       this.dialogRef.close(res);
-  //     },
-  //     err => {
-  //       console.log("Error occured");
-  //     }
-  //   );
-  // }
+  _update() {
+    this.sceneActionService.update(this.data.story_id, this.data.scene_id, this.data.id, this._buildData())
+      .subscribe(
+        res => {
+          this.dialogRef.close(res);
+        },
+        err => {
+          console.log(err);
+        }
+      );
+  }
 
   _create() {
-    this.sceneActionService.create(this.data.story_id, this._buildData()).subscribe(
-      res => {
-        this.dialogRef.close(res);
-      },
-      err => {
-        console.log("Error occured");
-      }
-    );
+    this.sceneActionService.create(this.data.story_id, this.data.scene_id, this._buildData())
+      .subscribe(
+        res => {
+          this.dialogRef.close(res);
+        },
+        err => {
+          console.log(err);
+        }
+      );
   }
 
   _buildData() {
@@ -60,9 +59,10 @@ export class SceneActionDialogComponent {
       scene_action: {
         id: this.data.id,
         name: this.name.value,
-        scene_id: this.scene_id.value
+        link_scene_id: this.link_scene_id.value,
+        scene_id: this.data.scene_id,
+        story_id: this.data.story_id
       }
     }
   }
-
 }

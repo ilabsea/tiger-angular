@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 const httpOptions = {
   headers: new HttpHeaders({
-    'Authorization': 'fmzwAmmx1hRLhF5DtUEM'
+    'Authorization': 'ooPQFGQzFF94jWcwiEDD'
   })
 };
 
@@ -15,28 +15,28 @@ export class SceneActionService {
     private http: HttpClient,
   ) { }
 
-  getAll(story_id) {
-    let endpoint = this.API_URL + 'stories/' + story_id + '/scene_actions';
+  getAll(story_id, scene_id) {
+    let endpoint = this.API_URL + 'stories/' + story_id + '/scenes/' + scene_id + '/scene_actions';
     return this.http.get(endpoint, httpOptions);
   }
 
-  create(story_id, body) {
-    let endpoint = this.API_URL + 'stories/' + story_id + '/scene_actions';
+  create(story_id, scene_id, body) {
+    let endpoint = this.API_URL + 'stories/' + story_id + '/scenes/' + scene_id + '/scene_actions';
     return this.http.post(endpoint, body, httpOptions);
   }
 
-  update(story_id, id, body) {
-    let endpoint = this.API_URL + 'stories/' + story_id + '/scene_actions/' + id;
+  update(story_id, scene_id, id, body) {
+    let endpoint = this.API_URL + 'stories/' + story_id + '/scenes/' + scene_id + '/scene_actions/' + id;
     return this.http.put(endpoint, body, httpOptions);
   }
 
-  delete(story_id, id) {
-    let endpoint = this.API_URL + 'stories/' + story_id + '/scene_actions/' + id;
+  delete(story_id, scene_id, id) {
+    let endpoint = this.API_URL + 'stories/' + story_id + '/scenes/' + scene_id + '/scene_actions/' + id;
     return this.http.delete(endpoint, httpOptions);
   }
 
-  updateOrder(story_id, body) {
-    let endpoint = this.API_URL + 'stories/' + story_id + '/scene_actions/update_order';
+  updateOrder(story_id, scene_id, body) {
+    let endpoint = this.API_URL + 'stories/' + story_id + '/scenes/' + scene_id + '/scene_actions/update_order';
     return this.http.put(endpoint, { data: body }, httpOptions);
   }
 }

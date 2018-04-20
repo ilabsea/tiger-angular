@@ -41,7 +41,7 @@ export class SceneActionsComponent implements OnInit {
 
   options = {
     allowDrag: true,
-    allowDrop: (element, { parent, index }) {
+    allowDrop: (element, { parent, index }) => {
       return parent.hasChildren;
     },
     actionMapping: defaultActionMapping

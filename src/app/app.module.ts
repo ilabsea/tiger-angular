@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
@@ -27,6 +28,10 @@ import { ScenesComponent }   from './components/scenes/scenes.component';
 import { SceneFormComponent } from './components/scene-form/scene-form.component';
 import { SceneActionsComponent } from './components/scene-actions/scene-actions.component';
 import { SceneActionDialogComponent } from './components/scene-action-dialog/scene-action-dialog.component';
+import { StoryPreviewComponent } from './components/story-preview/story-preview.component';
+
+import { CarouselComponent, CarouselItemElement } from './components/carousel/carousel.component';
+import { CarouselItemDirective } from './directives/carousel-item/carousel-item.directive';
 
 @NgModule({
   declarations: [
@@ -35,6 +40,10 @@ import { SceneActionDialogComponent } from './components/scene-action-dialog/sce
     SceneFormComponent,
     SceneActionsComponent,
     SceneActionDialogComponent,
+    StoryPreviewComponent,
+    CarouselComponent,
+    CarouselItemDirective,
+    CarouselItemElement
   ],
   imports: [
     BrowserModule,
@@ -52,6 +61,7 @@ import { SceneActionDialogComponent } from './components/scene-action-dialog/sce
     MatProgressSpinnerModule,
     MatSelectModule,
     MatMenuModule,
+    BrowserAnimationsModule,
     TreeModule,
     AppRoutingModule,
     HttpClientModule,

@@ -1,0 +1,43 @@
+<mat-sidenav-container class="container">
+  <mat-sidenav #sidenav (keydown.escape)="sidenav.close('escape')" mode='side'>
+    <p><button mat-button (click)="sidenav.close()">Toggle</button></p>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <button mat-icon-button (click)="sidenav.open()">
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <span>Preview Story</span>
+      <span class='spacer'></span>
+      <a mat-button routerLink="/stories/{{story_id}}/scenes" routerLinkActive="active">Done</a>
+    </mat-toolbar>
+
+    <section class="mat-typography flex-center" *ngIf='!dataSource.length || loading'>
+      <div *ngIf="!dataSource.length && !loading" class='no-item-available'>
+        <h3 class='mat-title'>No Scene Available.</h3>
+      </div>
+
+      <mat-spinner diameter='40' *ngIf='loading' color='accent'></mat-spinner>
+    </section>
+
+    <div class="content-wrapper" [hidden]="!dataSource.length || loading">
+      <carousel #carousel="carousel" [showControls]="false" style='width: 100%;'>
+        <ng-container *ngFor="let item of items;">
+          <ng-container *carouselItem>
+            <div class="item">{{item.title}}</div>
+          </ng-container>
+        </ng-container>
+      </carousel>
+
+      <div style="margin-top: 1em;">
+        <a mat-button (click)="carousel.next()" class="btn btn-success">Next</a>
+        <a mat-button (click)="carousel.prev()" class="btn btn-success">Prev</a>
+        <a mat-button (click)="carousel.slideTo(1)" class="btn btn-success">SlideTo</a>
+      </div>
+    </div>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
+

@@ -1,3 +1,24 @@
+// https://netbasal.com/building-a-simple-carousel-component-with-angular-3a94092b7080
+// https://medium.com/@asm/animated-slide-panel-with-angular-e985ad646f9
+
+/* ==== Usage====
+
+  <carousel #carousel="carousel" [showControls]="false">
+    <ng-container *ngFor="let item of items;">
+      <ng-container *carouselItem>
+        <div class="item">{{item.title}}</div>
+      </ng-container>
+    </ng-container>
+  </carousel>
+
+  <div>
+    <a (click)="carousel.next()">Next</a>
+    <a (click)="carousel.prev()">Prev</a>
+  </div>
+
+*/
+
+
 import { AfterViewInit, Component, ContentChildren, Directive, ElementRef, Input, OnInit, QueryList, TemplateRef, ViewChild, ViewChildren } from '@angular/core';
 import { CarouselItemDirective } from '../../directives/carousel-item/carousel-item.directive';
 import { animate, AnimationBuilder, AnimationFactory, AnimationPlayer, style } from '@angular/animations';
@@ -8,8 +29,6 @@ import { animate, AnimationBuilder, AnimationFactory, AnimationPlayer, style } f
 export class CarouselItemElement {
 }
 
-// https://netbasal.com/building-a-simple-carousel-component-with-angular-3a94092b7080
-// https://medium.com/@asm/animated-slide-panel-with-angular-e985ad646f9
 @Component({
   selector: 'carousel',
   exportAs: 'carousel',
@@ -28,8 +47,9 @@ export class CarouselItemElement {
   `,
   styles: [`
     .carousel-wrapper {
-      display: block;
+      display: hidden;
       overflow: hidden;
+      height: 100%;
     }
 
     ul {
@@ -37,13 +57,17 @@ export class CarouselItemElement {
       margin: 0;
       padding: 0;
       display: flex;
+      height: 100%;
     }
 
     .carousel-item {
       flex: 1;
+      display: flex;
+      flex-direction: column;
     }
   `]
 })
+
 export class CarouselComponent implements AfterViewInit {
   @ContentChildren(CarouselItemDirective) items : QueryList<CarouselItemDirective>;
   @ViewChildren(CarouselItemElement, { read: ElementRef }) private itemsElements : QueryList<ElementRef>;
@@ -66,6 +90,7 @@ export class CarouselComponent implements AfterViewInit {
 
   next() {
     if( this.currentSlide + 1 === this.items.length ) return;
+
     this.currentSlide = (this.currentSlide + 1) % this.items.length;
     this._move();
   }
@@ -96,7 +121,8 @@ export class CarouselComponent implements AfterViewInit {
     // For some reason only here I need to add setTimeout, in my local env it's working without this.
     setTimeout(() => {
       // this.itemWidth = this.itemsElements.first.nativeElement.getBoundingClientRect().width;
+      this.carouselWrapperStyle = { display: 'block' };
       this.ulStyle = { width: `${100 * this.items.length}%` }
-    });
+    }, 50);
   }
 }

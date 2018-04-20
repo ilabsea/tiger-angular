@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ChangeDetectionStrategy, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
+import { SceneService } from '../../services/scene.service';
 
 @Component({
   selector: 'app-story-preview',
@@ -10,27 +11,29 @@ import { MatSidenav } from '@angular/material/sidenav';
 
 export class StoryPreviewComponent implements OnInit {
   @ViewChild('sidenav') public sidenav: MatSidenav;
-
-  items = [
-    { title: 'Slide 1' },
-    { title: 'Slide 2' },
-    { title: 'Slide 3' },
-  ]
-
-  addSlide() {
-    this.items.push({
-      title: `Slide 4`
-    });
-  }
-
-  dataSource: any=[1];
+  dataSource: any=[];
   loading: boolean = true;
   story_id: string = this.route.snapshot.paramMap.get('id');
 
-  constructor(private route: ActivatedRoute) { }
+  constructor(
+    private route: ActivatedRoute,
+    private sceneService: SceneService
+  ) { }
 
   ngOnInit() {
-    this.loading = false;
+    this.getScenes();
   }
 
+  getScenes(): void {
+    this.sceneService.getAll(this.story_id)
+      .subscribe(scenes => {
+        this.loading = false;
+        this.dataSource = scenes;
+      });
+  }
+
+  slideTo(carousel, link_scene_id) {
+    let index = this.dataSource.findIndex(scene => scene.id == link_scene_id);
+    carousel.slideTo(index);
+  }
 }

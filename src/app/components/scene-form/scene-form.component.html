@@ -8,7 +8,7 @@
     </mat-form-field>
 
     <mat-form-field class="example-full-width">
-      <input matInput placeholder="Description" [formControl]='description' required>
+      <textarea matInput placeholder="Description" [formControl]='description' required></textarea>
       <mat-error *ngIf="description.hasError('required')">Can't be blank</mat-error>
     </mat-form-field>
 

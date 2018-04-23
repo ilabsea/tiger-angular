@@ -13,11 +13,8 @@ import { SceneService } from '../../services/scene.service';
 })
 
 export class ScenesComponent implements OnInit {
-  @ViewChild('sidenav') sidenav: MatSidenav;
+  @ViewChild('sidenav') public sidenav: MatSidenav;
 
-  name: string;
-  description: string;
-  image: string;
   displayedColumns = ['name', 'description', 'image', 'actions', 'method'];
   dataSource: Scene[]=[];
   loading: boolean = true;
@@ -40,14 +37,6 @@ export class ScenesComponent implements OnInit {
         this.dataSource = scenes;
         console.log(scenes);
       });
-  }
-
-  close() {
-    this.sidenav.close();
-  }
-
-  open() {
-    this.sidenav.open();
   }
 
   remove(scene) {

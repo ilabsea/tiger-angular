@@ -15,9 +15,12 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatChipsModule } from '@angular/material/chips';
+
 
 import { TreeModule } from 'angular-tree-component';
 
+import { StoryService } from './services/story.service';
 import { SceneService } from './services/scene.service';
 import { SceneActionService } from './services/scene_action.service';
 
@@ -32,6 +35,8 @@ import { StoryPreviewComponent } from './components/story-preview/story-preview.
 
 import { CarouselComponent, CarouselItemElement } from './components/carousel/carousel.component';
 import { CarouselItemDirective } from './directives/carousel-item/carousel-item.directive';
+import { StoryComponent } from './components/story/story.component';
+import { StoryDialogComponent } from './components/story-dialog/story-dialog.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +48,9 @@ import { CarouselItemDirective } from './directives/carousel-item/carousel-item.
     StoryPreviewComponent,
     CarouselComponent,
     CarouselItemDirective,
-    CarouselItemElement
+    CarouselItemElement,
+    StoryComponent,
+    StoryDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -61,6 +68,7 @@ import { CarouselItemDirective } from './directives/carousel-item/carousel-item.
     MatProgressSpinnerModule,
     MatSelectModule,
     MatMenuModule,
+    MatChipsModule,
     BrowserAnimationsModule,
     TreeModule,
     AppRoutingModule,
@@ -69,8 +77,10 @@ import { CarouselItemDirective } from './directives/carousel-item/carousel-item.
   entryComponents: [
     SceneFormComponent,
     SceneActionDialogComponent,
+    StoryDialogComponent,
   ],
   providers: [
+    StoryService,
     SceneService,
     SceneActionService
   ],

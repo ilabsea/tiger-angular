@@ -12,6 +12,7 @@
       <span>Story Scenes</span>
       <span class='spacer'></span>
       <a mat-button routerLink="/stories/{{story_id}}/preview" routerLinkActive="active">Preview</a>
+      <a mat-button routerLink="/stories" routerLinkActive="active">Done</a>
     </mat-toolbar>
 
     <section class="mat-typography flex-center" *ngIf='!dataSource.length || loading'>

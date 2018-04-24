@@ -34,4 +34,9 @@ export class StoryService {
     let endpoint = this.API_URL + 'stories/' + id;
     return this.http.delete(endpoint, httpOptions);
   }
+
+  clone(id, body) {
+    let endpoint = this.API_URL + 'stories/' + id + '/clone';
+    return this.http.post(endpoint, body, httpOptions);
+  }
 }

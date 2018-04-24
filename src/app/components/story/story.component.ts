@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MatSidenav } from '@angular/material/sidenav';
 import { StoryService } from '../../services/story.service';
 import { StoryDialogComponent } from '../story-dialog/story-dialog.component';
+import { PopupDialogComponent } from '../popup-dialog/popup-dialog.component';
 
 @Component({
   selector: 'app-story',
@@ -37,6 +38,10 @@ export class StoryComponent implements OnInit {
   }
 
   publish(story) {
+    var result = confirm("Are you sure you want to publish this story as you may not be able to modify it anymore?");
+
+    if (!result) { return; }
+
     this.storyService.update(story.id, this._buildData(story, 'published')).subscribe(
       res => {
         this._updateView(res);
@@ -59,7 +64,21 @@ export class StoryComponent implements OnInit {
   }
 
   clone(story) {
-    console.log('clone');
+    this.storyService.clone(story.id, {}).subscribe(
+      res => {
+        this._appendView(res);
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  showReason(story) {
+    let dialogRef = this.dialog.open(PopupDialogComponent, {
+      width: '500px',
+      data: { title: 'Deactivated Reason', message: story.reason }
+    });
   }
 
   remove(story) {

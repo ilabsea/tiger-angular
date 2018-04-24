@@ -25,7 +25,9 @@
       <mat-table #table [dataSource]="dataSource">
         <ng-container matColumnDef="name">
           <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.title}} </mat-cell>
+          <mat-cell *matCellDef="let element">
+            <a routerLink="/stories/{{element.id}}/scenes">{{element.title}} </a>
+          </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="description">
@@ -55,7 +57,13 @@
           <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
           <mat-cell *matCellDef="let element">
             <span *ngIf="element.actived">{{element.status | uppercase}}</span>
-            <span *ngIf="!element.actived">{{'Deactived' |uppercase}}</span>
+            <div *ngIf="!element.actived">
+              <span>{{'Deactived' |uppercase}}</span>
+              <button mat-icon-button (click)="showReason(element)">
+                <mat-icon class='error'>info_outline</mat-icon>
+              </button>
+            </div>
+
           </mat-cell>
         </ng-container>
 

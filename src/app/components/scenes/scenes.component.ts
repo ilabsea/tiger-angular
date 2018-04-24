@@ -59,7 +59,7 @@ export class ScenesComponent implements OnInit {
     if (!!scene) {
       this._showDialog(scene, this._updateScene)
     } else {
-      let data = { name: '', description: '', image: '', story_id: 1}
+      let data = { story_id: this.story_id }
       this._showDialog(data, this._appendScene);
     }
   }

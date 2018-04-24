@@ -37,6 +37,7 @@ import { CarouselComponent, CarouselItemElement } from './components/carousel/ca
 import { CarouselItemDirective } from './directives/carousel-item/carousel-item.directive';
 import { StoryComponent } from './components/story/story.component';
 import { StoryDialogComponent } from './components/story-dialog/story-dialog.component';
+import { PopupDialogComponent } from './components/popup-dialog/popup-dialog.component';
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { StoryDialogComponent } from './components/story-dialog/story-dialog.com
     CarouselItemDirective,
     CarouselItemElement,
     StoryComponent,
-    StoryDialogComponent
+    StoryDialogComponent,
+    PopupDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -78,6 +80,7 @@ import { StoryDialogComponent } from './components/story-dialog/story-dialog.com
     SceneFormComponent,
     SceneActionDialogComponent,
     StoryDialogComponent,
+    PopupDialogComponent
   ],
   providers: [
     StoryService,

@@ -15,12 +15,14 @@ export class StoryDialogComponent {
   title = new FormControl(this.data.title, [Validators.required]);
   description = new FormControl(this.data.description, [Validators.required]);
   image = new FormControl(this.data.image, [Validators.required]);
+
   fileToUpload: File = null;
   previewUrl: any;
   separatorKeysCodes = [ENTER, COMMA];
   tags = (this.data.tags || []).slice();
   removedTags: any = [];
-  showError: boolean= false;
+  showError: boolean = false;
+  isSubmitted: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<StoryDialogComponent>,
@@ -84,6 +86,9 @@ export class StoryDialogComponent {
   }
 
   handleSubmit(): void {
+    this.onBlur();
+    this.isSubmitted = true;
+
     if (this.title.invalid ||
         this.description.invalid ||
         !this.previewUrl ||
@@ -104,9 +109,15 @@ export class StoryDialogComponent {
         this.dialogRef.close(res);
       },
       err => {
-        console.log("Error occured");
+        this._handleError(err.error);
       }
     );
+  }
+
+  _handleError = (error) => {
+    if (!!error.title && (error.title == 'has already been taken')) {
+      this.title.setErrors({'been_taken': true})
+    }
   }
 
   _create() {
@@ -115,7 +126,8 @@ export class StoryDialogComponent {
         this.dialogRef.close(res);
       },
       err => {
-        console.log("Error occured");
+        console.log(err);
+        this._handleError(err.error);
       }
     );
   }
@@ -137,8 +149,7 @@ export class StoryDialogComponent {
       formData.append('file', this.fileToUpload, this.fileToUpload.name);
     }
 
-    formData.append("data", JSON.stringify(data));
+    formData.append('data', JSON.stringify(data));
     return formData;
   }
-
 }

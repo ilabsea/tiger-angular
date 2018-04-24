@@ -1,58 +1,71 @@
-<h1 mat-dialog-title>Story</h1>
+<h1 mat-dialog-title>{{data.header}}</h1>
 
-<div mat-dialog-content>
-  <div class="example-form">
-    <mat-form-field class="example-full-width">
-      <input matInput placeholder="Title" [formControl]='title' required>
-      <mat-error>Can't be blank</mat-error>
-    </mat-form-field>
+<form (ngSubmit)="handleSubmit()">
+  <div mat-dialog-content>
+    <div class="example-form">
+      <mat-form-field class="example-full-width">
+        <input
+          matInput
+          placeholder="Title"
+          [formControl]='title'
+          required>
+        <mat-error *ngIf="title.hasError('required')">Can't be blank</mat-error>
+        <mat-error *ngIf="title.hasError('been_taken')">Has already been taken</mat-error>
 
-    <mat-form-field class="example-full-width">
-      <textarea matInput placeholder="Description" [formControl]='description' required></textarea>
-      <mat-error>Can't be blank</mat-error>
-    </mat-form-field>
+      </mat-form-field>
 
-    <mat-form-field class="example-full-width">
-      <mat-chip-list #chipList>
-        <mat-chip *ngFor="let tag of tags" (remove)="remove(tag)">
-          {{tag.title}}
-          <mat-icon matChipRemove>cancel</mat-icon>
-        </mat-chip>
-        <input placeholder="Tags *"
-          [matChipInputFor]="chipList"
-          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-          [matChipInputAddOnBlur]="true"
-          (matChipInputTokenEnd)="add($event)"
-          (blur)="onBlur()"/>
-      </mat-chip-list>
+      <mat-form-field class="example-full-width">
+        <textarea
+          matInput
+          matTextareaAutosize
+          placeholder="Description"
+          matAutosizeMaxRows="5"
+          [formControl]='description'
+          required></textarea>
+        <mat-error>Can't be blank</mat-error>
+      </mat-form-field>
 
-      <div [hidden]="!showError" class="mat-form-field-subscript-wrapper" style='top: 38px;'>
-        <div class="" style='opacity: 1; transform: translateY(0%);'>
-          <div class='mat-error'>Can't be blank</div>
+      <mat-form-field class="example-full-width" [color]="red">
+        <mat-chip-list #chipList>
+          <mat-chip *ngFor="let tag of tags" (remove)="remove(tag)">
+            {{tag.title}}
+            <mat-icon matChipRemove>cancel</mat-icon>
+          </mat-chip>
+          <input placeholder="Tags *"
+            [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            [matChipInputAddOnBlur]="true"
+            (matChipInputTokenEnd)="add($event)"
+            (blur)="onBlur()"/>
+        </mat-chip-list>
+
+        <div [hidden]="!showError" class="mat-form-field-subscript-wrapper" style='top: 38px;'>
+          <div style='opacity: 1; transform: translateY(0%);'>
+            <div class='mat-error'>Can't be blank</div>
+          </div>
         </div>
-      </div>
-    </mat-form-field>
+      </mat-form-field>
 
-    <div class="example-full-width" style='margin-top: 20px;'>
-      <div class="img-wrapper">
-        <div class="thumbnail">
-          <img *ngIf='!!this.previewUrl' [src]="this.previewUrl" />
-          <mat-icon *ngIf='!this.previewUrl' class='default-image'>image</mat-icon>
+      <div class="example-full-width" style='margin-top: 20px;'>
+        <div class="img-wrapper" [ngClass]="{'error': isSubmitted && !previewUrl}">
+          <div class="thumbnail">
+            <img *ngIf='!!this.previewUrl' [src]="this.previewUrl" />
+            <mat-icon *ngIf='!this.previewUrl' class='default-image'>image</mat-icon>
+          </div>
+
+          <button mat-raised-button type='button' (click)='imgFileInput.click()'>
+            <mat-icon>camera</mat-icon>
+            <span>Choose image*</span>
+          </button>
         </div>
 
-        <button mat-raised-button (click)='imgFileInput.click()'>
-          <mat-icon>camera</mat-icon>
-          <span>Choose image*</span>
-        </button>
-
+        <input hidden type='file' #imgFileInput (change)="handleFileInput($event.target.files)"/>
       </div>
-
-      <input hidden type='file' #imgFileInput (change)="handleFileInput($event.target.files)"/>
     </div>
   </div>
-</div>
 
-<div mat-dialog-actions>
-  <button mat-raised-button color='primary' (click)='handleSubmit()' cdkFocusInitial>Save</button>
-  <button mat-button [mat-dialog-close]=''>Cancel</button>
-</div>
+  <div mat-dialog-actions>
+    <button mat-raised-button color='primary' type='submit' cdkFocusInitial>Save</button>
+    <button mat-button type='button' [mat-dialog-close]=''>Cancel</button>
+  </div>
+</form>

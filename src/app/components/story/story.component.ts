@@ -93,18 +93,24 @@ export class StoryComponent implements OnInit {
     this._delete(story);
   }
 
-  openDialog(scene): void {
-    if (!!scene) {
-      this._showDialog(scene, this._updateView)
+  openDialog(story): void {
+    if (!!story) {
+      this._showDialog(story, this._updateView)
     } else {
       this._showDialog({}, this._appendView);
     }
   }
 
   _showDialog(data, callback) {
+    let myData = Object.assign({}, data, { header: 'New Story' });
+
+    if (!!data.id) {
+      myData.header = `Edit ${data.title}`;
+    }
+
     let dialogRef = this.dialog.open(StoryDialogComponent, {
       width: '500px',
-      data: { id: data.id, title: data.title, description: data.description, image: data.image, tags: data.tags }
+      data: myData
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -165,5 +171,4 @@ export class StoryComponent implements OnInit {
     formData.append("data", JSON.stringify(data));
     return formData;
   }
-
 }

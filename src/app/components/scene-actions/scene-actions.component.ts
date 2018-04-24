@@ -88,17 +88,21 @@ export class SceneActionsComponent implements OnInit {
     }
   }
 
-  _showDialog(obj, callback = null) {
+  _showDialog(data, callback = null) {
+    let myData = Object.assign({}, data, {
+      header: 'New Action',
+      story_id: this.story_id,
+      scene_id: this.scene_id,
+      scenes: this.scenes
+    });
+
+    if (!!data.id) {
+      myData.header = `Edit ${data.name}`;
+    }
+
     let dialogRef = this.dialog.open(SceneActionDialogComponent, {
       width: '500px',
-      data: {
-        id: obj.id,
-        name: obj.name,
-        link_scene_id: obj.link_scene_id,
-        story_id: this.story_id,
-        scene_id: this.scene_id,
-        scenes: this.scenes
-      }
+      data: myData
     });
 
     dialogRef.afterClosed().subscribe(result => {

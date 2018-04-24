@@ -40,3 +40,7 @@
 .default-image {
   color: #ccc;
 }
+
+.error {
+  border-color: #f44336;
+}

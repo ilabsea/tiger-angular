@@ -65,9 +65,15 @@ export class ScenesComponent implements OnInit {
   }
 
   _showDialog(data, callback) {
+    let myData = Object.assign({}, data, { header: 'New Scene' });
+
+    if (!!data.id) {
+      myData.header = `Edit ${data.name}`;
+    }
+
     let dialogRef = this.dialog.open(SceneFormComponent, {
       width: '500px',
-      data: data
+      data: myData
     });
 
     dialogRef.afterClosed().subscribe(result => {

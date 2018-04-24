@@ -17,9 +17,9 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatChipsModule } from '@angular/material/chips';
 
-
 import { TreeModule } from 'angular-tree-component';
 
+import { AuthorizeService } from './services/authorize.service';
 import { StoryService } from './services/story.service';
 import { SceneService } from './services/scene.service';
 import { SceneActionService } from './services/scene_action.service';
@@ -83,9 +83,10 @@ import { PopupDialogComponent } from './components/popup-dialog/popup-dialog.com
     PopupDialogComponent
   ],
   providers: [
+    AuthorizeService,
     StoryService,
     SceneService,
-    SceneActionService
+    SceneActionService,
   ],
   bootstrap: [AppComponent]
 })

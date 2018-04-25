@@ -1,0 +1,67 @@
+<mat-sidenav-container class="example-container" (backdropClick)="close('backdrop')">
+  <mat-sidenav #sidenav (keydown.escape)="close('escape')" mode='side'>
+    <p><button mat-button (click)="close('toggle button')">Toggle</button></p>
+  </mat-sidenav>
+
+  <mat-sidenav-content *ngIf='!loading'>
+    <mat-toolbar color="primary">
+      <button mat-icon-button (click)="sidenav.open()">
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <span>Story Scenes</span>
+      <span class="spacer"></span>
+    </mat-toolbar>
+
+    <section class="mat-typography no-item-available" *ngIf="!dataSource.length">
+      <h3 class='mat-title'>No Story Scene Available.</h3>
+      <div class="mat-body-1">
+        Use <strong>+</strong> button at the bottom-right corner.
+      </div>
+    </section>
+
+    <div class="content-wrapper" *ngIf="dataSource.length">
+      <mat-table #table [dataSource]="dataSource">
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="description">
+          <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="image">
+          <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <div class="thumbnail" *ngIf='!!element.image'>
+              <img [src]="'http://192.168.1.107:3000' + element.image.url" />
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <button mat-icon-button (click)='openDialog(element)'>
+              <mat-icon>edit</mat-icon>
+            </button>
+
+            <button mat-icon-button>
+              <mat-icon (click)='remove(element)'>delete</mat-icon>
+            </button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </div>
+
+    <button mat-fab class='add-button' (click)="openDialog()">
+      <mat-icon>add</mat-icon>
+    </button>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

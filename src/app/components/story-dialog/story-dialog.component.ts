@@ -106,7 +106,7 @@ export class StoryDialogComponent {
   _update() {
     this.storyService.update(this.data.id, this._buildData()).subscribe(
       res => {
-        this.dialogRef.close(res);
+        this.dialogRef.close(res['story']);
       },
       err => {
         this._handleError(err.error);
@@ -123,7 +123,7 @@ export class StoryDialogComponent {
   _create() {
     this.storyService.create(this._buildData()).subscribe(
       res => {
-        this.dialogRef.close(res);
+        this.dialogRef.close(res['story']);
       },
       err => {
         console.log(err);

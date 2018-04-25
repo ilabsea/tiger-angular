@@ -31,7 +31,7 @@ export class SceneActionDialogComponent {
   }
 
   _update() {
-    this.sceneActionService.update(this.data.story_id, this.data.scene_id, this.data.id, this._buildData())
+    this.sceneActionService.update(this.data.scene_id, this.data.id, this._buildData())
       .subscribe(
         res => {
           this.dialogRef.close(res);
@@ -43,7 +43,7 @@ export class SceneActionDialogComponent {
   }
 
   _create() {
-    this.sceneActionService.create(this.data.story_id, this.data.scene_id, this._buildData())
+    this.sceneActionService.create(this.data.scene_id, this._buildData())
       .subscribe(
         res => {
           this.dialogRef.close(res);

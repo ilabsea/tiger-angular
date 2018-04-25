@@ -32,8 +32,7 @@ export class StoryComponent implements OnInit {
     this.storyService.getAll()
       .subscribe(result => {
         this.loading = false;
-        this.dataSource = result;
-        console.log(result);
+        this.dataSource = result['stories'];
       });
   }
 
@@ -44,7 +43,7 @@ export class StoryComponent implements OnInit {
 
     this.storyService.update(story.id, this._buildData(story, 'published')).subscribe(
       res => {
-        this._updateView(res);
+        this._updateView(res['story']);
       },
       err => {
         console.log(err);
@@ -55,7 +54,7 @@ export class StoryComponent implements OnInit {
   unpublish(story) {
     this.storyService.update(story.id, this._buildData(story, 'unpublished')).subscribe(
       res => {
-        this._updateView(res);
+        this._updateView(res['story']);
       },
       err => {
         console.log(err);
@@ -66,7 +65,7 @@ export class StoryComponent implements OnInit {
   clone(story) {
     this.storyService.clone(story.id, {}).subscribe(
       res => {
-        this._appendView(res);
+        this._appendView(res['story']);
       },
       err => {
         console.log(err);

@@ -51,7 +51,7 @@
           <mat-header-cell *matHeaderCellDef> Action Buttons </mat-header-cell>
           <mat-cell *matCellDef="let element">
             <span>{{element.scene_actions.length}} (links)</span>
-            <a mat-button routerLink="/stories/{{story_id}}/scenes/{{element.id}}/scene_actions" routerLinkActive="active">Manage</a>
+            <a mat-button routerLink="/scenes/{{element.id}}/scene_actions" routerLinkActive="active">Manage</a>
           </mat-cell>
         </ng-container>
 

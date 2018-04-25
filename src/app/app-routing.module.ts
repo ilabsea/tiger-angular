@@ -10,7 +10,7 @@ const routes: Routes = [
   { path: '', redirectTo: 'stories', pathMatch: 'full' },
   { path: 'stories', component: StoryComponent },
   { path: 'stories/:id/scenes', component: ScenesComponent },
-  { path: 'stories/:id/scenes/:scene_id/scene_actions', component: SceneActionsComponent },
+  { path: 'scenes/:scene_id/scene_actions', component: SceneActionsComponent },
   { path: 'stories/:id/preview', component: StoryPreviewComponent },
 ];
 

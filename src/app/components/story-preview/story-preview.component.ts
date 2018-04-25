@@ -26,9 +26,9 @@ export class StoryPreviewComponent implements OnInit {
 
   getScenes(): void {
     this.sceneService.getAll(this.story_id)
-      .subscribe(scenes => {
+      .subscribe(res => {
         this.loading = false;
-        this.dataSource = scenes;
+        this.dataSource = res['scenes'];
       });
   }
 

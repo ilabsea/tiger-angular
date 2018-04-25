@@ -32,10 +32,9 @@ export class ScenesComponent implements OnInit {
 
   getScenes(): void {
     this.sceneService.getAll(this.story_id)
-      .subscribe(scenes => {
+      .subscribe(res => {
         this.loading = false;
-        this.dataSource = scenes;
-        console.log(scenes);
+        this.dataSource = res['scenes'];
       });
   }
 
@@ -78,7 +77,7 @@ export class ScenesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (!!result) {
-        callback(result);
+        callback(result.scene);
         this.dataSource = this.dataSource.slice();
       }
     });

@@ -1,23 +1,28 @@
-<mat-sidenav-container class="example-container" (backdropClick)="close('backdrop')">
+<mat-sidenav-container class="container" (backdropClick)="close('backdrop')">
   <mat-sidenav #sidenav (keydown.escape)="close('escape')" mode='side'>
     <p><button mat-button (click)="close('toggle button')">Toggle</button></p>
   </mat-sidenav>
 
-  <mat-sidenav-content *ngIf='!loading'>
+  <mat-sidenav-content>
     <mat-toolbar color="primary">
       <button mat-icon-button (click)="sidenav.open()">
         <mat-icon>menu</mat-icon>
       </button>
 
       <span>Story Scenes</span>
-      <span class="spacer"></span>
+      <span class='spacer'></span>
+      <button mat-button>Preview</button>
     </mat-toolbar>
 
-    <section class="mat-typography no-item-available" *ngIf="!dataSource.length">
-      <h3 class='mat-title'>No Story Scene Available.</h3>
-      <div class="mat-body-1">
-        Use <strong>+</strong> button at the bottom-right corner.
+    <section class="mat-typography flex-center" *ngIf='!dataSource.length || loading'>
+      <div *ngIf="!dataSource.length && !loading" class='no-item-available'>
+        <h3 class='mat-title'>No Story Scene Available.</h3>
+        <div class="mat-body-1">
+          Use <strong>+</strong> button at the bottom-right corner.
+        </div>
       </div>
+
+      <mat-spinner diameter='40' *ngIf='loading' color='accent'></mat-spinner>
     </section>
 
     <div class="content-wrapper" *ngIf="dataSource.length">
@@ -36,13 +41,21 @@
           <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
           <mat-cell *matCellDef="let element">
             <div class="thumbnail" *ngIf='!!element.image'>
-              <img [src]="'http://192.168.1.107:3000' + element.image.url" />
+              <img [src]="'http://192.168.1.107:3000' + element.image" />
             </div>
           </mat-cell>
         </ng-container>
 
         <ng-container matColumnDef="actions">
-          <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+          <mat-header-cell *matHeaderCellDef> Action Buttons </mat-header-cell>
+          <mat-cell *matCellDef="let element">
+            <span>{{element.scene_actions.length}} (links)</span>
+            <a mat-button routerLink="/scenes/{{element.id}}/scene_actions" routerLinkActive="active">Manage</a>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="method">
+          <mat-header-cell *matHeaderCellDef> </mat-header-cell>
           <mat-cell *matCellDef="let element">
             <button mat-icon-button (click)='openDialog(element)'>
               <mat-icon>edit</mat-icon>

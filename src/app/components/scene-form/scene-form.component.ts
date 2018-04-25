@@ -22,7 +22,7 @@ export class SceneFormComponent {
     private sceneService: SceneService) {
 
     if(!!this.data.image) {
-      this.previewUrl = 'http://192.168.1.107:3000' + this.data.image.url;
+      this.previewUrl = 'http://192.168.1.107:3000' + this.data.image;
     }
   }
 
@@ -53,7 +53,7 @@ export class SceneFormComponent {
   }
 
   _update() {
-    this.sceneService.updateScene(this.data.story_id, this.data.id, this._buildData()).subscribe(
+    this.sceneService.update(this.data.story_id, this.data.id, this._buildData()).subscribe(
       res => {
         this.dialogRef.close(res);
       },
@@ -64,7 +64,7 @@ export class SceneFormComponent {
   }
 
   _create() {
-    this.sceneService.createScene(this.data.story_id, this._buildData()).subscribe(
+    this.sceneService.create(this.data.story_id, this._buildData()).subscribe(
       res => {
         this.dialogRef.close(res);
       },

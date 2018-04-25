@@ -1,6 +1,7 @@
-import { Component, ViewChild, ngOnInit } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
+import { MatSidenav } from '@angular/material/sidenav';
 import { SceneFormComponent } from '../scene-form/scene-form.component';
 import { Scene } from '../../models/scene';
 import { SceneService } from '../../services/scene.service';
@@ -11,13 +12,13 @@ import { SceneService } from '../../services/scene.service';
   styleUrls: ['./scenes.component.css']
 })
 
-export class ScenesComponent implements ngOnInit {
+export class ScenesComponent implements OnInit {
   @ViewChild('sidenav') sidenav: MatSidenav;
 
   name: string;
   description: string;
   image: string;
-  displayedColumns = ['name', 'description', 'image', 'actions'];
+  displayedColumns = ['name', 'description', 'image', 'actions', 'method'];
   dataSource: Scene[]=[];
   loading: boolean = true;
   story_id: string = this.route.snapshot.paramMap.get('id');
@@ -26,19 +27,17 @@ export class ScenesComponent implements ngOnInit {
     public dialog: MatDialog,
     private sceneService: SceneService,
     private route: ActivatedRoute
-  ) {
-    let that = this;
-  }
+  ) {}
 
   ngOnInit() {
     this.getScenes();
   }
 
   getScenes(): void {
-    this.sceneService.getScenes(this.story_id)
-      .subscribe(scenes => {
+    this.sceneService.getAll(this.story_id)
+      .subscribe(res => {
         this.loading = false;
-        this.dataSource = scenes
+        this.dataSource = res.scenes;
       });
   }
 
@@ -54,7 +53,7 @@ export class ScenesComponent implements ngOnInit {
     var result = confirm("Are you sure you want to delete this scene?");
 
     if (result) {
-      this.sceneService.deleteScene(this.story_id, scene.id).subscribe(
+      this.sceneService.delete(this.story_id, scene.id).subscribe(
         res => {
           this.dataSource.splice(this.dataSource.indexOf(scene), 1);
           this.dataSource = this.dataSource.slice();
@@ -83,7 +82,7 @@ export class ScenesComponent implements ngOnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (!!result) {
-        callback(result);
+        callback(result.scene);
         this.dataSource = this.dataSource.slice();
       }
     });

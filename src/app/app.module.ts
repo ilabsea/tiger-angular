@@ -5,27 +5,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { MatButtonModule, MatCheckboxModule } from '@angular/material';
-import { MatInputModule } from '@angular/material/input';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatTableModule } from '@angular/material/table';
-import { MatDialogModule } from '@angular/material/dialog';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatSelectModule } from '@angular/material/select';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatChipsModule } from '@angular/material/chips';
-
 import { TreeModule } from 'angular-tree-component';
 
 import { AuthorizeService } from './services/authorize.service';
 import { StoryService } from './services/story.service';
 import { SceneService } from './services/scene.service';
 import { SceneActionService } from './services/scene_action.service';
-
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
 
 import { ScenesComponent }   from './components/scenes/scenes.component';
 import { SceneFormComponent } from './components/scene-form/scene-form.component';
@@ -39,9 +24,51 @@ import { StoryComponent } from './components/story/story.component';
 import { StoryDialogComponent } from './components/story-dialog/story-dialog.component';
 import { PopupDialogComponent } from './components/popup-dialog/popup-dialog.component';
 
+import { AuthGuard } from './guards/auth.guard';
+
+import { AppComponent } from './app.component';
+import { HomeComponent } from './components/home/home.component';
+import { NavBarComponent } from './components/navbar/navbar.component';
+import { LoginComponent } from './components/login/login.component';
+import { UsersComponent } from './components/users/users.component';
+import { UserFormComponent } from './components/user-form/user-form.component';
+import { StoriesComponent } from './components/stories/stories.component';
+
+import { ApiService } from './services/api.service';
+import { AuthService } from './services/auth.service';
+import { UserService } from './services/user.service';
+
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokenInterceptor } from './helpers/token.interceptor';
+
+import { MatToolbarModule,
+         MatMenuModule,
+         MatCardModule,
+         MatFormFieldModule,
+         MatInputModule,
+         MatSelectModule,
+         MatTableModule,
+         MatButtonModule,
+         MatIconModule,
+         MatSnackBarModule,
+         MatPaginatorModule,
+         MatDialogModule,
+         MatSidenavModule,
+         MatProgressSpinnerModule,
+         MatChipsModule
+      } from '@angular/material';
+
+import { AppRoutingModule } from './app-routing.module';
+
 @NgModule({
   declarations: [
     AppComponent,
+    HomeComponent,
+    NavBarComponent,
+    LoginComponent,
+    UsersComponent,
+    UserFormComponent,
+    StoriesComponent,
     ScenesComponent,
     SceneFormComponent,
     SceneActionsComponent,
@@ -52,41 +79,55 @@ import { PopupDialogComponent } from './components/popup-dialog/popup-dialog.com
     CarouselItemElement,
     StoryComponent,
     StoryDialogComponent,
-    PopupDialogComponent
+    PopupDialogComponent,
+
   ],
   imports: [
-    BrowserModule,
-    FormsModule,
-    ReactiveFormsModule,
     NoopAnimationsModule,
-    MatButtonModule,
-    MatCheckboxModule,
-    MatInputModule,
-    MatToolbarModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatTableModule,
-    MatDialogModule,
-    MatProgressSpinnerModule,
-    MatSelectModule,
-    MatMenuModule,
-    MatChipsModule,
+    BrowserModule,
     BrowserAnimationsModule,
-    TreeModule,
+    ReactiveFormsModule,
+    FormsModule,
+    MatToolbarModule,
+    MatMenuModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatTableModule,
+    MatButtonModule,
+    MatSidenavModule,
+    MatProgressSpinnerModule,
+    MatChipsModule,
+    MatIconModule,
+    MatSnackBarModule,
+    MatPaginatorModule,
+    MatDialogModule,
     AppRoutingModule,
     HttpClientModule,
+    TreeModule,
   ],
   entryComponents: [
     SceneFormComponent,
     SceneActionDialogComponent,
     StoryDialogComponent,
-    PopupDialogComponent
+    PopupDialogComponent,
+    UserFormComponent
   ],
   providers: [
     AuthorizeService,
     StoryService,
     SceneService,
     SceneActionService,
+    AuthGuard,
+    ApiService,
+    AuthService,
+    UserService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })

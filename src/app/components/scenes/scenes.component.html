@@ -11,7 +11,7 @@
 
       <span>Story Scenes</span>
       <span class='spacer'></span>
-      <a mat-button routerLink="/stories/{{story_id}}/preview" routerLinkActive="active">Preview</a>
+      <button mat-button>Preview</button>
     </mat-toolbar>
 
     <section class="mat-typography flex-center" *ngIf='!dataSource.length || loading'>
@@ -50,7 +50,7 @@
           <mat-header-cell *matHeaderCellDef> Action Buttons </mat-header-cell>
           <mat-cell *matCellDef="let element">
             <span>{{element.scene_actions.length}} (links)</span>
-            <a mat-button routerLink="/stories/{{story_id}}/scenes/{{element.id}}/scene_actions" routerLinkActive="active">Manage</a>
+            <a mat-button routerLink="/scenes/{{element.id}}/scene_actions" routerLinkActive="active">Manage</a>
           </mat-cell>
         </ng-container>
 

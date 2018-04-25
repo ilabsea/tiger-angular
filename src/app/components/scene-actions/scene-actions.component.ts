@@ -35,7 +35,7 @@ export class SceneActionsComponent implements OnInit {
 
   dataSource: any=[];
   loading: boolean = true;
-  story_id: string = this.route.snapshot.paramMap.get('id');
+  story_id: any;
   scene_id: string = this.route.snapshot.paramMap.get('scene_id');
   scenes: any = [];
 
@@ -58,9 +58,9 @@ export class SceneActionsComponent implements OnInit {
   }
 
   onMoveNode($event) {
-    this.sceneActionService.updateOrder(this.story_id, this.scene_id, this.dataSource)
+    this.sceneActionService.updateOrder(this.scene_id, this.dataSource)
       .subscribe(res => {
-        this.dataSource = res;
+        this.dataSource = res.scene_actions;
       });
   }
 
@@ -68,7 +68,7 @@ export class SceneActionsComponent implements OnInit {
     var result = confirm("Are you sure you want to delete this action button?");
 
     if (result) {
-      this.sceneActionService.delete(this.story_id, this.scene_id, obj.id).subscribe(
+      this.sceneActionService.delete(this.scene_id, obj.id).subscribe(
         res => {
           this.loading = true;
           this._getSceneActions();
@@ -95,7 +95,6 @@ export class SceneActionsComponent implements OnInit {
         id: obj.id,
         name: obj.name,
         link_scene_id: obj.link_scene_id,
-        story_id: this.story_id,
         scene_id: this.scene_id,
         scenes: this.scenes
       }
@@ -103,7 +102,7 @@ export class SceneActionsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (!!result) {
-        !!callback && callback(result);
+        !!callback && callback(result.scene_action);
         this.dataSource = this.dataSource.slice();
       }
     });
@@ -119,11 +118,12 @@ export class SceneActionsComponent implements OnInit {
   }
 
   _getSceneActions() {
-    this.sceneActionService.getAll(this.story_id, this.scene_id)
+    this.sceneActionService.getAll(this.scene_id)
       .subscribe(res => {
         this.loading = false;
         this.dataSource = res['data'];
         this.scenes = res['meta']['scenes'];
+        this.story_id = res['meta']['story']['id'];
       });
   }
 }

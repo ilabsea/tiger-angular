@@ -1,9 +1,5 @@
-<mat-toolbar color="primary">
-  <span>
-    Tiger
-  </span>
-  <span class='fill-remaining-space'></span>
-  <a routerLink='/stories' mat-button>Stories</a>
-  <a routerLink='/users' mat-button >Users</a>
-  <a [routerLink]="['/login']" mat-button>Logout</a>
-</mat-toolbar>
+<mat-nav-list>
+  <a mat-list-item (click)="goTo('/stories')">Stories</a>
+  <a mat-list-item (click)="goTo('/users')">Users</a>
+  <a mat-list-item (click)="goTo('/login')">Logout</a>
+</mat-nav-list>

@@ -2,11 +2,11 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 import { USERS } from '../../mocks/mock-users';
+import { MatSidenav } from '@angular/material/sidenav';
 
-import {MatTableDataSource, MatPaginator, PageEvent, MatDialog} from '@angular/material';
-// import {DataSource} from '@angular/cdk';
+import { MatTableDataSource, MatPaginator, PageEvent, MatDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
-import {UserFormComponent} from './../user-form/user-form.component';
+import { UserFormComponent } from './../user-form/user-form.component';
 
 @Component({
   selector: 'app-users',
@@ -25,10 +25,12 @@ export class UsersComponent implements OnInit {
 
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild('sidenav') public sidenav: MatSidenav;
 
-  constructor(private userService: UserService, public dialog: MatDialog,) {
-
-  }
+  constructor(
+    private userService: UserService,
+    public dialog: MatDialog
+  ) { }
 
   ngOnInit() {
     this.getUsers(this.pageNumber, this.pageSize);

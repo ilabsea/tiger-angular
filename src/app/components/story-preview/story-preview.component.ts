@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatSidenav } from '@angular/material/sidenav';
 import { SceneService } from '../../services/scene.service';
 
 @Component({
@@ -10,7 +9,6 @@ import { SceneService } from '../../services/scene.service';
 })
 
 export class StoryPreviewComponent implements OnInit {
-  @ViewChild('sidenav') public sidenav: MatSidenav;
   dataSource: any=[];
   loading: boolean = true;
   story_id: string = this.route.snapshot.paramMap.get('id');

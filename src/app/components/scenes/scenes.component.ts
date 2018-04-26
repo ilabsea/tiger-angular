@@ -1,7 +1,6 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { MatSidenav } from '@angular/material/sidenav';
 import { SceneFormComponent } from '../scene-form/scene-form.component';
 import { Scene } from '../../models/scene';
 import { SceneService } from '../../services/scene.service';
@@ -13,8 +12,6 @@ import { SceneService } from '../../services/scene.service';
 })
 
 export class ScenesComponent implements OnInit {
-  @ViewChild('sidenav') public sidenav: MatSidenav;
-
   displayedColumns = ['name', 'description', 'image', 'actions', 'method'];
   dataSource: Scene[]=[];
   loading: boolean = true;

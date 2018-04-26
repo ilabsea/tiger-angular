@@ -2,7 +2,6 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { TREE_ACTIONS, KEYS, IActionMapping } from 'angular-tree-component';
-import { MatSidenav } from '@angular/material/sidenav';
 import { SceneActionDialogComponent } from '../scene-action-dialog/scene-action-dialog.component';
 import { SceneActionService } from '../../services/scene_action.service';
 
@@ -31,8 +30,6 @@ const defaultActionMapping: IActionMapping = {
   styleUrls: ['./scene-actions.component.css']
 })
 export class SceneActionsComponent implements OnInit {
-  @ViewChild('sidenav') public sidenav: MatSidenav;
-
   dataSource: any=[];
   loading: boolean = true;
   story_id: any;

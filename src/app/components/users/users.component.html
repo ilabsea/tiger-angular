@@ -1,12 +1,20 @@
 <mat-toolbar color="primary">
   <app-menu-button></app-menu-button>
-
   <span>User</span>
-  <span class='spacer'></span>
-
 </mat-toolbar>
 
-<div class="content-wrapper">
+<section class="mat-typography flex-center" *ngIf='!dataSource.length || loading'>
+  <div *ngIf="!dataSource.length && !loading" class='no-item-available'>
+    <h3 class='mat-title'>No User Available.</h3>
+    <div class="mat-body-1">
+      Use <strong>+</strong> button at the bottom-right corner.
+    </div>
+  </div>
+
+  <mat-spinner diameter='40' *ngIf='loading' color='accent'></mat-spinner>
+</section>
+
+<div class="content-wrapper" [hidden]="!dataSource.length || loading">
   <h3 class="table-header">List user</h3>
   <mat-table #table [dataSource]="dataSource">
     <ng-container matColumnDef="email">
@@ -24,28 +32,14 @@
       <mat-cell *matCellDef="let user">{{user.status}}</mat-cell>
     </ng-container>
 
-    <!-- <ng-container matColumnDef="options">
-              <mat-header-cell *matHeaderCellDef></mat-header-cell>
-              <mat-cell *matCellDef="let user">
-                <button mat-button (click)="viewUser(user.id)">View</button>
-                <button mat-button color='primary' (click)="editUser(user.id)">Edit</button>
-                <button mat-button color='warn' (click)="deleteUser(user.id)">Delete</button>
-              </mat-cell>
-    </ng-container> -->
-
     <ng-container matColumnDef="actions">
-      <mat-header-cell *matHeaderCellDef>
-        <!-- <button mat-icon-button color="primary" (click)="addUser()">
-          <mat-icon aria-label="icon-button with a heart icon">add</mat-icon>
-        </button> -->
-      </mat-header-cell>
-
-      <mat-cell *matCellDef="let row; let i=index;">
-        <button mat-icon-button color="accent" (click)="editUser(user.id)">
+      <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+      <mat-cell *matCellDef="let user; let i=index;">
+        <button mat-icon-button color="accent" (click)="openDialog(user)">
           <mat-icon aria-label="Edit">edit</mat-icon>
         </button>
 
-        <button mat-icon-button color="accent" (click)="deleteUser(user.id)">
+        <button mat-icon-button color="accent" (click)="delete(user)">
           <mat-icon aria-label="Delete">delete</mat-icon>
         </button>
       </mat-cell>
@@ -64,6 +58,6 @@
 
 </div>
 
-<button mat-fab class='add-button' (click)="addUser()">
+<button mat-fab class='add-button' (click)="openDialog()">
   <mat-icon>add</mat-icon>
 </button>

@@ -115,8 +115,8 @@ export class StoryDialogComponent {
   }
 
   _handleError = (error) => {
-    if (!!error.title && (error.title == 'has already been taken')) {
-      this.title.setErrors({'been_taken': true})
+    for (let name in error) {
+      this[name].setErrors({server: error[name]})
     }
   }
 

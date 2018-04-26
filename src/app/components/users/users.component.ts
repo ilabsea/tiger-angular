@@ -2,7 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 import { USERS } from '../../mocks/mock-users';
-import { MatSidenav } from '@angular/material/sidenav';
 
 import { MatTableDataSource, MatPaginator, PageEvent, MatDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
@@ -14,18 +13,16 @@ import { UserFormComponent } from './../user-form/user-form.component';
   styleUrls: ['./users.component.css']
 })
 export class UsersComponent implements OnInit {
+  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   users: User[];
   displayedColumns = ['email', 'role', 'status', 'actions'];
-  dataSource = new MatTableDataSource();
+  dataSource: any = [];
   pageEvent: PageEvent;
   length = 100;
   pageSize = 50;
   pageNumber = 1;
-
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild('sidenav') public sidenav: MatSidenav;
+  loading: boolean = true;
 
   constructor(
     private userService: UserService,
@@ -37,11 +34,12 @@ export class UsersComponent implements OnInit {
   }
 
   getUsers(page: number, perPage: number): void {
-    this.userService.getUsers(page, perPage).subscribe(response =>
+    this.userService.getAll(page, perPage).subscribe(response =>
       {
-        this.dataSource.data = response['users'];
+        this.dataSource = response['users'];
         this.length = response['meta']['pagination']['total_objects'];
         this.pageNumber = page - 1;
+        this.loading = false;
       }
     );
   }
@@ -52,30 +50,60 @@ export class UsersComponent implements OnInit {
     this.getUsers(page, perPage);
   }
 
-  addUser(user: User) {
-    const dialogRef = this.dialog.open(UserFormComponent, {
-      data: {user: User }
+  openDialog(user): void {
+    if (!!user) {
+      this._showDialog(user, this._updateView)
+    } else {
+      this._showDialog({}, this._appendView);
+    }
+  }
+
+  _showDialog(data, callback) {
+    let myData = Object.assign({}, data, { header: 'New User' });
+
+    if (!!data.id) {
+      myData.header = 'Edit User';
+    }
+
+    let dialogRef = this.dialog.open(UserFormComponent, {
+      width: '500px',
+      data: myData
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result === 1) {
-        // After dialog is closed we're doing frontend updates
-        // For add we're just pushing a new row inside DataService
-        // this.exampleDatabase.dataChange.value.push(this.dataService.getDialogData());
-        // this.refreshTable();
+      if (!!result) {
+        callback(result);
       }
     });
   }
 
-  viewUser(id){
-    console.log('view user_id ', id);
+  _updateView = (result) => {
+    let index = this.dataSource.findIndex(item => item.id == result.id);
+    this.dataSource[index] = result;
+    this.dataSource = this.dataSource.slice();
   }
 
-  editUser(id){
-    console.log('edit user_id ', id);
+  _appendView = (result) => {
+    // this.dataSource.push(result);
+    // this.dataSource = this.dataSource.slice();
+    this.getUsers(this.pageNumber, this.pageSize);
   }
 
-  deleteUser(id){
-    console.log('delete user_id ', id);
+  _deleteView = (result)=> {
+    this.dataSource.splice(this.dataSource.indexOf(result), 1);
+    this.dataSource = this.dataSource.slice();
+  }
+
+  delete(user){
+    var result = confirm("Are you sure you want to delete this user?");
+
+    if (!result) { return; }
+
+    this.userService.delete(user.id).subscribe(
+      res => {
+        this._deleteView(user);
+      },
+      err => { console.log(err); }
+    );
   }
 }

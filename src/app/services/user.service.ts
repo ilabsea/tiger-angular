@@ -1,40 +1,30 @@
 import { Injectable } from '@angular/core';
-import { USERS } from './../mocks/mock-users';
-import { User } from './../models/user';
 import { HttpClient } from '@angular/common/http';
-import { catchError, map, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs/Observable';
+import { environment } from '../../environments/environment';
 
-import { ApiService } from './api.service';
-import 'rxjs/add/operator/map';
+const API_URL = environment.apiUrl;
 
 @Injectable()
 export class UserService {
-  dialogData: any;
+  constructor(private http: HttpClient) { }
 
-  constructor(private http: HttpClient, private api: ApiService) { }
-
-  // getUsers(page: number): Observable<User[]> {
-  //   // return this.http.get<User[]>(this.api.listUsersUrl(page));
-  //   return this.http.get(this.api.listUsersUrl(page)).map(
-  //                                                         (response:Response) =>
-  //                                                           response['data']
-  //                                                         );
-  // }
-
-  getDialogData() {
-    return this.dialogData;
+  getAll(page: number, perPage: number) {
+    let endpoint = `${API_URL}users?page=${page}&per_page=${perPage}`
+    return this.http.get(endpoint);
   }
 
-  getUsers(page: number, perPage: number): Observable<any> {
-    return this.http.get<User[]>(this.api.listUsersUrl(page, perPage));
+  create(body) {
+    let endpoint = API_URL + 'users';
+    return this.http.post(endpoint, body);
   }
 
-  addUser (user: User): void {
-    this.dialogData = user;
+  update(id, body) {
+    let endpoint = API_URL + 'users/' + id;
+    return this.http.put(endpoint, body);
   }
 
-  private log(message: string) {
-    console.log('Service: ' + message);
+  delete(id) {
+    let endpoint = API_URL + 'users/' + id;
+    return this.http.delete(endpoint);
   }
 }

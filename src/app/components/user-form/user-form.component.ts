@@ -1,8 +1,8 @@
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material';
-import {Component, Inject} from '@angular/core';
-import {UserService} from '../../services/user.service';
-import {FormControl, Validators} from '@angular/forms';
-import {User} from '../../models/user';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { Component, Inject } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UserService } from '../../services/user.service';
+import { User } from '../../models/user';
 
 @Component({
   selector: 'app-user-form',
@@ -11,40 +11,73 @@ import {User} from '../../models/user';
 })
 
 export class UserFormComponent {
-  roles = [
-    {label: 'admin', value: 0},
-    {label: 'publisher', value: 1}
-  ];
+  roles = [ {label: 'Publisher', value: 'publisher'}, { label: 'Admin', value: 'admin' } ];
+
+  form: FormGroup = this.fb.group(
+    {
+      email: [this.data.email, [Validators.required, Validators.email]],
+      password: ['', Validators.required],
+      passwordConfirmation: ['', Validators.required],
+      role: [this.data.role, Validators.required],
+    }
+  );
 
   constructor(public dialogRef: MatDialogRef<UserFormComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: User,
+              @Inject(MAT_DIALOG_DATA) public data: any,
+              private fb: FormBuilder,
               public userService: UserService) { }
 
-  formControl = new FormControl('', [Validators.required, Validators.email]);
+  onSubmit() {
+    if (this.form.invalid) { return; }
 
-  getErrorMessage() {
-    return this.formControl.hasError('required') ? 'Required field' :
-      this.formControl.hasError('email') ? 'Not a valid email' :
-        '';
+    if ( this.form.controls.passwordConfirmation.value != this.form.controls.password.value) {
+      return this.form.controls.passwordConfirmation.setErrors({mismatch: true});
+    }
+
+    if (this.data.id) {
+      return this._update();
+    }
+
+    this._create();
   }
 
-  submit() {
-  // emppty stuff
-    console.log(this.formControl);
+  _update() {
+    this.userService.update(this.data.id, this._buildData()).subscribe(
+      res => {
+        this.dialogRef.close(res['user']);
+      },
+      err => {
+        this._handleError(err.error);
+      }
+    );
   }
 
-  onNoClick(): void {
-    this.dialogRef.close();
+  _create() {
+    this.userService.create(this._buildData()).subscribe(
+      res => {
+        this.dialogRef.close(res['user']);
+      },
+      err => {
+        this._handleError(err.error);
+      }
+    );
   }
 
-  addUser(){
-    console.log('add user');
-    console.log(this.formControl);
+  _buildData() {
+    return {
+      user:  {
+        id: this.data.id,
+        email: this.form.value.email,
+        password: this.form.value.password,
+        password_confirmation: this.form.value.passwordConfirmation,
+        role: this.form.value.role
+      }
+    }
   }
 
-  public confirmAdd(): void {
-    this.userService.addUser(this.data);
+  _handleError(error) {
+    for (let name in error.errors) {
+      this.form.controls[name].setErrors({server: error.errors[name]})
+    }
   }
-
-
 }

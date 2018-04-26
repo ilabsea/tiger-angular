@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from './../../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
 export class NavBarComponent implements OnInit {
   @Output() navBarEvent = new EventEmitter<String>();
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
   }
@@ -17,6 +18,11 @@ export class NavBarComponent implements OnInit {
   goTo(path) {
     this.router.navigate([path]);
     this._closeSideNav();
+  }
+
+  logout() {
+    this.authService.logout();
+    this.goTo('/login');
   }
 
   // https://stackoverflow.com/questions/44469330/call-a-parent-component-function-from-a-child-component-in-angular

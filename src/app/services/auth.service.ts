@@ -11,7 +11,7 @@ import { ApiService } from './api.service';
 export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(false);
 
-  get isLoggedIn() {
+  isLoggedIn() {
     return this.loggedIn.asObservable();
   }
 

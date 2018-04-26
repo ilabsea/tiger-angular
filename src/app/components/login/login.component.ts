@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
 import { MatSnackBar } from '@angular/material';
-
 import { AuthService } from './../../services/auth.service';
 
 @Component({
@@ -12,20 +10,20 @@ import { AuthService } from './../../services/auth.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
-  form: FormGroup;
+  form: FormGroup = this.fb.group(
+    {
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', Validators.required]
+    }
+  );
 
-  constructor(private fb: FormBuilder, private authService: AuthService,
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
     private router: Router,
     public snackBar: MatSnackBar) {}
 
   ngOnInit() {
-    this.authService.logout();
-    this.form = this.fb.group(
-      {
-        email: ['', [Validators.required, Validators.email]],
-        password: ['', Validators.required]
-      }
-    );
   }
 
   onSubmit() {
@@ -46,5 +44,4 @@ export class LoginComponent implements OnInit {
       verticalPosition: 'top',
     });
   }
-
 }

@@ -10,7 +10,6 @@ import { StoriesComponent }      from './components/stories/stories.component';
 import { ScenesComponent } from './components/scenes/scenes.component';
 import { SceneActionsComponent } from './components/scene-actions/scene-actions.component';
 import { StoryPreviewComponent } from './components/story-preview/story-preview.component';
-import { StoryComponent } from './components/story/story.component';
 
 import { AuthGuard } from './guards/auth.guard';
 
@@ -21,7 +20,6 @@ const routes: Routes = [
       { path: '' , component: NavBarComponent, outlet: 'navbar'},
       { path: 'users' , component: UsersComponent},
       { path: 'stories', component: StoriesComponent},
-      // { path: 'stories', component: StoryComponent },
       { path: 'stories/:id/scenes', component: ScenesComponent },
       { path: 'scenes/:scene_id/scene_actions', component: SceneActionsComponent },
       { path: 'stories/:id/preview', component: StoryPreviewComponent },

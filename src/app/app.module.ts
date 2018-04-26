@@ -57,7 +57,6 @@ import { HomeComponent } from './components/home/home.component';
 import { LoginComponent } from './components/login/login.component';
 import { UsersComponent } from './components/users/users.component';
 import { StoriesComponent } from './components/stories/stories.component';
-import { StoryComponent } from './components/story/story.component';
 import { ScenesComponent }   from './components/scenes/scenes.component';
 import { SceneActionsComponent } from './components/scene-actions/scene-actions.component';
 import { StoryPreviewComponent } from './components/story-preview/story-preview.component';
@@ -79,7 +78,6 @@ import { StoryPreviewComponent } from './components/story-preview/story-preview.
     CarouselComponent,
     CarouselItemDirective,
     CarouselItemElement,
-    StoryComponent,
     StoryDialogComponent,
     PopupDialogComponent,
     MenuButtonComponent,

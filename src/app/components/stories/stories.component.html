@@ -1,1 +1,104 @@
-List of Story 
+<mat-toolbar color="primary">
+  <app-menu-button></app-menu-button>
+  <span>Stories</span>
+</mat-toolbar>
+
+<section class="mat-typography flex-center" *ngIf='!dataSource.length || loading'>
+  <div *ngIf="!dataSource.length && !loading" class='no-item-available'>
+    <h3 class='mat-title'>No Story Available.</h3>
+  </div>
+
+  <mat-spinner diameter='40' *ngIf='loading' color='accent'></mat-spinner>
+</section>
+
+<div class="content-wrapper" [hidden]="!dataSource.length">
+  <mat-table #table [dataSource]="dataSource">
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <a routerLink="/stories/{{element.id}}/scenes">{{element.title}} </a>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="tags">
+      <mat-header-cell *matHeaderCellDef> Tags </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-chip-list>
+          <mat-chip *ngFor='let tag of element.tags'>{{tag.title}}</mat-chip>
+        </mat-chip-list>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="image">
+      <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <div class="thumbnail" *ngIf='!!element.image'>
+          <img [src]="'http://192.168.1.107:3000' + element.image" />
+        </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span *ngIf="element.actived">{{element.status | uppercase}}</span>
+        <div *ngIf="!element.actived">
+          <span>{{'Deactived' |uppercase}}</span>
+          <button mat-icon-button (click)="showReason(element)">
+            <mat-icon class='error'>info_outline</mat-icon>
+          </button>
+        </div>
+
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="openDialog(element)" [disabled]="!element.actived || element.status!='new'">
+              <mat-icon>edit</mat-icon>
+              <span>Edit</span>
+            </button>
+
+            <button mat-menu-item (click)="remove(element)">
+              <mat-icon>delete</mat-icon>
+              <span>Delete</span>
+            </button>
+
+            <button mat-menu-item (click)="publish(element)" *ngIf="element.status!='published'" [disabled]="!element.actived">
+              <mat-icon>visibility</mat-icon>
+              <span>Publish</span>
+            </button>
+
+            <button mat-menu-item (click)="unpublish(element)" *ngIf="element.actived && element.status=='published'">
+              <mat-icon>visibility_off</mat-icon>
+              <span>Unpublish</span>
+            </button>
+
+            <button mat-menu-item (click)="clone(element)">
+              <mat-icon>content_copy</mat-icon>
+              <span>Clone</span>
+            </button>
+          </mat-menu>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+</div>
+
+<button mat-fab class='add-button' (click)="openDialog()">
+  <mat-icon>add</mat-icon>
+</button>
+

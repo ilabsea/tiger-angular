@@ -32,7 +32,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { ApiService } from './services/api.service';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
-import { AuthorizeService } from './services/authorize.service';
 import { StoryService } from './services/story.service';
 import { SceneService } from './services/scene.service';
 import { SceneActionService } from './services/scene_action.service';
@@ -117,7 +116,6 @@ import { StoryPreviewComponent } from './components/story-preview/story-preview.
     UserFormComponent
   ],
   providers: [
-    AuthorizeService,
     StoryService,
     SceneService,
     SceneActionService,

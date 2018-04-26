@@ -1,6 +1,4 @@
-// https://github.com/angular/angular/issues/18224
-// https://plnkr.co/edit/8CpyAUSJcCiRqdZmuvt9?p=preview
-// https://stackoverflow.com/questions/48294197/angular-5-http-interceptors-error-when-injecting-service?rq=1
+// https://ryanchenkie.com/angular-authentication-using-the-http-client-and-http-interceptors
 
 import { Injectable } from '@angular/core';
 import {
@@ -24,22 +22,22 @@ export class TokenInterceptor implements HttpInterceptor {
     private router: Router
   ) {}
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    let currentUser = this.auth.getCurrentUser();
     if (currentUser && currentUser.authentication_token) {
-        request = request.clone({
-            setHeaders: {
-                Authorization: currentUser.authentication_token
-            }
-        });
+      request = request.clone({
+        setHeaders: {
+          Authorization: currentUser.authentication_token
+        }
+      });
     }
+
     return next.handle(request).catch((res) => {
       if (res.status === 401 || res.status === 403) {
-        localStorage.removeItem('currentUser');
+        this.auth.removeCurrentUser();
         this.router.navigate(['/login']);
       }
 
       return Observable.throw(res);
     });
-
   }
 }

@@ -21,6 +21,10 @@ export class AuthService {
     return JSON.parse(localStorage.getItem('currentUser'));
   }
 
+  removeCurrentUser() {
+    return localStorage.removeItem('currentUser');
+  }
+
   login(user: User): Observable<User> {
     if (user.email !== '' && user.password != '' ) {
       return this.http.post<User>(this.api.loginUrl(), {session: user}).pipe(

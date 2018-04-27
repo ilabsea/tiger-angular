@@ -33,11 +33,12 @@ export class LoginComponent implements OnInit {
       },
       error => {
         console.log('error', error);
+        this._openSnackBar(error.error['errors'], null);
       }
     );
   }
 
-  openSnackBar(message: string, action: string) {
+  _openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 4000,
       horizontalPosition: 'right',

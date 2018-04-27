@@ -19,9 +19,8 @@ export class UsersComponent implements OnInit {
   displayedColumns = ['email', 'role', 'status', 'actions'];
   dataSource: any = [];
   pageEvent: PageEvent;
-  length = 100;
-  pageSize = 50;
-  pageNumber = 1;
+  length: number;
+  pageSize = 20;
   loading: boolean = true;
 
   constructor(
@@ -30,7 +29,8 @@ export class UsersComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getUsers(this.pageNumber, this.pageSize);
+    this.loading = true;
+    this.getUsers(1, this.pageSize);
   }
 
   getUsers(page: number, perPage: number): void {
@@ -38,16 +38,28 @@ export class UsersComponent implements OnInit {
       {
         this.dataSource = response['users'];
         this.length = response['meta']['pagination']['total_objects'];
-        this.pageNumber = page - 1;
         this.loading = false;
       }
     );
   }
 
-  getNextData(event: PageEvent){
+  getNextData(event: PageEvent) {
     var page = event.pageIndex + 1;
     var perPage = event.pageSize;
     this.getUsers(page, perPage);
+  }
+
+  delete(user) {
+    var result = confirm("Are you sure you want to delete this user?");
+
+    if (!result) { return; }
+
+    this.userService.delete(user.id).subscribe(
+      res => {
+        this._deleteView(user);
+      },
+      err => { console.log(err); }
+    );
   }
 
   openDialog(user): void {
@@ -84,26 +96,10 @@ export class UsersComponent implements OnInit {
   }
 
   _appendView = (result) => {
-    // this.dataSource.push(result);
-    // this.dataSource = this.dataSource.slice();
-    this.getUsers(this.pageNumber, this.pageSize);
+    this.ngOnInit();
   }
 
   _deleteView = (result)=> {
-    this.dataSource.splice(this.dataSource.indexOf(result), 1);
-    this.dataSource = this.dataSource.slice();
-  }
-
-  delete(user){
-    var result = confirm("Are you sure you want to delete this user?");
-
-    if (!result) { return; }
-
-    this.userService.delete(user.id).subscribe(
-      res => {
-        this._deleteView(user);
-      },
-      err => { console.log(err); }
-    );
+    this.ngOnInit();
   }
 }

@@ -9,8 +9,8 @@ export class StoryService {
 
   constructor(private http: HttpClient) { }
 
-  getAll() {
-    let endpoint = API_URL + 'stories';
+  getAll(page: number, perPage: number) {
+    let endpoint = `${API_URL}stories?page=${page}&per_page=${perPage}`
     return this.http.get(endpoint);
   }
 

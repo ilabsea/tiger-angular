@@ -1,5 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, PageEvent } from '@angular/material';
 import { StoryService } from '../../services/story.service';
 import { StoryDialogComponent } from '../story-dialog/story-dialog.component';
 import { PopupDialogComponent } from '../popup-dialog/popup-dialog.component';
@@ -13,6 +13,9 @@ export class StoriesComponent implements OnInit {
   displayedColumns = ['name', 'description', 'tags', 'image', 'status', 'actions'];
   dataSource: any=[];
   loading: boolean = true;
+  pageEvent: PageEvent;
+  length: number;
+  pageSize = 20;
 
   constructor(
     public dialog: MatDialog,
@@ -20,15 +23,24 @@ export class StoriesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getStories();
+    this.loading = true;
+    this.getStories(1, this.pageSize);
   }
 
-  getStories(): void {
-    this.storyService.getAll()
+  getStories(page: number, perPage: number): void {
+    this.storyService.getAll(page, perPage)
       .subscribe(result => {
-        this.loading = false;
+        this.length = result['meta']['pagination']['total_objects'];
         this.dataSource = result['stories'];
+        this.loading = false;
       });
+  }
+
+  getNextData(event: PageEvent) {
+    var page = event.pageIndex + 1;
+    var perPage = event.pageSize;
+    this.pageSize = perPage;
+    this.getStories(page, perPage);
   }
 
   publish(story) {
@@ -121,13 +133,11 @@ export class StoriesComponent implements OnInit {
   }
 
   _appendView = (result) => {
-    this.dataSource.push(result);
-    this.dataSource = this.dataSource.slice();
+    this.ngOnInit();
   }
 
   _deleteView = (result)=> {
-    this.dataSource.splice(this.dataSource.indexOf(result), 1);
-    this.dataSource = this.dataSource.slice();
+    this.ngOnInit();
   }
 
   _archive(story) {

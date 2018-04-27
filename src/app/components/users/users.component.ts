@@ -1,7 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
-import { USERS } from '../../mocks/mock-users';
 
 import { MatTableDataSource, MatPaginator, PageEvent, MatDialog } from '@angular/material';
 import { Observable } from 'rxjs/Observable';
@@ -15,7 +13,6 @@ import { UserFormComponent } from './../user-form/user-form.component';
 export class UsersComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  users: User[];
   displayedColumns = ['email', 'role', 'status', 'actions'];
   dataSource: any = [];
   pageEvent: PageEvent;
@@ -46,6 +43,7 @@ export class UsersComponent implements OnInit {
   getNextData(event: PageEvent) {
     var page = event.pageIndex + 1;
     var perPage = event.pageSize;
+    this.pageSize = perPage;
     this.getUsers(page, perPage);
   }
 

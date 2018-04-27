@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { SceneFormComponent } from '../scene-form/scene-form.component';
 import { Scene } from '../../models/scene';
 import { SceneService } from '../../services/scene.service';
+import { AuthService } from './../../services/auth.service';
 
 @Component({
   selector: 'app-scenes',
@@ -16,11 +17,13 @@ export class ScenesComponent implements OnInit {
   dataSource: Scene[]=[];
   loading: boolean = true;
   story_id: string = this.route.snapshot.paramMap.get('id');
+  isAdmin = this.authService.isAdmin();
 
   constructor(
     public dialog: MatDialog,
     private sceneService: SceneService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthService
   ) {}
 
   ngOnInit() {

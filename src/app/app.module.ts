@@ -59,6 +59,7 @@ import { StoriesComponent } from './components/stories/stories.component';
 import { ScenesComponent }   from './components/scenes/scenes.component';
 import { SceneActionsComponent } from './components/scene-actions/scene-actions.component';
 import { StoryPreviewComponent } from './components/story-preview/story-preview.component';
+import { DeactivateDialogComponent } from './components/deactivate-dialog/deactivate-dialog.component';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import { StoryPreviewComponent } from './components/story-preview/story-preview.
     StoryDialogComponent,
     PopupDialogComponent,
     MenuButtonComponent,
+    DeactivateDialogComponent,
 
   ],
   imports: [
@@ -113,7 +115,8 @@ import { StoryPreviewComponent } from './components/story-preview/story-preview.
     SceneActionDialogComponent,
     StoryDialogComponent,
     PopupDialogComponent,
-    UserFormComponent
+    UserFormComponent,
+    DeactivateDialogComponent
   ],
   providers: [
     StoryService,

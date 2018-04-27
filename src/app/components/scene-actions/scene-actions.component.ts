@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TREE_ACTIONS, KEYS, IActionMapping } from 'angular-tree-component';
 import { SceneActionDialogComponent } from '../scene-action-dialog/scene-action-dialog.component';
 import { SceneActionService } from '../../services/scene_action.service';
+import { AuthService } from './../../services/auth.service';
 
 const defaultActionMapping: IActionMapping = {
   mouse: {
@@ -35,6 +36,7 @@ export class SceneActionsComponent implements OnInit {
   story_id: any;
   scene_id: string = this.route.snapshot.paramMap.get('scene_id');
   scenes: any = [];
+  isAdmin = this.authService.isAdmin();
 
   options = {
     allowDrag: true,
@@ -47,7 +49,8 @@ export class SceneActionsComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private sceneActionService: SceneActionService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {

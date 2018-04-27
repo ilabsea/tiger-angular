@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>{{data.header}}</h1>
 
-<form [formGroup]="form" (ngSubmit)="onSubmit">
+<form [formGroup]="form">
   <div class="mat-dialog-content">
     <mat-form-field class='form'>
       <input matInput type="email" placeholder="Email" formControlName="email" required>

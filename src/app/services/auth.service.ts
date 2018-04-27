@@ -32,7 +32,6 @@ export class AuthService {
           localStorage.setItem('currentUser', JSON.stringify(user))
         )
       );
-
     }
   }
 
@@ -41,4 +40,7 @@ export class AuthService {
     localStorage.removeItem("currentUser");
   }
 
+  isAdmin() {
+    return this.getCurrentUser().role == 'admin';
+  }
 }

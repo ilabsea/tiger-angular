@@ -1,5 +1,5 @@
 <mat-nav-list>
   <a mat-list-item (click)="goTo('/stories')">Stories</a>
-  <a mat-list-item (click)="goTo('/users')">Users</a>
+  <a mat-list-item (click)="goTo('/users')" *ngIf='authService.isAdmin()'>Users</a>
   <a mat-list-item (click)="logout()">Logout</a>
 </mat-nav-list>

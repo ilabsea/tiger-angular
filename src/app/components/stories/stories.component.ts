@@ -1,8 +1,10 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, PageEvent } from '@angular/material';
 import { StoryService } from '../../services/story.service';
+import { AuthService } from './../../services/auth.service';
 import { StoryDialogComponent } from '../story-dialog/story-dialog.component';
 import { PopupDialogComponent } from '../popup-dialog/popup-dialog.component';
+import { DeactivateDialogComponent } from '../deactivate-dialog/deactivate-dialog.component';
 
 @Component({
   selector: 'app-stories',
@@ -16,10 +18,12 @@ export class StoriesComponent implements OnInit {
   pageEvent: PageEvent;
   length: number;
   pageSize = 20;
+  isAdmin = this.authService.isAdmin();
 
   constructor(
     public dialog: MatDialog,
-    private storyService: StoryService
+    private storyService: StoryService,
+    private authService: AuthService
   ) { }
 
   ngOnInit() {
@@ -48,7 +52,7 @@ export class StoriesComponent implements OnInit {
 
     if (!result) { return; }
 
-    this.storyService.update(story.id, this._buildData(story, 'published')).subscribe(
+    this.storyService.update(story.id, this._buildData(story, {status: 'published'})).subscribe(
       res => {
         this._updateView(res['story']);
       },
@@ -59,7 +63,7 @@ export class StoriesComponent implements OnInit {
   }
 
   unpublish(story) {
-    this.storyService.update(story.id, this._buildData(story, 'unpublished')).subscribe(
+    this.storyService.update(story.id, this._buildData(story, {status: 'unpublished'})).subscribe(
       res => {
         this._updateView(res['story']);
       },
@@ -85,6 +89,30 @@ export class StoriesComponent implements OnInit {
       width: '500px',
       data: { title: 'Deactivated Reason', message: story.reason }
     });
+  }
+
+  confirmDeactivate(story) {
+    let dialogRef = this.dialog.open(DeactivateDialogComponent, {
+      width: '500px',
+      data: story
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!!result) {
+        this._deactivate(result);
+      }
+    });
+  }
+
+  _deactivate = (story) => {
+    this.storyService.update(story.id, this._buildData(story, { actived: false })).subscribe(
+      res => {
+        this._deleteView(story);
+      },
+      err => {
+        console.log(err);
+      }
+    );
   }
 
   remove(story) {
@@ -141,7 +169,7 @@ export class StoriesComponent implements OnInit {
   }
 
   _archive(story) {
-    this.storyService.update(story.id, this._buildData(story, 'archived')).subscribe(
+    this.storyService.update(story.id, this._buildData(story, {status: 'archived'})).subscribe(
       res => {
         this._deleteView(story);
       },
@@ -162,14 +190,11 @@ export class StoriesComponent implements OnInit {
     );
   }
 
-  _buildData(story, status) {
+  _buildData(story, options) {
     const formData: FormData = new FormData();
-
+    let attributes = Object.assign({id: story.id}, options);
     let data = {
-      story: {
-        id: story.id,
-        status: status
-      }
+      story: attributes
     };
 
     formData.append("data", JSON.stringify(data));

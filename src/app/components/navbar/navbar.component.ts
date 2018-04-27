@@ -10,7 +10,7 @@ import { AuthService } from './../../services/auth.service';
 export class NavBarComponent implements OnInit {
   @Output() navBarEvent = new EventEmitter<String>();
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(private router: Router, public authService: AuthService) { }
 
   ngOnInit() {
   }

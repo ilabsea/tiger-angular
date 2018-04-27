@@ -42,7 +42,7 @@
             </div>
           </div>
 
-          <div>
+          <div *ngIf='!isAdmin'>
             <button mat-icon-button [matMenuTriggerFor]="menu">
               <mat-icon>more_vert</mat-icon>
             </button>
@@ -57,7 +57,7 @@
   </tree-root>
 </div>
 
-<button mat-fab class='add-button' (click)='openDialog()' [disabled]="dataSource.length >= 3">
+<button mat-fab class='add-button' (click)='openDialog()' [disabled]="dataSource.length >= 3" *ngIf='!isAdmin'>
   <mat-icon>add</mat-icon>
 </button>
 

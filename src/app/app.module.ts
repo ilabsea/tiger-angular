@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { TreeModule } from 'angular-tree-component';
+import { DragulaModule } from 'ng2-dragula';
 import { MatToolbarModule,
          MatMenuModule,
          MatCardModule,
@@ -82,7 +82,6 @@ import { DeactivateDialogComponent } from './components/deactivate-dialog/deacti
     PopupDialogComponent,
     MenuButtonComponent,
     DeactivateDialogComponent,
-
   ],
   imports: [
     NoopAnimationsModule,
@@ -108,7 +107,7 @@ import { DeactivateDialogComponent } from './components/deactivate-dialog/deacti
     MatListModule,
     AppRoutingModule,
     HttpClientModule,
-    TreeModule,
+    DragulaModule,
   ],
   entryComponents: [
     SceneFormComponent,

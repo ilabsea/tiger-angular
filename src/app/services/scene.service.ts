@@ -28,4 +28,9 @@ export class SceneService {
     let endpoint = this.API_URL + 'stories/' + story_id + '/scenes/' + id;
     return this.http.delete(endpoint);
   }
+
+  updateOrder(story_id, scene_ids) {
+    let endpoint = this.API_URL + 'stories/' + story_id + '/scenes/update_order';
+    return this.http.put(endpoint, { data: scene_ids });
+  }
 }

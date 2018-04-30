@@ -1,6 +1,7 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
+import { DragulaService } from 'ng2-dragula';
 import { SceneFormComponent } from '../scene-form/scene-form.component';
 import { Scene } from '../../models/scene';
 import { SceneService } from '../../services/scene.service';
@@ -23,11 +24,22 @@ export class ScenesComponent implements OnInit {
     public dialog: MatDialog,
     private sceneService: SceneService,
     private route: ActivatedRoute,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+    private dragulaService: DragulaService
+  ) {
+    dragulaService.drop.subscribe((value) => {
+      this.onMoveNode();
+    });
+  }
 
   ngOnInit() {
     this.getScenes();
+  }
+
+  onMoveNode() {
+    let ids = this.dataSource.map(obj => obj['id']);
+    this.sceneService.updateOrder(this.story_id, ids)
+      .subscribe(res => { console.log(res) });
   }
 
   getScenes(): void {

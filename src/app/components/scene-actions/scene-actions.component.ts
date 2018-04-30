@@ -1,29 +1,10 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { TREE_ACTIONS, KEYS, IActionMapping } from 'angular-tree-component';
+import { DragulaService } from 'ng2-dragula';
 import { SceneActionDialogComponent } from '../scene-action-dialog/scene-action-dialog.component';
 import { SceneActionService } from '../../services/scene_action.service';
 import { AuthService } from './../../services/auth.service';
-
-const defaultActionMapping: IActionMapping = {
-  mouse: {
-    click: TREE_ACTIONS.EXPAND,
-    dblClick: null,
-    contextMenu: null,
-    expanderClick: TREE_ACTIONS.TOGGLE_EXPANDED,
-    checkboxClick: TREE_ACTIONS.TOGGLE_SELECTED,
-    drop: TREE_ACTIONS.MOVE_NODE
-  },
-  keys: {
-    [KEYS.RIGHT]: TREE_ACTIONS.DRILL_DOWN,
-    [KEYS.LEFT]: TREE_ACTIONS.DRILL_UP,
-    [KEYS.DOWN]: TREE_ACTIONS.NEXT_NODE,
-    [KEYS.UP]: TREE_ACTIONS.PREVIOUS_NODE,
-    [KEYS.SPACE]: TREE_ACTIONS.TOGGLE_ACTIVE,
-    [KEYS.ENTER]: TREE_ACTIONS.TOGGLE_ACTIVE
-  }
-};
 
 @Component({
   selector: 'app-scene-actions',
@@ -38,30 +19,26 @@ export class SceneActionsComponent implements OnInit {
   scenes: any = [];
   isAdmin = this.authService.isAdmin();
 
-  options = {
-    allowDrag: true,
-    allowDrop: (element, { parent, index }) => {
-      return parent.hasChildren;
-    },
-    actionMapping: defaultActionMapping
-  };
-
   constructor(
     public dialog: MatDialog,
     private sceneActionService: SceneActionService,
     private route: ActivatedRoute,
-    private authService: AuthService
-  ) { }
+    private authService: AuthService,
+    private dragulaService: DragulaService
+  ) {
+    dragulaService.drop.subscribe((value) => {
+      this.onMoveNode();
+    });
+  }
 
   ngOnInit() {
     this._getSceneActions();
   }
 
-  onMoveNode($event) {
-    this.sceneActionService.updateOrder(this.scene_id, this.dataSource)
-      .subscribe(res => {
-        this.dataSource = res['scene_actions'];
-      });
+  onMoveNode() {
+    let ids = this.dataSource.map(obj => obj['id']);
+    this.sceneActionService.updateOrder(this.scene_id, ids)
+      .subscribe(res => { console.log(res) });
   }
 
   delete(obj) {

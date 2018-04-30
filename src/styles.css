@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
-@import '~angular-tree-component/dist/angular-tree-component.css';
+@import './assets/css/dragula.min.css';
 
 body {
   margin: 0;
@@ -61,4 +61,72 @@ mat-toolbar {
 
 [hidden] {
   display: none !important;
+}
+
+/*======= Table layout=========*/
+.header-row, .row {
+  display: flex;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: rgba(0,0,0,.12);
+  align-items: center;
+  padding: 0 24px;
+  box-sizing: border-box;
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+}
+
+.header-row {
+  min-height: 56px;
+}
+
+.row {
+  min-height: 50px;
+  min-width: 600px;
+}
+
+.header-cell, .cell {
+  flex: 1;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+.header-cell {
+  color: rgba(0,0,0,.54);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.cell {
+  color: rgba(0,0,0,.87);
+  font-size: 14px;
+}
+
+/*======= dragula-specific example page styles ========*/
+.drag-wrapper {
+  display: table;
+  width: 100%;
+}
+
+.drag-container {
+  display: table-cell;
+  width: 100%;
+}
+
+.drag-container > div {
+  cursor: move;
+  cursor: grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+
+.gu-mirror {
+  background-color: rgba(0, 0, 0, 0.2);
+  transition: opacity 0.4s ease-in-out;
+  cursor: grabbing;
+  cursor: -moz-grabbing;
+  cursor: -webkit-grabbing;
+}
+
+.gu-transit {
+  background-color: rgba(0, 0, 0, 0.2);
 }

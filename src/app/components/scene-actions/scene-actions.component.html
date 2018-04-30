@@ -17,44 +17,45 @@
 </section>
 
 <div class="content-wrapper table" [hidden]="!dataSource.length || loading">
-  <!-- <div class="header-row">
-    <div class="header-cell">Title</div>
-    <div class="header-cell">Map to</div>
+  <div class="header-row">
+    <div class="header-cell">Button Label</div>
+    <div class="header-cell"></div>
     <div class="header-cell">Scene</div>
-    <div class="header-cell">Scene Image</div>
-    <div class="header-cell">Actions</div>
-  </div> -->
+    <div class="header-cell"></div>
+  </div>
 
-  <tree-root
-    #tree
-    [nodes]="dataSource"
-    [options]="options"
-    (moveNode)="onMoveNode($event)"
-    class='tree-wrapper'>
-    <ng-template #treeNodeTemplate let-node let-index="index">
-      <div class="row">
-          <div class='cell'>{{ node.data.name }} </div>
-          <strong class='cell'> Link to </strong>
-          <div class='cell' style="display: flex; align-items: center;">
-            <div style='margin-right: 10px;'>{{node.data.link_scene.name}}</div>
-            <div class=" thumbnail">
-              <img [src]="'http://192.168.1.107:3000' + node.data.link_scene.image" />
-            </div>
+  <div class='drag-wrapper'>
+    <div class='drag-container' [dragula]='"scenes-bag"' [dragulaModel]='dataSource'>
+      <div *ngFor="let item of dataSource" class='row'>
+        <div class='cell'>{{ item.name }} </div>
+        <div class='cell'>Link to</div>
+        <div class='cell' style="display: flex; align-items: center;">
+          <div style='margin-right: 10px;'>{{item.link_scene.name}}</div>
+          <div class="thumbnail">
+            <img [src]="'http://192.168.1.107:3000' + item.link_scene.image.url" />
           </div>
-
+        </div>
+        <div class="cell">
           <div *ngIf='!isAdmin'>
             <button mat-icon-button [matMenuTriggerFor]="menu">
               <mat-icon>more_vert</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-              <button mat-menu-item (click)="openDialog(node.data)">Edit</button>
-              <button mat-menu-item (click)="delete(node.data)">Delete</button>
+              <button mat-menu-item (click)="openDialog(item)">
+                <mat-icon>edit</mat-icon>
+                <span>Edit</span>
+              </button>
+              <button mat-menu-item (click)="delete(item)">
+                <mat-icon>delete</mat-icon>
+                <span>Delete</span>
+              </button>
             </mat-menu>
           </div>
-      </div>
+        </div>
 
-    </ng-template>
-  </tree-root>
+      </div>
+    </div>
+  </div>
 </div>
 
 <button mat-fab class='add-button' (click)='openDialog()' [disabled]="dataSource.length >= 3" *ngIf='!isAdmin'>

@@ -1,0 +1,17 @@
+.mat-dialog-actions {
+  flex-direction: row-reverse;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+
+.example-radio-group {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.example-radio-button {
+  margin: 5px;
+}

@@ -1,0 +1,29 @@
+<h1 mat-dialog-title>{{data.header}}</h1>
+
+<form (ngSubmit)="handleSubmit()">
+  <div mat-dialog-content>
+    <div class="example-form">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Question" [formControl]='label' required>
+        <mat-error *ngIf="label.hasError('required')">Can't be blank</mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- <h2 mat-dialog-title>Choices</h2>
+
+    <mat-radio-group class="example-radio-group">
+      <mat-radio-button class="example-radio-button" *ngFor="let choice of choices" [value]="choice">
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Question" [formControl]='label' required>
+          <mat-error *ngIf="label.hasError('required')">Can't be blank</mat-error>
+        </mat-form-field>
+      </mat-radio-button>
+    </mat-radio-group> -->
+
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-raised-button color='primary' type='submit'>Save</button>
+    <button mat-button type="button" [mat-dialog-close]=''>Cancel</button>
+  </div>
+</form>

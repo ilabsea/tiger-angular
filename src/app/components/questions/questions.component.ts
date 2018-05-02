@@ -4,19 +4,17 @@ import { ActivatedRoute } from '@angular/router';
 import { DragulaService } from 'ng2-dragula';
 import 'rxjs/add/operator/takeUntil';
 import { Subject } from 'rxjs/Subject';
-import { SceneFormComponent } from '../scene-form/scene-form.component';
-import { Scene } from '../../models/scene';
-import { SceneService } from '../../services/scene.service';
 import { AuthService } from './../../services/auth.service';
+import { QuestionService } from '../../services/question.service';
+import { QuestionDialogComponent } from '../question-dialog/question-dialog.component';
 
 @Component({
-  selector: 'app-scenes',
-  templateUrl: './scenes.component.html',
-  styleUrls: ['./scenes.component.css']
+  selector: 'app-questions',
+  templateUrl: './questions.component.html',
+  styleUrls: ['./questions.component.css']
 })
-
-export class ScenesComponent implements OnInit, OnDestroy {
-  dataSource: Scene[]=[];
+export class QuestionsComponent implements OnInit, OnDestroy {
+  dataSource: any[]=[];
   loading: boolean = true;
   story_id: string = this.route.snapshot.paramMap.get('id');
   isAdmin = this.authService.isAdmin();
@@ -24,7 +22,7 @@ export class ScenesComponent implements OnInit, OnDestroy {
 
   constructor(
     public dialog: MatDialog,
-    private sceneService: SceneService,
+    private questionService: QuestionService,
     private route: ActivatedRoute,
     private authService: AuthService,
     private dragulaService: DragulaService
@@ -35,34 +33,35 @@ export class ScenesComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.getScenes();
+    this.getQuestions();
   }
 
   ngOnDestroy() {
     this.destroy$.next();
   }
 
-  onMoveNode() {
-    let ids = this.dataSource.map(obj => obj['id']);
-    this.sceneService.updateOrder(this.story_id, ids)
-      .subscribe(res => { console.log(res) });
-  }
-
-  getScenes(): void {
-    this.sceneService.getAll(this.story_id)
+  getQuestions() {
+    this.questionService.getAll(this.story_id)
       .subscribe(res => {
         this.loading = false;
-        this.dataSource = res['scenes'];
+        this.dataSource = res['questions'];
+        console.log(this.dataSource);
       });
   }
 
-  remove(scene) {
-    var result = confirm("Are you sure you want to delete this scene?");
+  onMoveNode() {
+    let ids = this.dataSource.map(obj => obj['id']);
+    this.questionService.updateOrder(this.story_id, ids)
+      .subscribe(res => { console.log(res) });
+  }
+
+  remove(question) {
+    var result = confirm("Are you sure you want to delete this question?");
 
     if (result) {
-      this.sceneService.delete(this.story_id, scene.id).subscribe(
+      this.questionService.delete(this.story_id, question.id).subscribe(
         res => {
-          this.dataSource.splice(this.dataSource.indexOf(scene), 1);
+          this.dataSource.splice(this.dataSource.indexOf(question), 1);
           this.dataSource = this.dataSource.slice();
         },
         err => {
@@ -72,41 +71,41 @@ export class ScenesComponent implements OnInit, OnDestroy {
     }
   }
 
-  openDialog(scene): void {
-    if (!!scene) {
-      this._showDialog(scene, this._updateScene)
+  openDialog(question): void {
+    if (!!question) {
+      this._showDialog(question, this._updateView)
     } else {
       let data = { story_id: this.story_id }
-      this._showDialog(data, this._appendScene);
+      this._showDialog(data, this._appendView);
     }
   }
 
   _showDialog(data, callback) {
-    let myData = Object.assign({}, data, { header: 'New Scene' });
+    let myData = Object.assign({}, data, { header: 'New Question' });
 
     if (!!data.id) {
-      myData.header = `Edit ${data.name}`;
+      myData.header = 'Edit Question';
     }
 
-    let dialogRef = this.dialog.open(SceneFormComponent, {
+    let dialogRef = this.dialog.open(QuestionDialogComponent, {
       width: '500px',
       data: myData
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (!!result) {
-        callback(result.scene);
+        callback(result.question);
         this.dataSource = this.dataSource.slice();
       }
     });
   }
 
-  _updateScene = (result) => {
+  _updateView = (result) => {
     let index = this.dataSource.findIndex(item => item.id == result.id);
     this.dataSource[index] = result;
   }
 
-  _appendScene = (result) => {
+  _appendView = (result) => {
     this.dataSource.push(result);
   }
 }

@@ -24,6 +24,9 @@ export class LoginComponent implements OnInit {
     public snackBar: MatSnackBar) {}
 
   ngOnInit() {
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/stories']);
+    }
   }
 
   onSubmit() {

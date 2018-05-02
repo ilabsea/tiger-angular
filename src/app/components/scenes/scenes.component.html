@@ -42,29 +42,26 @@
         <div class="cell"> {{item.scene_actions.length}} (links) </div>
 
         <div class="cell">
-          <div *ngIf='!isAdmin'>
-            <button mat-icon-button [matMenuTriggerFor]="menu">
-              <mat-icon>more_vert</mat-icon>
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="openDialog(item)" *ngIf='!isAdmin'>
+              <mat-icon>edit</mat-icon>
+              <span>Edit</span>
             </button>
 
-            <mat-menu #menu="matMenu">
-              <button mat-menu-item (click)="openDialog(item)">
-                <mat-icon>edit</mat-icon>
-                <span>Edit</span>
-              </button>
+            <button mat-menu-item (click)="remove(item)" *ngIf='!isAdmin'>
+              <mat-icon>delete</mat-icon>
+              <span>Delete</span>
+            </button>
 
-              <button mat-menu-item (click)="remove(item)">
-                <mat-icon>delete</mat-icon>
-                <span>Delete</span>
-              </button>
-
-              <a mat-menu-item routerLink="/scenes/{{item.id}}/scene_actions">
-                <mat-icon>list</mat-icon>
-                <span>Manage actions</span>
-              </a>
-            </mat-menu>
-
-          </div>
+            <a mat-menu-item routerLink="/scenes/{{item.id}}/scene_actions">
+              <mat-icon>list</mat-icon>
+              <span>Manage actions</span>
+            </a>
+          </mat-menu>
         </div>
 
       </div>

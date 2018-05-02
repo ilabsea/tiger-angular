@@ -25,13 +25,13 @@
   </div>
 
   <div class='drag-wrapper'>
-    <div class='drag-container' [dragula]='"scenes-bag"' [dragulaModel]='dataSource'>
+    <div class='drag-container' [dragula]='"scene-actions-bag"' [dragulaModel]='dataSource'>
       <div *ngFor="let item of dataSource" class='row'>
         <div class='cell'>{{ item.name }} </div>
         <div class='cell'>Link to</div>
-        <div class='cell' style="display: flex; align-items: center;">
-          <div style='margin-right: 10px;'>{{item.link_scene.name}}</div>
-          <div class="thumbnail">
+        <div class='cell scene-wrapper'>
+          <div class="scene-name">{{item.link_scene.name}}</div>
+          <div class="thumbnail" *ngIf="!!item.link_scene && !!item.link_scene.image">
             <img [src]="'http://192.168.1.107:3000' + item.link_scene.image.url" />
           </div>
         </div>

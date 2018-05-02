@@ -10,7 +10,7 @@
 
       <mat-form-field class="example-full-width">
         <mat-select placeholder="Scene" [formControl]='link_scene_id' required>
-          <mat-option *ngFor="let scene of data.scenes" [value]="scene.id">
+          <mat-option *ngFor="let scene of scenes" [value]="scene.id">
             {{ scene.name }}
           </mat-option>
         </mat-select>

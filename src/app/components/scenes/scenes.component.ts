@@ -1,7 +1,9 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { DragulaService } from 'ng2-dragula';
+import 'rxjs/add/operator/takeUntil';
+import { Subject } from 'rxjs/Subject';
 import { SceneFormComponent } from '../scene-form/scene-form.component';
 import { Scene } from '../../models/scene';
 import { SceneService } from '../../services/scene.service';
@@ -13,12 +15,13 @@ import { AuthService } from './../../services/auth.service';
   styleUrls: ['./scenes.component.css']
 })
 
-export class ScenesComponent implements OnInit {
+export class ScenesComponent implements OnInit, OnDestroy {
   displayedColumns = ['name', 'description', 'image', 'actions', 'method'];
   dataSource: Scene[]=[];
   loading: boolean = true;
   story_id: string = this.route.snapshot.paramMap.get('id');
   isAdmin = this.authService.isAdmin();
+  private destroy$ = new Subject();
 
   constructor(
     public dialog: MatDialog,
@@ -27,13 +30,17 @@ export class ScenesComponent implements OnInit {
     private authService: AuthService,
     private dragulaService: DragulaService
   ) {
-    dragulaService.drop.subscribe((value) => {
+    dragulaService.drop.asObservable().takeUntil(this.destroy$).subscribe(() => {
       this.onMoveNode();
     });
   }
 
   ngOnInit() {
     this.getScenes();
+  }
+
+  ngOnDestroy() {
+    this.destroy$.next();
   }
 
   onMoveNode() {

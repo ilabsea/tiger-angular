@@ -13,7 +13,7 @@
   <mat-spinner diameter='40' *ngIf='loading' color='accent'></mat-spinner>
 </section>
 
-<div class="content-wrapper" [hidden]="!dataSource.length || loading">
+<div class="content-wrapper demo-phone" [hidden]="!dataSource.length || loading">
 
   <carousel #carousel="carousel" [showControls]="false" class='slide-wrapper'>
     <ng-container *ngFor="let scene of dataSource">

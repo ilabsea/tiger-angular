@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
   <app-menu-button></app-menu-button>
-  <span>Story Quiz</span>
+  <span *ngIf='!!story'>{{story.title}}'s Quiz</span>
   <span class='spacer'></span>
   <a mat-button routerLink="/stories" routerLinkActive="active">Done</a>
 </mat-toolbar>
@@ -22,7 +22,7 @@
   </div>
   <div class='drag-wrapper'>
 
-    <mat-accordion [dragula]='"questions-bag"' [dragulaModel]='dataSource'>
+    <mat-accordion [dragula]='questions-bag' [dragulaModel]='dataSource'>
       <mat-expansion-panel *ngFor="let item of dataSource; let i = index">
         <mat-expansion-panel-header>
           <mat-panel-title>

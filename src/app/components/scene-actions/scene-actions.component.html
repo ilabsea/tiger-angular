@@ -25,7 +25,7 @@
   </div>
 
   <div class='drag-wrapper'>
-    <div class='drag-container' [dragula]='"scene-actions-bag"' [dragulaModel]='dataSource'>
+    <div class='drag-container' [dragula]='scene-actions-bag' [dragulaModel]='dataSource'>
       <div *ngFor="let item of dataSource" class='row'>
         <div class='cell'>{{ item.name }} </div>
         <div class='cell'>Link to</div>

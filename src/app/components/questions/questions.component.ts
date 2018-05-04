@@ -18,6 +18,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   loading: boolean = true;
   story_id: string = this.route.snapshot.paramMap.get('id');
   isAdmin = this.authService.isAdmin();
+  story: any;
   private destroy$ = new Subject();
 
   constructor(
@@ -45,7 +46,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
       .subscribe(res => {
         this.loading = false;
         this.dataSource = res['questions'];
-        console.log(this.dataSource);
+        this.story = res['meta']['story'];
       });
   }
 

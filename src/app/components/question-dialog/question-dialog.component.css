@@ -2,16 +2,19 @@
   flex-direction: row-reverse;
 }
 
-.example-full-width {
+.full-width {
   width: 100%;
 }
 
-
-.example-radio-group {
-  display: inline-flex;
-  flex-direction: column;
+.error {
+  color: #f44336;
 }
 
-.example-radio-button {
-  margin: 5px;
+.choice-field {
+  width: 300px;
+}
+
+.answer-title {
+  margin-top: 20px;
+  margin-bottom: 0;
 }

@@ -1,0 +1,14 @@
+<mat-sidenav-container class="container">
+
+  <mat-sidenav
+    #sidenav
+    (keydown.escape)="sidenav.close('escape')"
+    mode='side'>
+    <app-navbar (navBarEvent)="closeSideNav()"></app-navbar>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

@@ -1,36 +1,44 @@
-<h1 mat-dialog-title>Scene</h1>
+<h1 mat-dialog-title>{{data.header}}</h1>
 
-<div mat-dialog-content>
-  <div class="example-form">
-    <mat-form-field class="example-full-width">
-      <input matInput placeholder="Name" [formControl]='name' required>
-      <mat-error *ngIf="name.hasError('required')">Can't be blank</mat-error>
-    </mat-form-field>
+<form (ngSubmit)="handleSubmit()">
+  <div mat-dialog-content>
+    <div class="example-form">
+      <mat-form-field class="example-full-width">
+        <input matInput placeholder="Name" [formControl]='name' required>
+        <mat-error *ngIf="name.hasError('required')">Can't be blank</mat-error>
+      </mat-form-field>
 
-    <mat-form-field class="example-full-width">
-      <textarea matInput placeholder="Description" [formControl]='description' required></textarea>
-      <mat-error *ngIf="description.hasError('required')">Can't be blank</mat-error>
-    </mat-form-field>
+      <mat-form-field class="example-full-width">
+        <textarea
+          matInput
+          matTextareaAutosize
+          matAutosizeMaxRows="5"
+          placeholder="Description"
+          [formControl]='description'
+          required></textarea>
+        <mat-error *ngIf="description.hasError('required')">Can't be blank</mat-error>
+      </mat-form-field>
 
-    <div class="example-full-width">
-      <div class="img-wrapper">
-        <div class="thumbnail">
-          <img *ngIf='!!this.previewUrl' [src]="this.previewUrl" />
-          <mat-icon *ngIf='!this.previewUrl' class='default-image'>image</mat-icon>
+      <div class="example-full-width">
+        <div class="img-wrapper" style='margin-top: 20px;' [ngClass]="{'error': isSubmitted && !previewUrl}">
+          <div class="thumbnail">
+            <img *ngIf='!!this.previewUrl' [src]="this.previewUrl" />
+            <mat-icon *ngIf='!this.previewUrl' class='default-image'>image</mat-icon>
+          </div>
+
+          <button mat-raised-button type='button' (click)='imgFileInput.click()'>
+            <mat-icon>camera</mat-icon>
+            <span>Choose image*</span>
+          </button>
         </div>
 
-        <button mat-raised-button (click)='imgFileInput.click()'>
-          <mat-icon>camera</mat-icon>
-          <span>Choose image*</span>
-        </button>
+        <input hidden type='file' #imgFileInput (change)="handleFileInput($event.target.files)"/>
       </div>
-
-      <input hidden type='file' #imgFileInput (change)="handleFileInput($event.target.files)"/>
     </div>
   </div>
-</div>
 
-<div mat-dialog-actions>
-  <button mat-raised-button color='primary' (click)='handleSubmit()' cdkFocusInitial>Save</button>
-  <button mat-button [mat-dialog-close]=''>Cancel</button>
-</div>
+  <div mat-dialog-actions>
+    <button mat-raised-button color='primary' type='submit' cdkFocusInitial>Save</button>
+    <button mat-button type='button' [mat-dialog-close]=''>Cancel</button>
+  </div>
+</form>

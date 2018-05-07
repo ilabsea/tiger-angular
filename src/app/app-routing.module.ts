@@ -1,17 +1,34 @@
 import { NgModule }             from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ScenesComponent }   from './components/scenes/scenes.component';
-import { SceneActionsComponent }   from './components/scene-actions/scene-actions.component';
+import { HomeComponent }      from './components/home/home.component';
+import { NavBarComponent }      from './components/navbar/navbar.component';
+import { LoginComponent }      from './components/login/login.component';
+import { UsersComponent }      from './components/users/users.component';
+import { StoriesComponent }      from './components/stories/stories.component';
+
+import { ScenesComponent } from './components/scenes/scenes.component';
+import { SceneActionsComponent } from './components/scene-actions/scene-actions.component';
+import { StoryPreviewComponent } from './components/story-preview/story-preview.component';
+
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'stories/1/scenes', pathMatch: 'full' },
-  { path: 'stories/:id/scenes', component: ScenesComponent },
-  { path: 'scenes/:scene_id/scene_actions', component: SceneActionsComponent },
+
+  { path: 'login', component: LoginComponent },
+  { path: '', component: HomeComponent, canActivate: [AuthGuard], children: [
+      { path: '' , component: NavBarComponent, outlet: 'navbar'},
+      { path: 'users' , component: UsersComponent},
+      { path: 'stories', component: StoriesComponent},
+      { path: 'stories/:id/scenes', component: ScenesComponent },
+      { path: 'scenes/:scene_id/scene_actions', component: SceneActionsComponent },
+      { path: 'stories/:id/preview', component: StoryPreviewComponent },
+    ]
+  }
 ];
 
 @NgModule({
+  exports: [ RouterModule ],
   imports: [ RouterModule.forRoot(routes) ],
-  exports: [ RouterModule ]
 })
 export class AppRoutingModule {}

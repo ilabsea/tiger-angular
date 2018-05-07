@@ -1,0 +1,21 @@
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form > * {
+  width: 100%;
+}
+
+.container > .login-card {
+  margin: 0 auto;
+  width: 500px;
+}
+
+.test{
+  border: 1px solid red;
+}
+
+.actions {
+  margin-top: 24px;
+}

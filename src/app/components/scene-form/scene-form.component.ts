@@ -15,6 +15,7 @@ export class SceneFormComponent {
   image = new FormControl(this.data.image, [Validators.required]);
   fileToUpload: File = null;
   previewUrl: any;
+  isSubmitted: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<SceneFormComponent>,
@@ -41,6 +42,8 @@ export class SceneFormComponent {
   }
 
   handleSubmit(): void {
+    this.isSubmitted = true;
+
     if (this.name.invalid || this.description.invalid || !this.previewUrl) {
       return;
     }

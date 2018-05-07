@@ -1,80 +1,74 @@
-<mat-sidenav-container class="container" (backdropClick)="close('backdrop')">
-  <mat-sidenav #sidenav (keydown.escape)="close('escape')" mode='side'>
-    <p><button mat-button (click)="close('toggle button')">Toggle</button></p>
-  </mat-sidenav>
+<mat-toolbar color="primary">
+  <app-menu-button></app-menu-button>
+  <span>Story Scenes</span>
+  <span class='spacer'></span>
+  <a mat-button routerLink="/stories/{{story_id}}/preview" routerLinkActive="active">Preview</a>
+  <a mat-button routerLink="/stories" routerLinkActive="active">Done</a>
+</mat-toolbar>
 
-  <mat-sidenav-content>
-    <mat-toolbar color="primary">
-      <button mat-icon-button (click)="sidenav.open()">
-        <mat-icon>menu</mat-icon>
-      </button>
-
-      <span>Story Scenes</span>
-      <span class='spacer'></span>
-      <button mat-button>Preview</button>
-    </mat-toolbar>
-
-    <section class="mat-typography flex-center" *ngIf='!dataSource.length || loading'>
-      <div *ngIf="!dataSource.length && !loading" class='no-item-available'>
-        <h3 class='mat-title'>No Story Scene Available.</h3>
-        <div class="mat-body-1">
-          Use <strong>+</strong> button at the bottom-right corner.
-        </div>
-      </div>
-
-      <mat-spinner diameter='40' *ngIf='loading' color='accent'></mat-spinner>
-    </section>
-
-    <div class="content-wrapper" *ngIf="dataSource.length">
-      <mat-table #table [dataSource]="dataSource">
-        <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="description">
-          <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
-          <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="image">
-          <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
-          <mat-cell *matCellDef="let element">
-            <div class="thumbnail" *ngIf='!!element.image'>
-              <img [src]="'http://192.168.1.107:3000' + element.image" />
-            </div>
-          </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="actions">
-          <mat-header-cell *matHeaderCellDef> Action Buttons </mat-header-cell>
-          <mat-cell *matCellDef="let element">
-            <span>{{element.scene_actions.length}} (links)</span>
-            <a mat-button routerLink="/scenes/{{element.id}}/scene_actions" routerLinkActive="active">Manage</a>
-          </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="method">
-          <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-          <mat-cell *matCellDef="let element">
-            <button mat-icon-button (click)='openDialog(element)'>
-              <mat-icon>edit</mat-icon>
-            </button>
-
-            <button mat-icon-button>
-              <mat-icon (click)='remove(element)'>delete</mat-icon>
-            </button>
-          </mat-cell>
-        </ng-container>
-
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-      </mat-table>
+<section class="mat-typography flex-center" *ngIf='!dataSource.length || loading'>
+  <div *ngIf="!dataSource.length && !loading" class='no-item-available'>
+    <h3 class='mat-title'>No Story Scene Available.</h3>
+    <div class="mat-body-1" *ngIf='!isAdmin'>
+      Use <strong>+</strong> button at the bottom-right corner.
     </div>
+  </div>
 
-    <button mat-fab class='add-button' (click)="openDialog()">
-      <mat-icon>add</mat-icon>
-    </button>
+  <mat-spinner diameter='40' *ngIf='loading' color='accent'></mat-spinner>
+</section>
 
-  </mat-sidenav-content>
-</mat-sidenav-container>
+<div class="content-wrapper" *ngIf="dataSource.length">
+  <div class="header-row">
+    <div class="header-cell">Title</div>
+    <div class="header-cell">Description</div>
+    <div class="header-cell">Image</div>
+    <div class="header-cell">Actions</div>
+    <div class="header-cell"></div>
+  </div>
+  <div class='drag-wrapper'>
+    <div class='drag-container' [dragula]='"scenes-bag"' [dragulaModel]='dataSource'>
+      <div *ngFor="let item of dataSource; let i = index" class='row'>
+        <div class='cell'>
+          <span>{{ item.name }}</span>
+          <strong *ngIf='i==0'>(root)</strong>
+        </div>
+        <div class='cell'>{{ item.description}}</div>
+        <div class='cell'>
+          <div class="thumbnail" *ngIf='!!item.image'>
+            <img [src]="'http://192.168.1.107:3000' + item.image" />
+          </div>
+        </div>
+
+        <div class="cell"> {{item.scene_actions.length}} (links) </div>
+
+        <div class="cell">
+          <button mat-icon-button [matMenuTriggerFor]="menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="openDialog(item)" *ngIf='!isAdmin'>
+              <mat-icon>edit</mat-icon>
+              <span>Edit</span>
+            </button>
+
+            <button mat-menu-item (click)="remove(item)" *ngIf='!isAdmin'>
+              <mat-icon>delete</mat-icon>
+              <span>Delete</span>
+            </button>
+
+            <a mat-menu-item routerLink="/scenes/{{item.id}}/scene_actions">
+              <mat-icon>list</mat-icon>
+              <span>Manage actions</span>
+            </a>
+          </mat-menu>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<button mat-fab class='add-button' (click)="openDialog()" *ngIf='!isAdmin'>
+  <mat-icon>add</mat-icon>
+</button>

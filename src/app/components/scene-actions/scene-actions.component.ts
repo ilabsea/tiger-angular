@@ -1,67 +1,52 @@
-import { Component, ViewChild, OnInit } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-import { TREE_ACTIONS, KEYS, IActionMapping } from 'angular-tree-component';
-import { MatSidenav } from '@angular/material/sidenav';
+import { DragulaService } from 'ng2-dragula';
+import 'rxjs/add/operator/takeUntil';
+import { Subject } from 'rxjs/Subject';
 import { SceneActionDialogComponent } from '../scene-action-dialog/scene-action-dialog.component';
 import { SceneActionService } from '../../services/scene_action.service';
+import { AuthService } from './../../services/auth.service';
 
-const defaultActionMapping: IActionMapping = {
-  mouse: {
-    click: TREE_ACTIONS.EXPAND,
-    dblClick: null,
-    contextMenu: null,
-    expanderClick: TREE_ACTIONS.TOGGLE_EXPANDED,
-    checkboxClick: TREE_ACTIONS.TOGGLE_SELECTED,
-    drop: TREE_ACTIONS.MOVE_NODE
-  },
-  keys: {
-    [KEYS.RIGHT]: TREE_ACTIONS.DRILL_DOWN,
-    [KEYS.LEFT]: TREE_ACTIONS.DRILL_UP,
-    [KEYS.DOWN]: TREE_ACTIONS.NEXT_NODE,
-    [KEYS.UP]: TREE_ACTIONS.PREVIOUS_NODE,
-    [KEYS.SPACE]: TREE_ACTIONS.TOGGLE_ACTIVE,
-    [KEYS.ENTER]: TREE_ACTIONS.TOGGLE_ACTIVE
-  }
-};
 
 @Component({
   selector: 'app-scene-actions',
   templateUrl: './scene-actions.component.html',
   styleUrls: ['./scene-actions.component.css']
 })
-export class SceneActionsComponent implements OnInit {
-  @ViewChild('sidenav') public sidenav: MatSidenav;
-
+export class SceneActionsComponent implements OnInit, OnDestroy {
   dataSource: any=[];
   loading: boolean = true;
   story_id: any;
   scene_id: string = this.route.snapshot.paramMap.get('scene_id');
   scenes: any = [];
-
-  options = {
-    allowDrag: true,
-    allowDrop: (element, { parent, index }) => {
-      return parent.hasChildren;
-    },
-    actionMapping: defaultActionMapping
-  };
+  isAdmin = this.authService.isAdmin();
+  private destroy$ = new Subject();
 
   constructor(
     public dialog: MatDialog,
     private sceneActionService: SceneActionService,
-    private route: ActivatedRoute
-  ) { }
+    private route: ActivatedRoute,
+    private authService: AuthService,
+    private dragulaService: DragulaService
+  ) {
+    dragulaService.drop.asObservable().takeUntil(this.destroy$).subscribe(() => {
+      this.onMoveNode();
+    });
+  }
 
   ngOnInit() {
     this._getSceneActions();
   }
 
-  onMoveNode($event) {
-    this.sceneActionService.updateOrder(this.scene_id, this.dataSource)
-      .subscribe(res => {
-        this.dataSource = res.scene_actions;
-      });
+  ngOnDestroy() {
+    this.destroy$.next();
+  }
+
+  onMoveNode() {
+    let ids = this.dataSource.map(obj => obj['id']);
+    this.sceneActionService.updateOrder(this.scene_id, ids)
+      .subscribe(res => { console.log(res) });
   }
 
   delete(obj) {
@@ -88,16 +73,21 @@ export class SceneActionsComponent implements OnInit {
     }
   }
 
-  _showDialog(obj, callback = null) {
+  _showDialog(data, callback = null) {
+    let myData = Object.assign({}, data, {
+      header: 'New Action',
+      story_id: this.story_id,
+      scene_id: this.scene_id,
+      scenes: this.scenes
+    });
+
+    if (!!data.id) {
+      myData.header = `Edit ${data.name}`;
+    }
+
     let dialogRef = this.dialog.open(SceneActionDialogComponent, {
       width: '500px',
-      data: {
-        id: obj.id,
-        name: obj.name,
-        link_scene_id: obj.link_scene_id,
-        scene_id: this.scene_id,
-        scenes: this.scenes
-      }
+      data: myData
     });
 
     dialogRef.afterClosed().subscribe(result => {

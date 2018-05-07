@@ -1,4 +1,13 @@
+:host {
+  width: 100%;
+  display: flex;
+}
+
 .thumbnail img {
   max-width: 40px;
   max-height: 40px;
+}
+
+.content-wrapper {
+  background-color: #fff;
 }

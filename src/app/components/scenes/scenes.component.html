@@ -57,10 +57,10 @@
               <span>Delete</span>
             </button>
 
-            <a mat-menu-item routerLink="/scenes/{{item.id}}/scene_actions">
+            <button mat-menu-item (click)="openSceneActionDialog(item)" *ngIf='!isAdmin'>
               <mat-icon>list</mat-icon>
               <span>Manage actions</span>
-            </a>
+            </button>
           </mat-menu>
         </div>
 

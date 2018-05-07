@@ -39,7 +39,7 @@
           <strong *ngIf='choice.answered'>(answer)</strong>
         </div>
 
-        <mat-action-row *ngIf='!isAdmin'>
+        <mat-action-row *ngIf='!isAdmin && story.status == "new"'>
           <button mat-icon-button (click)="openDialog(item)">
             <mat-icon>edit</mat-icon>
           </button>
@@ -54,6 +54,6 @@
   </div>
 </div>
 
-<button mat-fab class='add-button' (click)="openDialog()" *ngIf='!isAdmin'>
+<button mat-fab class='add-button' (click)="openDialog()" *ngIf='!isAdmin && story.status == "new"'>
   <mat-icon>add</mat-icon>
 </button>

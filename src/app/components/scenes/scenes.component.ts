@@ -85,7 +85,8 @@ export class ScenesComponent implements OnInit, OnDestroy {
     let myData = Object.assign({}, data, {
       header: 'Manage Scene Actions',
       story_id: this.story.id,
-      scenes: this.dataSource
+      scenes: this.dataSource,
+      story: this.story
     });
 
     let dialogRef = this.dialog.open(SceneActionsDialogComponent, {

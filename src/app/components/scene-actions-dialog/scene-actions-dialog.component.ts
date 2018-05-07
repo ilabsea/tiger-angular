@@ -77,7 +77,7 @@ export class SceneActionsDialogComponent implements OnInit {
   }
 
   handleSubmit(): void {
-    if (this.myForm.invalid) { return; }
+    if (this.myForm.invalid || this.data.story.status != 'new') { return; }
 
     return this._update();
   }

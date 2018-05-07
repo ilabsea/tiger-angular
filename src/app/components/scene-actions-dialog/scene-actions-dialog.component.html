@@ -36,12 +36,16 @@
       </div>
     </div>
 
-    <button mat-button color="primary" type='button' (click)='addAction()' [disabled]="myForm.controls.scene_actions.controls.length > 2">
+    <button mat-button
+            color="primary"
+            type='button'
+            *ngIf="data.story.status == 'new'" (click)='addAction()'
+            [disabled]="myForm.controls.scene_actions.controls.length > 2">
       Add another action +
     </button>
   </div>
 
-  <div mat-dialog-actions>
+  <div mat-dialog-actions *ngIf="data.story.status == 'new'">
     <button mat-raised-button color='primary' type='submit'>Save</button>
     <button mat-button type="button" [mat-dialog-close]=''>Cancel</button>
   </div>

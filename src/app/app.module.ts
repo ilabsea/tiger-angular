@@ -25,6 +25,8 @@ import { MatToolbarModule,
          MatExpansionModule,
       } from '@angular/material';
 
+import { ChartsModule } from 'ng2-charts/ng2-charts';
+
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './helpers/token.interceptor';
 
@@ -38,6 +40,7 @@ import { StoryService } from './services/story.service';
 import { SceneService } from './services/scene.service';
 import { SharedEventService } from './services/shared-event.service';
 import { QuestionService } from './services/question.service';
+import { ChartService } from './services/chart.service';
 
 // Dialog
 import { StoryDialogComponent } from './components/story-dialog/story-dialog.component';
@@ -63,6 +66,7 @@ import { StoryPreviewComponent } from './components/story-preview/story-preview.
 import { DeactivateDialogComponent } from './components/deactivate-dialog/deactivate-dialog.component';
 import { QuestionsComponent } from './components/questions/questions.component';
 import { QuestionDialogComponent } from './components/question-dialog/question-dialog.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +90,7 @@ import { QuestionDialogComponent } from './components/question-dialog/question-d
     QuestionsComponent,
     QuestionDialogComponent,
     SceneActionsDialogComponent,
+    DashboardComponent,
   ],
   imports: [
     NoopAnimationsModule,
@@ -114,6 +119,7 @@ import { QuestionDialogComponent } from './components/question-dialog/question-d
     AppRoutingModule,
     HttpClientModule,
     DragulaModule,
+    ChartsModule,
   ],
   entryComponents: [
     SceneFormComponent,
@@ -133,6 +139,7 @@ import { QuestionDialogComponent } from './components/question-dialog/question-d
     AuthService,
     UserService,
     QuestionService,
+    ChartService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

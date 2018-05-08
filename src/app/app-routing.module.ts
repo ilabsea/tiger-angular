@@ -10,6 +10,7 @@ import { StoriesComponent }      from './components/stories/stories.component';
 import { ScenesComponent } from './components/scenes/scenes.component';
 import { StoryPreviewComponent } from './components/story-preview/story-preview.component';
 import { QuestionsComponent } from './components/questions/questions.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 import { AuthGuard } from './guards/auth.guard';
 
@@ -23,6 +24,7 @@ const routes: Routes = [
       { path: 'stories/:id/scenes', component: ScenesComponent },
       { path: 'stories/:id/preview', component: StoryPreviewComponent },
       { path: 'stories/:id/quiz', component: QuestionsComponent },
+      { path: 'dashboard', component: DashboardComponent },
     ]
   }
 ];

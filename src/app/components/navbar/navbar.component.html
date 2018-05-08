@@ -1,4 +1,8 @@
 <mat-nav-list>
+  <a mat-list-item (click)="goTo('/dashboard')" *ngIf='authService.isAdmin()'>
+    <mat-icon>dashboard</mat-icon>
+    <span>Dashboard</span>
+  </a>
   <a mat-list-item (click)="goTo('/stories')">
     <mat-icon>library_books</mat-icon>
     <span>Stories</span>
@@ -8,6 +12,7 @@
     <span>Users</span>
   </a>
   <a mat-list-item (click)="logout()">
+    <mat-icon>vpn_key</mat-icon>
     <span>Logout</span>
   </a>
 </mat-nav-list>

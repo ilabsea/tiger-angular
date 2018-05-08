@@ -1,0 +1,34 @@
+:host {
+  width: 100%;
+  display: flex;
+}
+
+.download-wrapper {
+  margin-right: 20px;
+}
+
+.download-title {
+  margin-bottom: 10px;
+}
+
+.download-count {
+  color: rgb(255, 99, 132);
+  font-size: 1.8em;
+}
+
+.read-title {
+  margin-bottom: 10px;
+}
+
+.read-count {
+  color: rgb(54, 162, 235);
+  font-size: 1.8em;
+}
+
+.flex-layout {
+  display: flex;
+}
+
+.label-wrapper {
+  margin-bottom: 20px;
+}

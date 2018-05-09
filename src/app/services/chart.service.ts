@@ -17,7 +17,7 @@ export class ChartService {
       params = `${params}${this._serialize(option['time'])}`;
     }
 
-    let endpoint = `${API_URL}story_downloads?${params}`;
+    let endpoint = `${API_URL}chart?${params}`;
     return this.http.get(endpoint);
   }
 

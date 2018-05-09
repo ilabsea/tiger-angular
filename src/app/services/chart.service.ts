@@ -9,23 +9,24 @@ export class ChartService {
   constructor(private http: HttpClient) { }
 
   getAll(option={}) {
-    // let endpoint = `${API_URL}stories?page=${page}&per_page=${perPage}`
-    let params = '?';
+    let params = '';
     if (!!option['story_id']) {
       params = `${params}story_id=${option['story_id']}&`;
     }
     if (!!option['time']) {
-      let time = option['time'];
-      params = `${params}period=${time['period']}&period_unit=${time['unit']}`;
+      params = `${params}${this._serialize(option['time'])}`;
     }
 
-    // let endpoint = API_URL + 'story_downloads';
-    let endpoint = `${API_URL}story_downloads${params}`;
+    let endpoint = `${API_URL}story_downloads?${params}`;
     return this.http.get(endpoint);
   }
 
-  create(body) {
-    let endpoint = API_URL + 'story_downloads';
-    return this.http.post(endpoint, body);
+  _serialize(obj) {
+    var str = [];
+    for (var p in obj)
+      if (obj.hasOwnProperty(p)) {
+        str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+      }
+    return str.join("&");
   }
 }

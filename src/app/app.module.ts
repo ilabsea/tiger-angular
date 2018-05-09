@@ -23,6 +23,8 @@ import { MatToolbarModule,
          MatListModule,
          MatRadioModule,
          MatExpansionModule,
+         MatDatepickerModule,
+         MatNativeDateModule,
       } from '@angular/material';
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
@@ -48,6 +50,7 @@ import { PopupDialogComponent } from './components/popup-dialog/popup-dialog.com
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { SceneFormComponent } from './components/scene-form/scene-form.component';
 import { SceneActionsDialogComponent } from './components/scene-actions-dialog/scene-actions-dialog.component';
+import { CustomDateRangeDialogComponent } from './components/custom-date-range-dialog/custom-date-range-dialog.component';
 
 // Shared
 import { NavBarComponent } from './components/navbar/navbar.component';
@@ -91,6 +94,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     QuestionDialogComponent,
     SceneActionsDialogComponent,
     DashboardComponent,
+    CustomDateRangeDialogComponent,
   ],
   imports: [
     NoopAnimationsModule,
@@ -116,6 +120,8 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     MatListModule,
     MatRadioModule,
     MatExpansionModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     AppRoutingModule,
     HttpClientModule,
     DragulaModule,
@@ -129,6 +135,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     DeactivateDialogComponent,
     QuestionDialogComponent,
     SceneActionsDialogComponent,
+    CustomDateRangeDialogComponent,
   ],
   providers: [
     StoryService,

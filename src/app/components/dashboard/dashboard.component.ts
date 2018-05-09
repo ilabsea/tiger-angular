@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from './../../services/auth.service';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ChartService } from './../../services/chart.service';
+import { CustomDateRangeDialogComponent } from '../custom-date-range-dialog/custom-date-range-dialog.component';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,54 +9,58 @@ import { ChartService } from './../../services/chart.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
-  isAdmin = this.authService.isAdmin();
   loading: boolean = true;
-  dataSource: any[] = [1];
   stories: any[] = [{id: '', title: 'All Stories'}];
   selectedStory: any = '';
   times: any[] = [
     { period: 7,
-      unit: 'days',
+      period_unit: 'days',
       label: '7 days'
     },
     {
       period: 30,
-      unit: 'days',
+      period_unit: 'days',
       label: '30 days'
     },
     {
       period: 12,
-      unit: 'months',
+      period_unit: 'months',
       label: '1 year'
     },
     {
-      period: 'lifetime',
-      unit: '',
+      period: '',
+      period_unit: 'lifetime',
       label: 'Lifetime'
+    },
+    {
+      period: '',
+      period_unit: 'custom',
+      label: 'Custom Range'
     }
   ];
   selectedTime: any;
-  lineChartData: Array<any> = [{ data: [], label: 'Story Downloads' }];
+  customDate: any = {};
+  previousTime: any;
+  lineChartData: Array<any> = [{ data: [], label: '' }];
   lineChartLabels: Array<any> = [];
   lineChartOptions: any = { responsive: true };
   totalDownload: number;
   totalRead: number;
 
   constructor(
-    private authService: AuthService,
     private chartService: ChartService,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit() {
     this.selectedTime = this.times[0];
+    this.previousTime = this.selectedTime;
     this._getData();
   }
 
   _getData() {
     this.chartService.getAll()
       .subscribe(result => {
-        console.log(result);
-        this.dataSource = result['data'];
         this.stories = this.stories.concat(result['meta']['stories']);
         this.loading = false;
         this._setChartData(result['data']);
@@ -72,12 +77,44 @@ export class DashboardComponent implements OnInit {
       this.lineChartLabels = data.map(o => o.date);
     }, 10);
 
-    this.totalDownload = data.map(o => o.story_downloads).reduce(function(a, b) { return a + b; });
-    this.totalRead = data.map(o => o.story_reads).reduce(function(a, b) { return a + b; });
+    this.totalDownload = data.map(o => o.story_downloads).reduce((a, b) => {return a + b});
+    this.totalRead = data.map(o => o.story_reads).reduce((a, b) => {return a + b});
+  }
+
+  showDialog() {
+    let dialogRef = this.dialog.open(CustomDateRangeDialogComponent, {
+      width: '500px',
+      data: this.customDate
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!!result) {
+        this.customDate = result;
+        this.filterData();
+        return
+      }
+
+      if (!!this.customDate.from) { return; }
+
+      this.customDate = {};
+      this.selectedTime = this.previousTime;
+    });
+  }
+
+  filterDate() {
+    if (this.selectedTime.period_unit == 'custom') {
+      return this.showDialog();
+    }
+
+    this.customDate = {};
+    this.previousTime = this.selectedTime;
+    this.filterData();
   }
 
   filterData() {
-    this.chartService.getAll({story_id: this.selectedStory, time: this.selectedTime})
+    let time = Object.assign({}, this.selectedTime, this.customDate);
+
+    this.chartService.getAll({story_id: this.selectedStory, time: time})
       .subscribe(result => {
         this._setChartData(result['data']);
       });

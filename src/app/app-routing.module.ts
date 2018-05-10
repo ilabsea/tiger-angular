@@ -18,9 +18,9 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: '', component: HomeComponent, canActivate: [AuthGuard], children: [
-      { path: '' , component: NavBarComponent, outlet: 'navbar'},
-      { path: 'users' , component: UsersComponent},
-      { path: 'stories', component: StoriesComponent},
+      { path: '' , component: NavBarComponent, outlet: 'navbar' },
+      { path: 'users' , component: UsersComponent },
+      { path: 'stories', component: StoriesComponent },
       { path: 'stories/:id/scenes', component: ScenesComponent },
       { path: 'stories/:id/preview', component: StoryPreviewComponent },
       { path: 'stories/:id/quiz', component: QuestionsComponent },

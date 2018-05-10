@@ -10,7 +10,10 @@ import { AuthService } from './../../services/auth.service';
 export class NavBarComponent implements OnInit {
   @Output() navBarEvent = new EventEmitter<String>();
 
-  constructor(private router: Router, public authService: AuthService) { }
+  currentUser = this.authService.getCurrentUser();
+  isAdmin = this.authService.isAdmin();
+
+  constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit() {
   }
@@ -18,6 +21,10 @@ export class NavBarComponent implements OnInit {
   goTo(path) {
     this.router.navigate([path]);
     this._closeSideNav();
+  }
+
+  isActive(path): boolean {
+    return this.router.isActive(path);
   }
 
   logout() {

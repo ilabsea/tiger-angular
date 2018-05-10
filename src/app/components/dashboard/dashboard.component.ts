@@ -15,22 +15,22 @@ export class DashboardComponent implements OnInit {
   times: any[] = [
     { period: 7,
       period_unit: 'days',
-      label: '7 days'
+      label: 'Last 7 days'
     },
     {
       period: 30,
       period_unit: 'days',
-      label: '30 days'
+      label: 'Last 30 days'
+    },
+    {
+      period: 90,
+      period_unit: 'days',
+      label: 'Last 3 months'
     },
     {
       period: 12,
       period_unit: 'months',
-      label: '1 year'
-    },
-    {
-      period: '',
-      period_unit: 'lifetime',
-      label: 'Lifetime'
+      label: 'Last year'
     },
     {
       period: '',

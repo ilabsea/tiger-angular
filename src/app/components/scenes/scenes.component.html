@@ -17,7 +17,7 @@
   <mat-spinner diameter='40' *ngIf='loading' color='accent'></mat-spinner>
 </section>
 
-<div class="content-wrapper" *ngIf="dataSource.length">
+<div class="content-wrapper" *ngIf="!!dataSource.length">
   <div class="header-row">
     <div class="header-cell">Title</div>
     <div class="header-cell">Description</div>

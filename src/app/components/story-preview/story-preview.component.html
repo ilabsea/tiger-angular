@@ -31,7 +31,7 @@
 
             <div class='description'>{{scene.description}}</div>
 
-            <div class='actions'>
+            <div class='actions flex-column'>
               <a *ngFor="let action of scene.scene_actions" mat-raised-button (click)="slideTo(carousel, action.link_scene.id)" class="btn btn-success">{{action.name}} Link to {{action.link_scene.id}}</a>
             </div>
           </div>

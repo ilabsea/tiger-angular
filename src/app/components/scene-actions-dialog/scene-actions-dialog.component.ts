@@ -101,6 +101,8 @@ export class SceneActionsDialogComponent implements OnInit {
       if (action.link_scene_id == 'use_next') {
         action.link_scene_id = null;
         action.use_next = true;
+      } else {
+        action.use_next = false;
       }
       action.story_id = self.data.story_id;
       action.display_order = index + 1;

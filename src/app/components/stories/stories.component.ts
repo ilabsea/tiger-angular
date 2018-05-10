@@ -37,6 +37,7 @@ export class StoriesComponent implements OnInit {
         this.length = result['meta']['pagination']['total_objects'];
         this.dataSource = result['stories'];
         this.loading = false;
+        console.log(this.dataSource);
       });
   }
 

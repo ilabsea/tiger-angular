@@ -24,7 +24,7 @@ export class NavBarComponent implements OnInit {
   }
 
   isActive(path): boolean {
-    return this.router.isActive(path);
+    return this.router.isActive(path, true);
   }
 
   logout() {

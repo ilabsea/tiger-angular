@@ -24,13 +24,13 @@ export class StoriesComponent implements OnInit {
     public dialog: MatDialog,
     private storyService: StoryService,
     private authService: AuthService
-  ) { }
-
-  ngOnInit() {
+  ) {
     if(this.isAdmin) {
       this.displayedColumns.splice(4, 0, 'by');
     }
+  }
 
+  ngOnInit() {
     this.loading = true;
     this.getStories(1, this.pageSize);
   }

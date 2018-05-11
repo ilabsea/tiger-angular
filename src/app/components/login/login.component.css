@@ -19,3 +19,11 @@
 .actions {
   margin-top: 24px;
 }
+
+.container {
+  padding: 30px;
+}
+
+.header {
+  text-align: center;
+}

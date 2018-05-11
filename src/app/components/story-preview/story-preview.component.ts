@@ -4,6 +4,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SceneService } from '../../services/scene.service';
 import { QuestionService } from '../../services/question.service';
 import { QuizAnswerDialogComponent } from '../quiz-answer-dialog/quiz-answer-dialog.component';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-story-preview',
@@ -17,12 +18,14 @@ export class StoryPreviewComponent implements OnInit {
   loading: boolean = true;
   story_id: string = this.route.snapshot.paramMap.get('id');
   totalSlides: number = 0;
+  story: any={};
 
   constructor(
     private route: ActivatedRoute,
     private sceneService: SceneService,
     private questionService: QuestionService,
     private dialog: MatDialog,
+    public location: Location
   ) { }
 
   ngOnInit() {
@@ -34,6 +37,7 @@ export class StoryPreviewComponent implements OnInit {
       .subscribe(res => {
         this.dataSource = res['scenes'];
         this.totalSlides = this.dataSource.length;
+        this.story = res['meta']['story'];
         this._getQuizzes();
       });
   }

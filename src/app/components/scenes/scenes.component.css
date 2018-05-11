@@ -10,4 +10,7 @@
 
 .content-wrapper {
   background-color: #fff;
+  overflow: scroll;
+  margin-bottom: 0;
+  padding-bottom: 24px;
 }

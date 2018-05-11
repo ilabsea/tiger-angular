@@ -49,6 +49,8 @@ export class ScenesComponent implements OnInit, OnDestroy {
   }
 
   onMoveNode() {
+    if (this.isAdmin) { return; }
+
     let ids = this.dataSource.map(obj => obj['id']);
     this.sceneService.updateOrder(this.story_id, ids)
       .subscribe(res => { console.log(res) });

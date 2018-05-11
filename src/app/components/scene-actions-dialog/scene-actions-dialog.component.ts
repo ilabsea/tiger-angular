@@ -6,6 +6,7 @@ import 'rxjs/add/operator/takeUntil';
 import { Subject } from 'rxjs/Subject';
 import { Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { SceneService } from '../../services/scene.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-scene-actions-dialog',
@@ -16,6 +17,7 @@ export class SceneActionsDialogComponent implements OnInit {
   public myForm: FormGroup;
   scenes: any = this.data.scenes.slice();
   archiveActions: any = [];
+  isAdmin = this.authService.isAdmin();
   private destroy$ = new Subject();
 
   constructor(
@@ -23,7 +25,8 @@ export class SceneActionsDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private sceneService: SceneService,
     private _fb: FormBuilder,
-    private dragulaService: DragulaService
+    private dragulaService: DragulaService,
+    private authService: AuthService,
   ) { }
 
   ngOnInit() {

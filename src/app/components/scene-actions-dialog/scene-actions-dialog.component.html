@@ -45,7 +45,7 @@
     </button>
   </div>
 
-  <div mat-dialog-actions *ngIf="data.story.status == 'new'">
+  <div mat-dialog-actions *ngIf="data.story.status == 'new' && !isAdmin">
     <button mat-raised-button color='primary' type='submit'>Save</button>
     <button mat-button type="button" [mat-dialog-close]=''>Cancel</button>
   </div>

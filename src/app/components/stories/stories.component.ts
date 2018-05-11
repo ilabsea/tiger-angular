@@ -27,6 +27,10 @@ export class StoriesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    if(this.isAdmin) {
+      this.displayedColumns.splice(4, 0, 'by');
+    }
+
     this.loading = true;
     this.getStories(1, this.pageSize);
   }

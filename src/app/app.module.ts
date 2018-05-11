@@ -51,6 +51,7 @@ import { UserFormComponent } from './components/user-form/user-form.component';
 import { SceneFormComponent } from './components/scene-form/scene-form.component';
 import { SceneActionsDialogComponent } from './components/scene-actions-dialog/scene-actions-dialog.component';
 import { CustomDateRangeDialogComponent } from './components/custom-date-range-dialog/custom-date-range-dialog.component';
+import { QuizAnswerDialogComponent } from './components/quiz-answer-dialog/quiz-answer-dialog.component';
 
 // Shared
 import { NavBarComponent } from './components/navbar/navbar.component';
@@ -95,6 +96,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     SceneActionsDialogComponent,
     DashboardComponent,
     CustomDateRangeDialogComponent,
+    QuizAnswerDialogComponent,
   ],
   imports: [
     NoopAnimationsModule,
@@ -136,6 +138,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     QuestionDialogComponent,
     SceneActionsDialogComponent,
     CustomDateRangeDialogComponent,
+    QuizAnswerDialogComponent,
   ],
   providers: [
     StoryService,

@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SceneService } from '../../services/scene.service';
 import { QuestionService } from '../../services/question.service';
+import { QuizAnswerDialogComponent } from '../quiz-answer-dialog/quiz-answer-dialog.component';
 
 @Component({
   selector: 'app-story-preview',
@@ -20,7 +22,7 @@ export class StoryPreviewComponent implements OnInit {
     private route: ActivatedRoute,
     private sceneService: SceneService,
     private questionService: QuestionService,
-
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -45,6 +47,15 @@ export class StoryPreviewComponent implements OnInit {
       });
   }
 
+  _showDialog() {
+    let myData = Object.assign({}, { questions: this.questions, header: 'Quiz Result' });
+
+    let dialogRef = this.dialog.open(QuizAnswerDialogComponent, {
+      width: '500px',
+      data: myData
+    });
+  }
+
   slideTo(carousel, link_scene_id) {
     if (!link_scene_id) {
       carousel.slideTo(this.dataSource.length);
@@ -55,12 +66,18 @@ export class StoryPreviewComponent implements OnInit {
     carousel.slideTo(index);
   }
 
-  slideQuizTo(carousel, index) {
-    let next = this.dataSource.length + index
+  slideQuizTo(carousel, index, choice) {
+    let next = this.dataSource.length + index;
+    this._setAnswer(index-1, choice);
+
     if ( next == this.totalSlides) {
-      return alert('Show answer');
+      return this._showDialog();
     }
 
     carousel.slideTo(next);
+  }
+
+  _setAnswer(index, choice) {
+    this.questions[index]['user_choice'] = choice;
   }
 }

@@ -38,7 +38,7 @@
                 <span *ngIf='!action.link_scene.id'>Go to quiz</span>
               </a>
 
-              <a *ngIf='!scene.scene_actions.length' mat-raised-button (click)="slideTo(carousel, null)" class="btn btn-success">
+              <a *ngIf='!scene.scene_actions.length && !!this.questions.length' mat-raised-button (click)="slideTo(carousel, null)" class="btn btn-success">
                 Go to quiz
               </a>
             </div>
@@ -55,7 +55,7 @@
             <div class='flex1 flex-center'>{{question.label}}</div>
 
             <div class='actions flex-column'>
-              <a *ngFor="let choice of question.choices" mat-raised-button class="btn btn-success" (click)='slideQuizTo(carousel, i+1)'>{{choice.label}}</a>
+              <a *ngFor="let choice of question.choices" mat-raised-button class="btn btn-success" (click)='slideQuizTo(carousel, i+1, choice)'>{{choice.label}}</a>
             </div>
           </div>
         </div>

@@ -43,7 +43,7 @@ export class SceneActionsDialogComponent implements OnInit {
   }
 
   _setScenes() {
-    this.scenes.unshift({id: 'use_next', name: 'Use Next Scene'});
+    this.scenes.unshift({id: 'use_next', name: 'Next Scene'});
     this.scenes = this.scenes.filter(obj => obj.id !== this.data.id);
   }
 

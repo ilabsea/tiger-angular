@@ -19,13 +19,18 @@
 
     <ng-container *ngFor="let scene of dataSource">
       <ng-container *carouselItem>
-        <div class='flow-row flex1'>
+        <div class='flow-row flex1' style='position: relative;'>
           <div class="item flex-column flex1">
 
-            <div class='mat-subheading-2'>{{scene.name}}</div>
+            <div class='mat-subheading-2 name' *ngIf='scene.visible_name'>{{scene.name}}</div>
 
-            <div class="thumbnail" *ngIf='!!scene.image'>
-              <div>
+            <div class="thumbnail bg" *ngIf='(!!scene.image && scene.image_as_background) || !scene.image'>
+              <img [src]="'http://192.168.1.107:3000' + scene.image" *ngIf='!!scene.image && scene.image_as_background' />
+              <img [src]="scene.default_image" *ngIf='!scene.image' />
+            </div>
+
+            <div class="thumbnail">
+              <div *ngIf='!!scene.image && !scene.image_as_background'>
                 <img [src]="'http://192.168.1.107:3000' + scene.image" />
               </div>
             </div>
@@ -37,10 +42,6 @@
                 <span *ngIf='!!action.link_scene.id'>{{action.name}}</span>
                 <span *ngIf='!action.link_scene.id'>Go to quiz</span>
               </a>
-
-              <a *ngIf='!scene.scene_actions.length && !!this.questions.length' mat-raised-button (click)="slideTo(carousel, null)" class="btn btn-success">
-                Go to quiz
-              </a>
             </div>
           </div>
         </div>
@@ -51,7 +52,7 @@
       <ng-container *carouselItem>
         <div class='flow-row flex1'>
           <div class="item flex-column flex1">
-            <div class='mat-title'>Quiz: question {{i + 1}}/{{questions.length}}</div>
+            <div class='mat-title name'>Quiz: question {{i + 1}}/{{questions.length}}</div>
             <div class='flex1 flex-center description'>{{question.label}}</div>
 
             <div class='actions flex-column'>

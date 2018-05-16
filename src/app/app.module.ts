@@ -25,6 +25,7 @@ import { MatToolbarModule,
          MatExpansionModule,
          MatDatepickerModule,
          MatNativeDateModule,
+         MatSlideToggleModule,
       } from '@angular/material';
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
@@ -124,6 +125,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     MatExpansionModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatSlideToggleModule,
     AppRoutingModule,
     HttpClientModule,
     DragulaModule,

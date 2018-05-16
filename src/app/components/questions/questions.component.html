@@ -27,7 +27,7 @@
       <mat-expansion-panel *ngFor="let item of dataSource; let i = index">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            {{item.label}}
+            {{i+1}}) {{item.label}}
           </mat-panel-title>
           <mat-panel-description>
             ({{item.choices.length}}) Choices

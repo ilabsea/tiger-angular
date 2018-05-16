@@ -13,9 +13,12 @@ export class SceneFormComponent {
   name = new FormControl(this.data.name, [Validators.required]);
   description = new FormControl(this.data.description, [Validators.required]);
   image = new FormControl(this.data.image, [Validators.required]);
+  visible_name = new FormControl(this.data.visible_name);
+  image_as_background = new FormControl(this.data.image_as_background);
   fileToUpload: File = null;
   previewUrl: any;
   isSubmitted: boolean = false;
+  remove_image: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<SceneFormComponent>,
@@ -28,6 +31,7 @@ export class SceneFormComponent {
   }
 
   handleFileInput(files: FileList) {
+    this.remove_image = false;
     if (files && files[0]) {
       var reader = new FileReader();
 
@@ -41,10 +45,16 @@ export class SceneFormComponent {
     this.fileToUpload = files.item(0);
   }
 
+  deleteImage() {
+    this.previewUrl = null;
+    this.fileToUpload = null;
+    this.remove_image = true;
+  }
+
   handleSubmit(): void {
     this.isSubmitted = true;
 
-    if (this.name.invalid || this.description.invalid || !this.previewUrl) {
+    if (this.name.invalid || this.description.invalid) {
       return;
     }
 
@@ -85,9 +95,18 @@ export class SceneFormComponent {
         id: this.data.id,
         name: this.name.value,
         description: this.description.value,
-        story_id: this.data.story_id
+        story_id: this.data.story_id,
+        visible_name: this.visible_name.value,
+        image_as_background: this.image_as_background.value,
+        remove_image: this.remove_image,
       }
     };
+
+    if (!this.data.id) {
+      data.scene['scene_actions_attributes'] = [
+        { name: 'Next', use_next: true, story_id: this.data.story_id, display_order: 1 }
+      ];
+    }
 
     if (!!this.fileToUpload) {
       formData.append('file', this.fileToUpload, this.fileToUpload.name);

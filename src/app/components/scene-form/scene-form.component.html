@@ -8,6 +8,8 @@
         <mat-error *ngIf="name.hasError('required')">Can't be blank</mat-error>
       </mat-form-field>
 
+      <mat-slide-toggle color='accent' [formControl]='visible_name' class='visible-name'> Visible name </mat-slide-toggle>
+
       <mat-form-field class="example-full-width">
         <textarea
           matInput
@@ -19,18 +21,26 @@
         <mat-error *ngIf="description.hasError('required')">Can't be blank</mat-error>
       </mat-form-field>
 
-      <div class="example-full-width">
-        <div class="img-wrapper" style='margin-top: 20px;' [ngClass]="{'error': isSubmitted && !previewUrl}">
+      <div class="example-full-width img-section">
+        <div class="img-wrapper">
           <div class="thumbnail">
             <img *ngIf='!!this.previewUrl' [src]="this.previewUrl" />
             <mat-icon *ngIf='!this.previewUrl' class='default-image'>image</mat-icon>
           </div>
 
-          <button mat-raised-button type='button' (click)='imgFileInput.click()'>
+          <button mat-raised-button type='button' (click)='imgFileInput.click()' class='img-btn'>
             <mat-icon>camera</mat-icon>
-            <span>Choose image*</span>
+            <span>Choose image</span>
+          </button>
+
+          <button mat-icon-button type='button' (click)='deleteImage()' class='btn-delete' *ngIf='!!this.previewUrl'>
+            <mat-icon>close</mat-icon>
           </button>
         </div>
+
+        <mat-slide-toggle color='accent' [formControl]='image_as_background'>
+          Display as background
+        </mat-slide-toggle>
 
         <input hidden type='file' #imgFileInput (change)="handleFileInput($event.target.files)"/>
       </div>

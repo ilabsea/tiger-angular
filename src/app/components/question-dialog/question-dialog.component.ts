@@ -27,7 +27,6 @@ export class QuestionDialogComponent implements OnInit {
   ngOnInit() {
     this.myForm = this._fb.group({
       label: [this.data.label, [Validators.required]],
-      selectedChoice: ['', [Validators.required]],
       choices: this._fb.array([])
     });
 
@@ -42,9 +41,6 @@ export class QuestionDialogComponent implements OnInit {
     for(let i=0; i<this.data.choices.length; i++) {
       this.addChoice(this.data.choices[i]);
     }
-
-    let index = this.myForm.value.choices.findIndex(item => item.answered == true);
-    this.myForm.controls.selectedChoice.setValue(this.myForm.value.choices[index]['_id']);
   }
 
   initChoice(obj={}) {
@@ -64,17 +60,10 @@ export class QuestionDialogComponent implements OnInit {
   }
 
   removeChoice(i: number) {
-    this._handleSelectedChoice(i);
     this._handleArchivedChoice(i);
 
     const control = <FormArray>this.myForm.controls['choices'];
     control.removeAt(i);
-  }
-
-  _handleSelectedChoice(i) {
-    if (this.myForm.value.selectedChoice == this.myForm.value.choices[i]['_id']) {
-      this.myForm.controls.selectedChoice.reset();
-    }
   }
 
   _handleArchivedChoice(i) {
@@ -88,13 +77,21 @@ export class QuestionDialogComponent implements OnInit {
 
   handleSubmit(): void {
     this.submmited = true;
-    if (this.myForm.invalid) { return; }
+    if (this.myForm.invalid || this.noAnswerSelected()) {
+      return;
+    }
 
     if (this.data.id) {
       return this._update();
     }
 
     this._create();
+  }
+
+  noAnswerSelected() {
+    let arr = this.myForm.value.choices.filter(obj => !!obj.answered);
+
+    return !arr.length;
   }
 
   _update() {
@@ -123,10 +120,6 @@ export class QuestionDialogComponent implements OnInit {
 
   _buildData() {
     let choices = this.myForm.value.choices.slice();
-    let index = choices.findIndex(item => item['_id'] == this.myForm.value.selectedChoice);
-
-    choices.map(c => c['answered'] = null);
-    choices[index].answered = true;
     choices = choices.concat(this.archiveChoices);
 
     let obj = {

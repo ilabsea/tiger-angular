@@ -7,12 +7,12 @@
     <div>
       <strong>Answer: </strong>
 
-      <span *ngIf='question.user_choice.id != this.getAnswer(question.choices).id'>
+      <span *ngIf='!isCorrect(question.user_choice.id, question.choices)'>
         <span class='wrong'>{{question.user_choice.label}}</span>
         <span> / </span>
       </span>
 
-      <span class='correct'>{{this.getAnswer(question.choices).label}}</span>
+      <span class='correct'>[{{this.getAnswers(question.choices)}}]</span>
     </div>
   </div>
 </div>

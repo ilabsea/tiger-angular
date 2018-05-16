@@ -26,6 +26,7 @@ import { MatToolbarModule,
          MatDatepickerModule,
          MatNativeDateModule,
          MatSlideToggleModule,
+         MatCheckboxModule,
       } from '@angular/material';
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
@@ -126,6 +127,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSlideToggleModule,
+    MatCheckboxModule,
     AppRoutingModule,
     HttpClientModule,
     DragulaModule,

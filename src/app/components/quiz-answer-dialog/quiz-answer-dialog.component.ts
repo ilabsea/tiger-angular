@@ -12,9 +12,18 @@ export class QuizAnswerDialogComponent  {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
-  getAnswer(choices) {
-    return choices.find(function(choice) {
-      return choice.answered == true;
-    });
+  isCorrect(id, choices) {
+    let arr = this._answers(choices).filter(obj => obj.id == id);
+
+    return !!arr.length;
+  }
+
+  getAnswers(choices) {
+    let arr = this._answers(choices).map(choice => choice.label);
+    return arr.join(' / ');
+  }
+
+  _answers(choices) {
+    return choices.filter(obj => !!obj.answered);
   }
 }

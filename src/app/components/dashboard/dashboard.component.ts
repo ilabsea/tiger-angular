@@ -61,7 +61,6 @@ export class DashboardComponent implements OnInit {
   _getData() {
     this.chartService.getAll()
       .subscribe(result => {
-        this.stories = this.stories.concat(result['meta']['stories']);
         this.loading = false;
         this._setChartData(result['data']);
       });

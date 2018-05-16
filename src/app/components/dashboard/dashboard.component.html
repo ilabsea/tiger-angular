@@ -3,15 +3,7 @@
   <span>Dashboard</span>
 </mat-toolbar>
 
-<section class="mat-typography flex-center" *ngIf='stories.length == 1 || loading'>
-  <div *ngIf="!stories.length && !loading" class='no-item-available'>
-    <h3 class='mat-title'>No Data Available.</h3>
-  </div>
-
-  <mat-spinner diameter='40' *ngIf='loading' color='accent'></mat-spinner>
-</section>
-
-<div class="content-wrapper" [hidden]="stories.length == 1 || loading">
+<div class="content-wrapper" [hidden]="loading">
   <div class='flex-layout'>
     <span class="spacer"></span>
     <mat-form-field style='margin-right: 10px;'>

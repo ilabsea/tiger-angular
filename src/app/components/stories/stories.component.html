@@ -41,7 +41,8 @@
       <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
       <mat-cell *matCellDef="let element">
         <div class="thumbnail" *ngIf='!!element.image'>
-          <img [src]="'http://192.168.1.107:3000' + element.image" />
+          <!-- <img [src]="'http://192.168.1.107:3000' + element.image" /> -->
+          <img [src]="element.image" />
         </div>
       </mat-cell>
     </ng-container>

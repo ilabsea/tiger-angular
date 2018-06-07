@@ -14,6 +14,8 @@ import { ENTER, COMMA } from '@angular/cdk/keycodes';
 export class StoryDialogComponent {
   title = new FormControl(this.data.title, [Validators.required]);
   description = new FormControl(this.data.description, [Validators.required]);
+  author = new FormControl(this.data.author);
+  source_link = new FormControl(this.data.source_link);
   image = new FormControl(this.data.image, [Validators.required]);
 
   fileToUpload: File = null;
@@ -142,7 +144,9 @@ export class StoryDialogComponent {
         title: this.title.value,
         description: this.description.value,
         story_id: this.data.story_id,
-        tags_attributes: this.tags.concat(this.removedTags)
+        tags_attributes: this.tags.concat(this.removedTags),
+        author: this.author.value,
+        source_link: this.source_link.value
       }
     };
 

@@ -15,6 +15,7 @@ export class SceneFormComponent {
   image = new FormControl(this.data.image, [Validators.required]);
   visible_name = new FormControl(this.data.visible_name);
   image_as_background = new FormControl(this.data.image_as_background);
+  is_end = new FormControl(this.data.is_end);
   fileToUpload: File = null;
   previewUrl: any;
   isSubmitted: boolean = false;
@@ -100,6 +101,7 @@ export class SceneFormComponent {
         visible_name: this.visible_name.value,
         image_as_background: this.image_as_background.value,
         remove_image: this.remove_image,
+        is_end: this.is_end.value,
       }
     };
 

@@ -3,12 +3,14 @@
 <form (ngSubmit)="handleSubmit()">
   <div mat-dialog-content>
     <div class="example-form">
-      <mat-form-field class="example-full-width">
-        <input matInput placeholder="Name" [formControl]='name' required>
-        <mat-error *ngIf="name.hasError('required')">Can't be blank</mat-error>
-      </mat-form-field>
+      <div class='name-wrapper'>
+        <mat-form-field class="example-full-width">
+          <input matInput placeholder="Name" [formControl]='name' required>
+          <mat-error *ngIf="name.hasError('required')">Can't be blank</mat-error>
+        </mat-form-field>
 
-      <mat-slide-toggle color='accent' [formControl]='visible_name' class='visible-name'> Visible name </mat-slide-toggle>
+        <mat-slide-toggle color='accent' [formControl]='visible_name'>Visible</mat-slide-toggle>
+      </div>
 
       <mat-form-field class="example-full-width">
         <textarea
@@ -20,6 +22,8 @@
           required></textarea>
         <mat-error *ngIf="description.hasError('required')">Can't be blank</mat-error>
       </mat-form-field>
+
+      <mat-slide-toggle color='accent' [formControl]='is_end' style='margin: 20px 0;'>End Scene</mat-slide-toggle>
 
       <div class="example-full-width img-section">
         <div class="img-wrapper">

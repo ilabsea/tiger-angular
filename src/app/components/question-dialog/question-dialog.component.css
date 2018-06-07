@@ -1,0 +1,20 @@
+.mat-dialog-actions {
+  flex-direction: row-reverse;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.error {
+  color: #f44336;
+}
+
+.choice-field {
+  width: 300px;
+}
+
+.answer-title {
+  margin-top: 20px;
+  margin-bottom: 0;
+}

@@ -20,7 +20,9 @@ import { MatToolbarModule,
          MatSidenavModule,
          MatProgressSpinnerModule,
          MatChipsModule,
-         MatListModule
+         MatListModule,
+         MatRadioModule,
+         MatExpansionModule,
       } from '@angular/material';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -34,15 +36,15 @@ import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 import { StoryService } from './services/story.service';
 import { SceneService } from './services/scene.service';
-import { SceneActionService } from './services/scene_action.service';
 import { SharedEventService } from './services/shared-event.service';
+import { QuestionService } from './services/question.service';
 
 // Dialog
-import { SceneActionDialogComponent } from './components/scene-action-dialog/scene-action-dialog.component';
 import { StoryDialogComponent } from './components/story-dialog/story-dialog.component';
 import { PopupDialogComponent } from './components/popup-dialog/popup-dialog.component';
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { SceneFormComponent } from './components/scene-form/scene-form.component';
+import { SceneActionsDialogComponent } from './components/scene-actions-dialog/scene-actions-dialog.component';
 
 // Shared
 import { NavBarComponent } from './components/navbar/navbar.component';
@@ -57,9 +59,10 @@ import { LoginComponent } from './components/login/login.component';
 import { UsersComponent } from './components/users/users.component';
 import { StoriesComponent } from './components/stories/stories.component';
 import { ScenesComponent }   from './components/scenes/scenes.component';
-import { SceneActionsComponent } from './components/scene-actions/scene-actions.component';
 import { StoryPreviewComponent } from './components/story-preview/story-preview.component';
 import { DeactivateDialogComponent } from './components/deactivate-dialog/deactivate-dialog.component';
+import { QuestionsComponent } from './components/questions/questions.component';
+import { QuestionDialogComponent } from './components/question-dialog/question-dialog.component';
 
 @NgModule({
   declarations: [
@@ -72,8 +75,6 @@ import { DeactivateDialogComponent } from './components/deactivate-dialog/deacti
     StoriesComponent,
     ScenesComponent,
     SceneFormComponent,
-    SceneActionsComponent,
-    SceneActionDialogComponent,
     StoryPreviewComponent,
     CarouselComponent,
     CarouselItemDirective,
@@ -82,6 +83,9 @@ import { DeactivateDialogComponent } from './components/deactivate-dialog/deacti
     PopupDialogComponent,
     MenuButtonComponent,
     DeactivateDialogComponent,
+    QuestionsComponent,
+    QuestionDialogComponent,
+    SceneActionsDialogComponent,
   ],
   imports: [
     NoopAnimationsModule,
@@ -105,27 +109,30 @@ import { DeactivateDialogComponent } from './components/deactivate-dialog/deacti
     MatPaginatorModule,
     MatDialogModule,
     MatListModule,
+    MatRadioModule,
+    MatExpansionModule,
     AppRoutingModule,
     HttpClientModule,
     DragulaModule,
   ],
   entryComponents: [
     SceneFormComponent,
-    SceneActionDialogComponent,
     StoryDialogComponent,
     PopupDialogComponent,
     UserFormComponent,
-    DeactivateDialogComponent
+    DeactivateDialogComponent,
+    QuestionDialogComponent,
+    SceneActionsDialogComponent,
   ],
   providers: [
     StoryService,
     SceneService,
-    SceneActionService,
     SharedEventService,
     AuthGuard,
     ApiService,
     AuthService,
     UserService,
+    QuestionService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

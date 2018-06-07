@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
   <app-menu-button></app-menu-button>
-  <span>Story Scenes</span>
+  <span *ngIf='!!story'>{{story.title}}'s Scenes</span>
   <span class='spacer'></span>
   <a mat-button routerLink="/stories/{{story_id}}/preview" routerLinkActive="active">Preview</a>
   <a mat-button routerLink="/stories" routerLinkActive="active">Done</a>
@@ -26,7 +26,7 @@
     <div class="header-cell"></div>
   </div>
   <div class='drag-wrapper'>
-    <div class='drag-container' [dragula]='"scenes-bag"' [dragulaModel]='dataSource'>
+    <div class='drag-container' [dragula]="scenes-bag" [dragulaModel]='dataSource'>
       <div *ngFor="let item of dataSource; let i = index" class='row'>
         <div class='cell'>
           <span>{{ item.name }}</span>
@@ -57,10 +57,10 @@
               <span>Delete</span>
             </button>
 
-            <a mat-menu-item routerLink="/scenes/{{item.id}}/scene_actions">
+            <button mat-menu-item (click)="openSceneActionDialog(item)" *ngIf='!isAdmin'>
               <mat-icon>list</mat-icon>
               <span>Manage actions</span>
-            </a>
+            </button>
           </mat-menu>
         </div>
 

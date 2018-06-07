@@ -1,0 +1,48 @@
+<h1 mat-dialog-title>{{data.header}}</h1>
+
+<form [formGroup]="myForm" (ngSubmit)="handleSubmit()">
+  <div mat-dialog-content>
+    <mat-form-field class="full-width">
+      <input matInput placeholder="Scene Name" [value]="data.name" disabled="true" />
+    </mat-form-field>
+
+    <h2 class='mat-typography mat-body-2'>Scene actions</h2>
+
+    <div formArrayName="scene_actions" [dragula]="actions-bag" [dragulaModel]='myForm.value.scene_actions'>
+      <div *ngFor="let scene_action of myForm.controls.scene_actions.controls; let i=index">
+        <div [formGroupName]="i">
+          <button mat-icon-button type="button" tabindex="-1">
+            <mat-icon>open_with</mat-icon>
+          </button>
+
+          <mat-form-field>
+            <input matInput placeholder="Name" formControlName="name" required />
+            <mat-error *ngIf="myForm.controls.scene_actions.controls[i].controls.name.hasError('required')">Can't be blank</mat-error>
+          </mat-form-field>
+
+          <mat-form-field>
+            <mat-select placeholder="Scene" formControlName='link_scene_id' required>
+              <mat-option *ngFor="let scene of scenes" [value]="scene.id">
+                {{ scene.name }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="myForm.controls.scene_actions.controls[i].controls.link_scene_id.hasError('required')">Can't be blank</mat-error>
+          </mat-form-field>
+
+          <button mat-icon-button type="button" (click)="removeAction(i)" [hidden]="myForm.controls.scene_actions.controls.length < 2">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <button mat-button color="primary" type='button' (click)='addAction()' [disabled]="myForm.controls.scene_actions.controls.length > 2">
+      Add another action +
+    </button>
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-raised-button color='primary' type='submit'>Save</button>
+    <button mat-button type="button" [mat-dialog-close]=''>Cancel</button>
+  </div>
+</form>

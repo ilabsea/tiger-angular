@@ -98,6 +98,11 @@
               <mat-icon>list</mat-icon>
               <span>Manage scenes</span>
             </a>
+
+            <a mat-menu-item routerLink="/stories/{{element.id}}/quiz">
+              <mat-icon>question_answer</mat-icon>
+              <span>Manage quiz</span>
+            </a>
           </mat-menu>
         </div>
 
@@ -109,6 +114,11 @@
             <a mat-menu-item routerLink="/stories/{{element.id}}/scenes">
               <mat-icon>list</mat-icon>
               <span>Scenes</span>
+            </a>
+
+            <a mat-menu-item routerLink="/stories/{{element.id}}/quiz">
+              <mat-icon>question_answer</mat-icon>
+              <span>Quiz</span>
             </a>
 
             <button mat-menu-item (click)="confirmDeactivate(element)" [disabled]="element.status == 'new' || !element.actived">

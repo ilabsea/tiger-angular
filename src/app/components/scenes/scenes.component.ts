@@ -1,10 +1,11 @@
-import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { DragulaService } from 'ng2-dragula';
 import 'rxjs/add/operator/takeUntil';
 import { Subject } from 'rxjs/Subject';
 import { SceneFormComponent } from '../scene-form/scene-form.component';
+import { SceneActionsDialogComponent } from '../scene-actions-dialog/scene-actions-dialog.component';
 import { Scene } from '../../models/scene';
 import { SceneService } from '../../services/scene.service';
 import { AuthService } from './../../services/auth.service';
@@ -16,11 +17,11 @@ import { AuthService } from './../../services/auth.service';
 })
 
 export class ScenesComponent implements OnInit, OnDestroy {
-  displayedColumns = ['name', 'description', 'image', 'actions', 'method'];
   dataSource: Scene[]=[];
   loading: boolean = true;
   story_id: string = this.route.snapshot.paramMap.get('id');
   isAdmin = this.authService.isAdmin();
+  story: any;
   private destroy$ = new Subject();
 
   constructor(
@@ -30,7 +31,11 @@ export class ScenesComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private dragulaService: DragulaService
   ) {
-    dragulaService.drop.asObservable().takeUntil(this.destroy$).subscribe(() => {
+    this.subscribeDrop();
+  }
+
+  subscribeDrop() {
+    this.dragulaService.dropModel.asObservable().takeUntil(this.destroy$).subscribe(() => {
       this.onMoveNode();
     });
   }
@@ -54,6 +59,7 @@ export class ScenesComponent implements OnInit, OnDestroy {
       .subscribe(res => {
         this.loading = false;
         this.dataSource = res['scenes'];
+        this.story = res['meta']['story'];
       });
   }
 
@@ -71,6 +77,30 @@ export class ScenesComponent implements OnInit, OnDestroy {
         }
       );
     }
+  }
+
+  openSceneActionDialog(data) {
+    this.ngOnDestroy();
+
+    let myData = Object.assign({}, data, {
+      header: 'Manage Scene Actions',
+      story_id: this.story.id,
+      scenes: this.dataSource
+    });
+
+    let dialogRef = this.dialog.open(SceneActionsDialogComponent, {
+      width: '500px',
+      data: myData
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.subscribeDrop();
+
+      if (!!result) {
+        this._updateScene(result.scene);
+        this.dataSource = this.dataSource.slice();
+      }
+    });
   }
 
   openDialog(scene): void {

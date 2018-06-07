@@ -12,7 +12,8 @@ export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(false);
 
   isLoggedIn() {
-    return this.loggedIn.asObservable();
+    // return this.loggedIn.asObservable();
+    return !!this.getCurrentUser();
   }
 
   constructor(private router: Router, private http: HttpClient, private api: ApiService) { }

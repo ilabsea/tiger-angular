@@ -6,7 +6,6 @@ const API_URL = environment.apiUrl;
 
 @Injectable()
 export class StoryService {
-
   constructor(private http: HttpClient) { }
 
   getAll(page: number, perPage: number) {

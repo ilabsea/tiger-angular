@@ -24,7 +24,11 @@ export class StoriesComponent implements OnInit {
     public dialog: MatDialog,
     private storyService: StoryService,
     private authService: AuthService
-  ) { }
+  ) {
+    if(this.isAdmin) {
+      this.displayedColumns.splice(4, 0, 'by');
+    }
+  }
 
   ngOnInit() {
     this.loading = true;
@@ -37,6 +41,7 @@ export class StoriesComponent implements OnInit {
         this.length = result['meta']['pagination']['total_objects'];
         this.dataSource = result['stories'];
         this.loading = false;
+        console.log(this.dataSource);
       });
   }
 

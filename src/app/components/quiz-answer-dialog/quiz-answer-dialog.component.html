@@ -1,0 +1,22 @@
+<h1 mat-dialog-title>{{data.header}}</h1>
+
+<div mat-dialog-content class="mat-typography mat-body-1">
+  <div *ngFor='let question of data.questions; let i = index' class='question-wrapper'>
+    <div> {{i+1}}) {{question.label}} </div>
+
+    <div>
+      <strong>Answer: </strong>
+
+      <span *ngIf='!isCorrect(question.user_choice.id, question.choices)'>
+        <span class='wrong'>{{question.user_choice.label}}</span>
+        <span> / </span>
+      </span>
+
+      <span class='correct'>[{{this.getAnswers(question.choices)}}]</span>
+    </div>
+  </div>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-raised-button [mat-dialog-close]='' color='primary'>OK</button>
+</div>

@@ -30,7 +30,8 @@ export class StoryDialogComponent {
     private storyService: StoryService) {
 
     if(!!this.data.image) {
-      this.previewUrl = 'http://192.168.1.107:3000' + this.data.image;
+      // this.previewUrl = 'http://192.168.1.107:3000' + this.data.image;
+      this.previewUrl = this.data.image;
     }
   }
 

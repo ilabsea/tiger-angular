@@ -18,7 +18,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   loading: boolean = true;
   story_id: string = this.route.snapshot.paramMap.get('id');
   isAdmin = this.authService.isAdmin();
-  story: any;
+  story: any = {};
   private destroy$ = new Subject();
 
   constructor(
@@ -51,6 +51,8 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   }
 
   onMoveNode() {
+    if (this.isAdmin) { return; }
+
     let ids = this.dataSource.map(obj => obj['id']);
     this.questionService.updateOrder(this.story_id, ids)
       .subscribe(res => { console.log(res) });

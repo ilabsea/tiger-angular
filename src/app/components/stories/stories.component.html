@@ -17,15 +17,15 @@
 <div class="content-wrapper" [hidden]="!dataSource.length || loading">
   <mat-table #table [dataSource]="dataSource">
     <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef> Title </mat-header-cell>
-      <mat-cell *matCellDef="let element">
+      <mat-header-cell *matHeaderCellDef class='flex-2'> Title </mat-header-cell>
+      <mat-cell *matCellDef="let element" class='flex-2'>
         {{element.title}}
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="description">
-      <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
-      <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
+      <mat-header-cell *matHeaderCellDef class='flex-2'>Description</mat-header-cell>
+      <mat-cell *matCellDef="let element" class='flex-2'> {{element.description}} </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="tags">
@@ -41,8 +41,16 @@
       <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
       <mat-cell *matCellDef="let element">
         <div class="thumbnail" *ngIf='!!element.image'>
-          <img [src]="'http://192.168.1.107:3000' + element.image" />
+          <!-- <img [src]="'http://192.168.1.107:3000' + element.image" /> -->
+          <img [src]="element.image" />
         </div>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="by" *ngIf='isAdmin'>
+      <mat-header-cell *matHeaderCellDef> Created By </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span>{{element.user.email}}</span>
       </mat-cell>
     </ng-container>
 
@@ -119,6 +127,11 @@
             <a mat-menu-item routerLink="/stories/{{element.id}}/quiz">
               <mat-icon>question_answer</mat-icon>
               <span>Quiz</span>
+            </a>
+
+            <a mat-menu-item routerLink="/stories/{{element.id}}/preview">
+              <mat-icon>phone_android</mat-icon>
+              <span>Preview</span>
             </a>
 
             <button mat-menu-item (click)="confirmDeactivate(element)" [disabled]="element.status == 'new' || !element.actived">

@@ -1,0 +1,63 @@
+<mat-toolbar color="primary">
+  <app-menu-button></app-menu-button>
+  <span>Dashboard</span>
+</mat-toolbar>
+
+<div class="content-wrapper" [hidden]="loading">
+  <div class='flex-layout'>
+    <span class="spacer"></span>
+    <mat-form-field style='margin-right: 10px;'>
+      <mat-select placeholder="" [(ngModel)]="selectedStory" name='story_id' (selectionChange)="filterData()">
+        <mat-option *ngFor="let story of stories" [value]="story.id">
+          <span>{{ story.title }}</span>
+          <span *ngIf="!!story.status">({{story.status}})</span>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select placeholder="" [(ngModel)]="selectedTime" name='my_time' (selectionChange)="filterDate()">
+        <mat-option *ngFor="let time of times" [value]="time">
+          {{ time.label }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div class="mat-typography label-wrapper">
+    <div class='mat-body-2' [hidden]='!!customDate && !!customDate.from'>
+      {{selectedTime.label}}
+    </div>
+
+    <div *ngIf='!!customDate && !!customDate.from'>
+      <span>From</span>
+      <strong>{{customDate.from | date: 'MMMM dd, yyyy'}}</strong>
+      <span>To</span>
+      <strong>{{customDate.to | date: 'MMMM dd, yyyy'}}</strong>
+      <button mat-button color="primary" (click)='showDialog()'>Edit</button>
+    </div>
+
+    <div class="flex-layout">
+      <div class='download-wrapper'>
+        <div class='mat-body-1 download-title'>Downloads by user</div>
+        <div class='mat-body-1 download-count'>{{totalDownload}}</div>
+      </div>
+
+      <div>
+        <div class='mat-body-1 read-title'>Reads by user</div>
+        <div class='mat-body-1 read-count'>{{totalRead}}</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div>
+      <canvas baseChart width="700" height="400"
+        [datasets]="lineChartData"
+        [labels]="lineChartLabels"
+        [options]="lineChartOptions"
+        chartType="line">
+      </canvas>
+    </div>
+  </div>
+</div>

@@ -22,6 +22,33 @@
   border: 1px solid #eee;
   border-radius: 3px;
   overflow: hidden;
+  margin-right: 20px;
+  position: relative;
+}
+
+.img-section {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.img-btn {
+  width: 158px;
+}
+
+.visible-name {
+  margin: 20px 0;
+}
+
+.btn-delete {
+  display: none;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.img-wrapper:hover .btn-delete {
+  display: block;
 }
 
 .thumbnail {

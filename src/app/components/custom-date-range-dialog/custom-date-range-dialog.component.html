@@ -1,0 +1,20 @@
+<h1 mat-dialog-title>Custom Date Range</h1>
+
+<div mat-dialog-content class="mat-typography mat-body-1">
+  <mat-form-field style='margin-right: 8px;'>
+    <input matInput [max]="maxDate" [matDatepicker]="picker1" placeholder="From" [formControl]="from" required>
+    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+    <mat-datepicker #picker1 disabled="false"></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput [max]="maxDate" [matDatepicker]="picker2" placeholder="To" [formControl]="to" required>
+    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+    <mat-datepicker #picker2 disabled="false"></mat-datepicker>
+  </mat-form-field>
+</div>
+
+<div mat-dialog-actions>
+  <button mat-raised-button color='primary' (click)='handleSubmit()'>Done</button>
+  <button mat-button [mat-dialog-close]=''>Cancel</button>
+</div>

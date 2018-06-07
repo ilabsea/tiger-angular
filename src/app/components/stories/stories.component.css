@@ -11,3 +11,7 @@
 .error {
   color: #f44336;
 }
+
+.flex-2 {
+  flex: 2;
+}

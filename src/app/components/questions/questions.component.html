@@ -2,13 +2,14 @@
   <app-menu-button></app-menu-button>
   <span *ngIf='!!story'>{{story.title}}'s Quiz</span>
   <span class='spacer'></span>
-  <a mat-button routerLink="/stories" routerLinkActive="active">Done</a>
+  <a mat-button routerLink="/stories/{{story_id}}/preview">Preview</a>
+  <a mat-button routerLink="/stories">Done</a>
 </mat-toolbar>
 
 <section class="mat-typography flex-center" *ngIf='!dataSource.length || loading'>
   <div *ngIf="!dataSource.length && !loading" class='no-item-available'>
     <h3 class='mat-title'>No Questions Available.</h3>
-    <div class="mat-body-1" *ngIf='!isAdmin'>
+    <div class="mat-body-1" *ngIf='!isAdmin && story.status == "new"'>
       Use <strong>+</strong> button at the bottom-right corner.
     </div>
   </div>
@@ -16,7 +17,7 @@
   <mat-spinner diameter='40' *ngIf='loading' color='accent'></mat-spinner>
 </section>
 
-<div class="content-wrapper" *ngIf="dataSource.length">
+<div class="content-wrapper" *ngIf="!!dataSource.length">
   <div class="header-row">
     <div class="header-cell">Question</div>
   </div>
@@ -26,7 +27,7 @@
       <mat-expansion-panel *ngFor="let item of dataSource; let i = index">
         <mat-expansion-panel-header>
           <mat-panel-title>
-            {{item.label}}
+            {{i+1}}) {{item.label}}
           </mat-panel-title>
           <mat-panel-description>
             ({{item.choices.length}}) Choices
@@ -39,7 +40,7 @@
           <strong *ngIf='choice.answered'>(answer)</strong>
         </div>
 
-        <mat-action-row *ngIf='!isAdmin'>
+        <mat-action-row *ngIf='!isAdmin && story.status == "new"'>
           <button mat-icon-button (click)="openDialog(item)">
             <mat-icon>edit</mat-icon>
           </button>
@@ -54,6 +55,6 @@
   </div>
 </div>
 
-<button mat-fab class='add-button' (click)="openDialog()" *ngIf='!isAdmin'>
+<button mat-fab class='add-button' (click)="openDialog()" *ngIf='!isAdmin && story.status == "new"'>
   <mat-icon>add</mat-icon>
 </button>

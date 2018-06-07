@@ -123,6 +123,6 @@ export class CarouselComponent implements AfterViewInit {
       // this.itemWidth = this.itemsElements.first.nativeElement.getBoundingClientRect().width;
       this.carouselWrapperStyle = { display: 'block' };
       this.ulStyle = { width: `${100 * this.items.length}%` }
-    }, 50);
+    }, 100);
   }
 }

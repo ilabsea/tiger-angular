@@ -1,5 +1,32 @@
-.fill-remaining-space {
-  /* This fills the remaining space, by using flexbox.
-     Every toolbar row uses a flexbox row layout. */
-  flex: 1 1 auto;
+.nav-icon {
+  margin-right: 10px;
+  color: rgba(0,0,0,.54);
+}
+
+.header-section {
+  padding-bottom: 16px;
+  padding: 20px 20px 16px 20px;
+}
+
+.header-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  max-width: 40px;
+  max-height: 40px;
+  margin-right: 10px;
+}
+
+.header-title {
+  margin: 0;
+}
+
+.email {
+  text-align: right;
+}
+
+.active, .active .nav-icon {
+  color: #3f51b5;
 }

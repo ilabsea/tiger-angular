@@ -24,14 +24,24 @@ export class LoginComponent implements OnInit {
     public snackBar: MatSnackBar) {}
 
   ngOnInit() {
-    if (this.authService.isLoggedIn()) {
-      this.router.navigate(['/stories']);
+    if (!this.authService.isLoggedIn()) {
+      return;
     }
+
+    if (this.authService.isAdmin()) {
+      return this.router.navigate(['/dashboard']);
+    }
+
+    this.router.navigate(['/stories']);
   }
 
   onSubmit() {
     this.authService.login(this.form.value).subscribe(
       data => {
+        if (this.authService.isAdmin()) {
+          return this.router.navigate(['/dashboard']);
+        }
+
         this.router.navigate(['/stories']);
       },
       error => {

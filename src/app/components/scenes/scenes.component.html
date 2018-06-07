@@ -17,7 +17,7 @@
   <mat-spinner diameter='40' *ngIf='loading' color='accent'></mat-spinner>
 </section>
 
-<div class="content-wrapper" *ngIf="dataSource.length">
+<div class="content-wrapper" *ngIf="!!dataSource.length">
   <div class="header-row">
     <div class="header-cell">Title</div>
     <div class="header-cell">Description</div>
@@ -35,7 +35,8 @@
         <div class='cell'>{{ item.description}}</div>
         <div class='cell'>
           <div class="thumbnail" *ngIf='!!item.image'>
-            <img [src]="'http://192.168.1.107:3000' + item.image" />
+            <!-- <img [src]="'http://192.168.1.107:3000' + item.image" /> -->
+            <img [src]="item.image" />
           </div>
         </div>
 
@@ -47,17 +48,17 @@
           </button>
 
           <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="openDialog(item)" *ngIf='!isAdmin'>
+            <button mat-menu-item (click)="openDialog(item)" *ngIf='!isAdmin && story.status == "new"'>
               <mat-icon>edit</mat-icon>
               <span>Edit</span>
             </button>
 
-            <button mat-menu-item (click)="remove(item)" *ngIf='!isAdmin'>
+            <button mat-menu-item (click)="remove(item)" *ngIf='!isAdmin && story.status == "new"'>
               <mat-icon>delete</mat-icon>
               <span>Delete</span>
             </button>
 
-            <button mat-menu-item (click)="openSceneActionDialog(item)" *ngIf='!isAdmin'>
+            <button mat-menu-item (click)="openSceneActionDialog(item)">
               <mat-icon>list</mat-icon>
               <span>Manage actions</span>
             </button>
@@ -69,6 +70,6 @@
   </div>
 </div>
 
-<button mat-fab class='add-button' (click)="openDialog()" *ngIf='!isAdmin'>
+<button mat-fab class='add-button' (click)="openDialog()" *ngIf='!isAdmin && story.status == "new"'>
   <mat-icon>add</mat-icon>
 </button>

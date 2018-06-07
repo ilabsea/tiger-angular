@@ -1,6 +1,6 @@
 <mat-toolbar color="primary">
   <app-menu-button></app-menu-button>
-  <span>User</span>
+  <span>Users</span>
 </mat-toolbar>
 
 <section class="mat-typography flex-center" *ngIf='!dataSource.length || loading'>
@@ -15,7 +15,6 @@
 </section>
 
 <div class="content-wrapper" [hidden]="!dataSource.length || loading">
-  <h3 class="table-header">List user</h3>
   <mat-table #table [dataSource]="dataSource">
     <ng-container matColumnDef="email">
       <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>

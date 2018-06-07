@@ -21,7 +21,7 @@ export class ScenesComponent implements OnInit, OnDestroy {
   loading: boolean = true;
   story_id: string = this.route.snapshot.paramMap.get('id');
   isAdmin = this.authService.isAdmin();
-  story: any;
+  story: any = {};
   private destroy$ = new Subject();
 
   constructor(
@@ -49,6 +49,8 @@ export class ScenesComponent implements OnInit, OnDestroy {
   }
 
   onMoveNode() {
+    if (this.isAdmin) { return; }
+
     let ids = this.dataSource.map(obj => obj['id']);
     this.sceneService.updateOrder(this.story_id, ids)
       .subscribe(res => { console.log(res) });
@@ -85,7 +87,8 @@ export class ScenesComponent implements OnInit, OnDestroy {
     let myData = Object.assign({}, data, {
       header: 'Manage Scene Actions',
       story_id: this.story.id,
-      scenes: this.dataSource
+      scenes: this.dataSource,
+      story: this.story
     });
 
     let dialogRef = this.dialog.open(SceneActionsDialogComponent, {
@@ -107,7 +110,7 @@ export class ScenesComponent implements OnInit, OnDestroy {
     if (!!scene) {
       this._showDialog(scene, this._updateScene)
     } else {
-      let data = { story_id: this.story_id }
+      let data = { story_id: this.story_id, visible_name: true, image_as_background: false }
       this._showDialog(data, this._appendScene);
     }
   }

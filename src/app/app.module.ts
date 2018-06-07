@@ -23,7 +23,13 @@ import { MatToolbarModule,
          MatListModule,
          MatRadioModule,
          MatExpansionModule,
+         MatDatepickerModule,
+         MatNativeDateModule,
+         MatSlideToggleModule,
+         MatCheckboxModule,
       } from '@angular/material';
+
+import { ChartsModule } from 'ng2-charts/ng2-charts';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptor } from './helpers/token.interceptor';
@@ -38,6 +44,7 @@ import { StoryService } from './services/story.service';
 import { SceneService } from './services/scene.service';
 import { SharedEventService } from './services/shared-event.service';
 import { QuestionService } from './services/question.service';
+import { ChartService } from './services/chart.service';
 
 // Dialog
 import { StoryDialogComponent } from './components/story-dialog/story-dialog.component';
@@ -45,6 +52,8 @@ import { PopupDialogComponent } from './components/popup-dialog/popup-dialog.com
 import { UserFormComponent } from './components/user-form/user-form.component';
 import { SceneFormComponent } from './components/scene-form/scene-form.component';
 import { SceneActionsDialogComponent } from './components/scene-actions-dialog/scene-actions-dialog.component';
+import { CustomDateRangeDialogComponent } from './components/custom-date-range-dialog/custom-date-range-dialog.component';
+import { QuizAnswerDialogComponent } from './components/quiz-answer-dialog/quiz-answer-dialog.component';
 
 // Shared
 import { NavBarComponent } from './components/navbar/navbar.component';
@@ -63,6 +72,7 @@ import { StoryPreviewComponent } from './components/story-preview/story-preview.
 import { DeactivateDialogComponent } from './components/deactivate-dialog/deactivate-dialog.component';
 import { QuestionsComponent } from './components/questions/questions.component';
 import { QuestionDialogComponent } from './components/question-dialog/question-dialog.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +96,9 @@ import { QuestionDialogComponent } from './components/question-dialog/question-d
     QuestionsComponent,
     QuestionDialogComponent,
     SceneActionsDialogComponent,
+    DashboardComponent,
+    CustomDateRangeDialogComponent,
+    QuizAnswerDialogComponent,
   ],
   imports: [
     NoopAnimationsModule,
@@ -111,9 +124,14 @@ import { QuestionDialogComponent } from './components/question-dialog/question-d
     MatListModule,
     MatRadioModule,
     MatExpansionModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSlideToggleModule,
+    MatCheckboxModule,
     AppRoutingModule,
     HttpClientModule,
     DragulaModule,
+    ChartsModule,
   ],
   entryComponents: [
     SceneFormComponent,
@@ -123,6 +141,8 @@ import { QuestionDialogComponent } from './components/question-dialog/question-d
     DeactivateDialogComponent,
     QuestionDialogComponent,
     SceneActionsDialogComponent,
+    CustomDateRangeDialogComponent,
+    QuizAnswerDialogComponent,
   ],
   providers: [
     StoryService,
@@ -133,6 +153,7 @@ import { QuestionDialogComponent } from './components/question-dialog/question-d
     AuthService,
     UserService,
     QuestionService,
+    ChartService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

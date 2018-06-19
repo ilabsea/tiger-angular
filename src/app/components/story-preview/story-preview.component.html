@@ -39,12 +39,17 @@
 
             <div class='description'>{{scene.description}}</div>
 
-            <div class='actions flex-column'>
-              <a *ngFor="let action of scene.scene_actions" mat-raised-button (click)="slideTo(carousel, action.link_scene.id)" class="btn btn-success" [hidden]='!action.link_scene.id && !this.questions.length'>
+            <div class='actions flex-column' *ngIf='!scene.is_end'>
+              <a *ngFor="let action of scene.scene_actions" mat-raised-button (click)="slideTo(carousel, action.link_scene.id)" [hidden]='!action.link_scene.id && !this.questions.length'>
                 <span *ngIf='!!action.link_scene.id'>{{action.name}}</span>
                 <span *ngIf='!action.link_scene.id'>Go to quiz</span>
               </a>
             </div>
+
+            <div class='actions flex-column' *ngIf='scene.is_end && this.questions.length'>
+              <a mat-raised-button (click)="slideTo(carousel, null)"> Go to quiz </a>
+            </div>
+
           </div>
         </div>
       </ng-container>

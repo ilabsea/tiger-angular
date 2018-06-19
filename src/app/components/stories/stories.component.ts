@@ -57,7 +57,7 @@ export class StoriesComponent implements OnInit {
 
     if (!result) { return; }
 
-    this.storyService.update(story.id, this._buildData(story, {status: 'published'})).subscribe(
+    this.storyService.update(story.id, this._buildData(story, {status: 'published', published_at: new Date})).subscribe(
       res => {
         this._updateView(res['story']);
       },

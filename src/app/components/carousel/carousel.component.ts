@@ -47,9 +47,10 @@ export class CarouselItemElement {
   `,
   styles: [`
     .carousel-wrapper {
-      display: hidden;
+      display: block;
       overflow: hidden;
       height: 100%;
+      opacity: 0;
     }
 
     ul {
@@ -121,8 +122,8 @@ export class CarouselComponent implements AfterViewInit {
     // For some reason only here I need to add setTimeout, in my local env it's working without this.
     setTimeout(() => {
       // this.itemWidth = this.itemsElements.first.nativeElement.getBoundingClientRect().width;
-      this.carouselWrapperStyle = { display: 'block' };
       this.ulStyle = { width: `${100 * this.items.length}%` }
-    }, 100);
+      this.carouselWrapperStyle = { opacity: 1 };
+    }, 150);
   }
 }

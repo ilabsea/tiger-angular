@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ChartService } from './../../services/chart.service';
+import { TagService } from './../../services/tag.service';
+import { AuthService } from './../../services/auth.service';
 import { CustomDateRangeDialogComponent } from '../custom-date-range-dialog/custom-date-range-dialog.component';
 
 @Component({
@@ -8,38 +11,39 @@ import { CustomDateRangeDialogComponent } from '../custom-date-range-dialog/cust
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
+
 export class DashboardComponent implements OnInit {
   loading: boolean = true;
-  stories: any[] = [{id: '', title: 'All Stories'}];
-  selectedStory: any = '';
+  tags: any[] = [
+    {id: '', title: 'All Tags'}
+  ];
+  selectedTag: any = '';
+  apiUrl = environment.apiUrl;
+  authToken = this.authService.getCurrentUser().authentication_token;
   times: any[] = [
     { period: 7,
-      period_unit: 'days',
       label: 'Last 7 days'
     },
     {
       period: 30,
-      period_unit: 'days',
       label: 'Last 30 days'
     },
     {
       period: 90,
-      period_unit: 'days',
       label: 'Last 3 months'
     },
     {
-      period: 12,
-      period_unit: 'months',
+      period: 365,
       label: 'Last year'
     },
     {
-      period: '',
-      period_unit: 'custom',
+      period: -1,
       label: 'Custom Range'
     }
   ];
   selectedTime: any;
-  customDate: any = {};
+  fromDate: any;
+  toDate: any;
   previousTime: any;
   lineChartData: Array<any> = [{ data: [], label: '' }];
   lineChartLabels: Array<any> = [];
@@ -49,21 +53,34 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private chartService: ChartService,
+    private authService: AuthService,
+    private tagService: TagService,
     public dialog: MatDialog,
   ) { }
 
   ngOnInit() {
     this.selectedTime = this.times[0];
     this.previousTime = this.selectedTime;
-    this._getData();
+    this.selectedTag = this.tags[0].id;
+    this._setFilterDate(this.times[0].period);
+    this.loadRefData();
+    this.fetchData();
   }
 
-  _getData() {
-    this.chartService.getAll()
+  loadRefData() {
+    this.tagService.getAll()
       .subscribe(result => {
-        this.loading = false;
-        this._setChartData(result['data']);
-      });
+        for (let tag of result['tags']) {
+          this.tags.push(tag);
+        }
+      }
+  }
+
+  _setFilterDate(numOfDayAgo) {
+    this.toDate = new Date();
+    this.toDate.setHours(23,59,59,999);
+    this.fromDate = new Date(this.toDate.getFullYear(), this.toDate.getMonth(), this.toDate.getDate() - numOfDayAgo)
+    this.fromDate.setHours(0,0,0,0);
   }
 
   _setChartData(data) {
@@ -80,42 +97,75 @@ export class DashboardComponent implements OnInit {
     this.totalRead = data.map(o => o.story_reads).reduce((a, b) => {return a + b});
   }
 
+  fromDateParams() {
+    return encodeURIComponent(this.fromDateStr() + " " + "00:00:00")
+  }
+
+  toDateParams() {
+    return encodeURIComponent(this.toDateStr() + " " + "23:59:59")
+  }
+
+  fromDateStr() {
+    return this.fromDate.toLocaleDateString("km-kh");
+  }
+
+  toDateStr() {
+    return this.toDate.toLocaleDateString("km-kh");
+  }
+
   showDialog() {
     let dialogRef = this.dialog.open(CustomDateRangeDialogComponent, {
       width: '500px',
-      data: this.customDate
+      data: { from: this.fromDate, to: this.toDate }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (!!result) {
-        this.customDate = result;
-        this.filterData();
-        return
+        this.fromDate = result.from;
+        this.toDate = result.to;
+        this.selectedTime = this.times[this.times.length - 1];
+        this.fetchData();
+        return;
       }
 
-      if (!!this.customDate.from) { return; }
+      if (!!this.fromDate) { return; }
 
-      this.customDate = {};
       this.selectedTime = this.previousTime;
     });
   }
 
+  downloadUrl() {
+    let url = `${this.apiUrl}story_downloads.xlsx?from=${this.fromDateParams()}&to=${this.toDateParams()}&Authorization=${this.authToken}`;
+    
+    if (!!this.selectedTag) {
+      url = `${url}&tag_id=${this.selectedTag}`;
+    }
+
+    return url;
+  }
+
   filterDate() {
-    if (this.selectedTime.period_unit == 'custom') {
+    if (this.selectedTime.period == -1) {
       return this.showDialog();
     }
 
-    this.customDate = {};
     this.previousTime = this.selectedTime;
-    this.filterData();
+    this._setFilterDate(this.selectedTime.period);
+    this.fetchData();
   }
 
-  filterData() {
-    let time = Object.assign({}, this.selectedTime, this.customDate);
+  tagChanged(event) {
+    this.selectedTag = event.value;
+    this.fetchData();
+  }
 
-    this.chartService.getAll({story_id: this.selectedStory, time: time})
-      .subscribe(result => {
-        this._setChartData(result['data']);
-      });
+  fetchData() {
+    let dateRange = Object.assign({}, {from: this.fromDateParams(), to: this.toDateParams()});
+
+    this.chartService.getAll({tag_id: this.selectedTag, dateRange: dateRange})
+      .subscribe(result => { 
+        this.loading = false;
+        this._setChartData(result['data'])
+      })
   }
 }

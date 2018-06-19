@@ -45,6 +45,7 @@ import { SceneService } from './services/scene.service';
 import { SharedEventService } from './services/shared-event.service';
 import { QuestionService } from './services/question.service';
 import { ChartService } from './services/chart.service';
+import { TagService } from './services/tag.service';
 
 // Dialog
 import { StoryDialogComponent } from './components/story-dialog/story-dialog.component';
@@ -157,6 +158,7 @@ import { RejectDialogComponent } from './components/reject-dialog/reject-dialog.
     UserService,
     QuestionService,
     ChartService,
+    TagService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

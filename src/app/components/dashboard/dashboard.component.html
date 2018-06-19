@@ -7,10 +7,9 @@
   <div class='flex-layout'>
     <span class="spacer"></span>
     <mat-form-field style='margin-right: 10px;'>
-      <mat-select placeholder="" [(ngModel)]="selectedStory" name='story_id' (selectionChange)="filterData()">
-        <mat-option *ngFor="let story of stories" [value]="story.id">
-          <span>{{ story.title }}</span>
-          <span *ngIf="!!story.status">({{story.status}})</span>
+      <mat-select placeholder="" [(ngModel)]="selectedTag" name='tag_id' (selectionChange)="tagChanged($event)">
+        <mat-option *ngFor="let tag of tags" [value]="tag.id">
+          <span>{{ tag.title }}</span>
         </mat-option>
       </mat-select>
     </mat-form-field>
@@ -25,15 +24,15 @@
   </div>
 
   <div class="mat-typography label-wrapper">
-    <div class='mat-body-2' [hidden]='!!customDate && !!customDate.from'>
-      {{selectedTime.label}}
+    <div class='mat-body-2' [hidden]='!!(selectedTime.period == -1)'>
+      {{selectedTime.label}} (From <strong>{{fromDateStr()}}</strong> To <strong>{{toDateStr()}}</strong>)
     </div>
 
-    <div *ngIf='!!customDate && !!customDate.from'>
+    <div *ngIf='!!(selectedTime.period == -1)'>
       <span>From</span>
-      <strong>{{customDate.from | date: 'MMMM dd, yyyy'}}</strong>
+      <strong>{{fromDateStr() | date: 'MMMM dd, yyyy'}}</strong>
       <span>To</span>
-      <strong>{{customDate.to | date: 'MMMM dd, yyyy'}}</strong>
+      <strong>{{toDateStr() | date: 'MMMM dd, yyyy'}}</strong>
       <button mat-button color="primary" (click)='showDialog()'>Edit</button>
     </div>
 
@@ -46,6 +45,12 @@
       <div>
         <div class='mat-body-1 read-title'>Reads by user</div>
         <div class='mat-body-1 read-count'>{{totalRead}}</div>
+      </div>
+
+      <div>
+        <div class='mat-body-1 read-title'>
+          <a [href]="downloadUrl()" target='_blank' class='mat-body-1 export-csv'>Export as Excel</a>
+        </div>
       </div>
     </div>
   </div>

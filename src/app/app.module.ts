@@ -73,6 +73,7 @@ import { DeactivateDialogComponent } from './components/deactivate-dialog/deacti
 import { QuestionsComponent } from './components/questions/questions.component';
 import { QuestionDialogComponent } from './components/question-dialog/question-dialog.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { RejectDialogComponent } from './components/reject-dialog/reject-dialog.component';
 
 @NgModule({
   declarations: [
@@ -99,6 +100,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     DashboardComponent,
     CustomDateRangeDialogComponent,
     QuizAnswerDialogComponent,
+    RejectDialogComponent,
   ],
   imports: [
     NoopAnimationsModule,
@@ -143,6 +145,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
     SceneActionsDialogComponent,
     CustomDateRangeDialogComponent,
     QuizAnswerDialogComponent,
+    RejectDialogComponent,
   ],
   providers: [
     StoryService,

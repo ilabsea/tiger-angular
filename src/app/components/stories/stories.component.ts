@@ -5,6 +5,7 @@ import { AuthService } from './../../services/auth.service';
 import { StoryDialogComponent } from '../story-dialog/story-dialog.component';
 import { PopupDialogComponent } from '../popup-dialog/popup-dialog.component';
 import { DeactivateDialogComponent } from '../deactivate-dialog/deactivate-dialog.component';
+import { RejectDialogComponent } from '../reject-dialog/reject-dialog.component';
 
 @Component({
   selector: 'app-stories',
@@ -19,6 +20,14 @@ export class StoriesComponent implements OnInit {
   length: number;
   pageSize = 20;
   isAdmin = this.authService.isAdmin();
+  statuses: any[] = [
+    { label: 'All', value: '' },
+    { label: 'New', value: 'new' },
+    { label: 'Pending', value: 'pending' },
+    { label: 'Published', value: 'published' },
+    { label: 'Rejected', value: 'rejected' }];
+  status = this.statuses[0];
+  hasData = false;
 
   constructor(
     public dialog: MatDialog,
@@ -27,6 +36,10 @@ export class StoriesComponent implements OnInit {
   ) {
     if(this.isAdmin) {
       this.displayedColumns.splice(4, 0, 'by');
+      this.statuses = this.statuses.concat([
+        {label: 'Archived', value: 'archived'},
+        {label: 'Deactivated', value: 'deactivated'},
+      ]);
     }
   }
 
@@ -36,11 +49,22 @@ export class StoriesComponent implements OnInit {
   }
 
   getStories(page: number, perPage: number): void {
-    this.storyService.getAll(page, perPage)
+    this.storyService.getAll({page: page, perPage: perPage})
       .subscribe(result => {
         this.length = result['meta']['pagination']['total_objects'];
         this.dataSource = result['stories'];
         this.loading = false;
+        this.hasData = page == 1 && !!result['stories'].length;
+      });
+  }
+
+  filterData() {
+    let options = {page: 1, perPage: this.pageSize, status: this.status.value};
+
+    this.storyService.getAll(options)
+      .subscribe(result => {
+        this.length = result['meta']['pagination']['total_objects'];
+        this.dataSource = result['stories'];
         console.log(this.dataSource);
       });
   }
@@ -52,11 +76,7 @@ export class StoriesComponent implements OnInit {
     this.getStories(page, perPage);
   }
 
-  publish(story) {
-    var result = confirm("Are you sure you want to publish this story as you may not be able to modify it anymore?");
-
-    if (!result) { return; }
-
+  approve(story) {
     this.storyService.update(story.id, this._buildData(story, {status: 'published', published_at: new Date})).subscribe(
       res => {
         this._updateView(res['story']);
@@ -67,8 +87,29 @@ export class StoriesComponent implements OnInit {
     );
   }
 
-  unpublish(story) {
-    this.storyService.update(story.id, this._buildData(story, {status: 'unpublished'})).subscribe(
+  _reject(story) {
+    console.log('reject');
+  }
+
+  showConfirmRecject(story) {
+    let dialogRef = this.dialog.open(RejectDialogComponent, {
+      width: '500px',
+      data: story
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!!result) {
+        this._updateView(result);
+      }
+    });
+  }
+
+  publish(story) {
+    var result = confirm("Are you sure you want to submit for review this story?");
+
+    if (!result) { return; }
+
+    this.storyService.update(story.id, this._buildData(story, {status: 'pending'})).subscribe(
       res => {
         this._updateView(res['story']);
       },
@@ -92,7 +133,7 @@ export class StoriesComponent implements OnInit {
   showReason(story) {
     let dialogRef = this.dialog.open(PopupDialogComponent, {
       width: '500px',
-      data: { title: 'Deactivated Reason', message: story.reason }
+      data: { title: 'Reason', message: story.reason }
     });
   }
 

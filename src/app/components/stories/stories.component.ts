@@ -1,4 +1,5 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, PageEvent } from '@angular/material';
 import { StoryService } from '../../services/story.service';
 import { AuthService } from './../../services/auth.service';
@@ -12,6 +13,7 @@ import { RejectDialogComponent } from '../reject-dialog/reject-dialog.component'
   templateUrl: './stories.component.html',
   styleUrls: ['./stories.component.css']
 })
+
 export class StoriesComponent implements OnInit {
   displayedColumns = ['name', 'description', 'tags', 'image', 'status', 'actions'];
   dataSource: any=[];
@@ -20,6 +22,7 @@ export class StoriesComponent implements OnInit {
   length: number;
   pageSize = 20;
   isAdmin = this.authService.isAdmin();
+  endpointUrl = environment.endpointUrl;
   statuses: any[] = [
     { label: 'All', value: '' },
     { label: 'New', value: 'new' },

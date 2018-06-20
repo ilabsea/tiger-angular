@@ -124,6 +124,6 @@ export class CarouselComponent implements AfterViewInit {
       // this.itemWidth = this.itemsElements.first.nativeElement.getBoundingClientRect().width;
       this.ulStyle = { width: `${100 * this.items.length}%` }
       this.carouselWrapperStyle = { opacity: 1 };
-    }, 150);
+    }, 200);
   }
 }

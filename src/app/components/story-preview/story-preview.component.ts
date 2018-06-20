@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { ActivatedRoute } from '@angular/router';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { SceneService } from '../../services/scene.service';
@@ -19,6 +20,7 @@ export class StoryPreviewComponent implements OnInit {
   story_id: string = this.route.snapshot.paramMap.get('id');
   totalSlides: number = 0;
   story: any={};
+  endpointUrl = environment.endpointUrl;
 
   constructor(
     private route: ActivatedRoute,

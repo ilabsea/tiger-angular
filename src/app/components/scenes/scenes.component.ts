@@ -1,4 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { environment } from '../../../environments/environment';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { DragulaService } from 'ng2-dragula';
@@ -22,6 +23,7 @@ export class ScenesComponent implements OnInit, OnDestroy {
   story_id: string = this.route.snapshot.paramMap.get('id');
   isAdmin = this.authService.isAdmin();
   story: any = {};
+  endpointUrl = environment.endpointUrl;
   private destroy$ = new Subject();
 
   constructor(

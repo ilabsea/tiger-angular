@@ -8,13 +8,19 @@ const API_URL = environment.apiUrl;
 export class ChartService {
   constructor(private http: HttpClient) { }
 
-  getAll(option={}) {
+  getAll(options={}) {
     let params = '';
-    if (!!option['story_id']) {
-      params = `${params}story_id=${option['story_id']}&`;
+
+    if (!!options['story_id']) {
+      params = `${params}story_id=${options['story_id']}&`;
     }
-    if (!!option['time']) {
-      params = `${params}${this._serialize(option['time'])}`;
+
+    if (!!options['tag_id']) {
+      params = `${params}tag_id=${options['tag_id']}&`;
+    }
+
+    if (!!options['dateRange']) {
+      params = `${params}${this._serialize(options['dateRange'])}`;
     }
 
     let endpoint = `${API_URL}chart?${params}`;

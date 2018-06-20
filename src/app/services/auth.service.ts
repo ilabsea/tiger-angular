@@ -11,12 +11,12 @@ import { ApiService } from './api.service';
 export class AuthService {
   private loggedIn = new BehaviorSubject<boolean>(false);
 
+  constructor(private router: Router, private http: HttpClient, private api: ApiService) { }
+
   isLoggedIn() {
     // return this.loggedIn.asObservable();
     return !!this.getCurrentUser();
   }
-
-  constructor(private router: Router, private http: HttpClient, private api: ApiService) { }
 
   getCurrentUser(): User{
     return JSON.parse(localStorage.getItem('currentUser'));

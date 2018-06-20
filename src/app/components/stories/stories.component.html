@@ -3,7 +3,7 @@
   <span>Stories</span>
 </mat-toolbar>
 
-<section class="mat-typography flex-center" *ngIf='!dataSource.length || loading'>
+<section class="mat-typography flex-center" *ngIf='!hasData || loading'>
   <div *ngIf="!dataSource.length && !loading" class='no-item-available'>
     <h3 class='mat-title'>No Story Available.</h3>
     <div class="mat-body-1" *ngIf="!isAdmin">
@@ -14,7 +14,19 @@
   <mat-spinner diameter='40' *ngIf='loading' color='accent'></mat-spinner>
 </section>
 
-<div class="content-wrapper" [hidden]="!dataSource.length || loading">
+<div class="content-wrapper" [hidden]="!hasData || loading">
+
+  <div class='flex-layout'>
+    <span class="spacer"></span>
+    <mat-form-field style='margin-right: 10px;'>
+      <mat-select placeholder="" [(ngModel)]="status" name='status' (selectionChange)="filterData()">
+        <mat-option *ngFor="let status of statuses" [value]="status">
+          <span>{{ status.label }}</span>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
   <mat-table #table [dataSource]="dataSource">
     <ng-container matColumnDef="name">
       <mat-header-cell *matHeaderCellDef class='flex-2'> Title </mat-header-cell>
@@ -57,13 +69,11 @@
     <ng-container matColumnDef="status">
       <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <span *ngIf="element.actived">{{element.status | uppercase}}</span>
-        <div *ngIf="!element.actived">
-          <span>{{'Deactived' |uppercase}}</span>
-          <button mat-icon-button (click)="showReason(element)">
-            <mat-icon class='error'>info_outline</mat-icon>
-          </button>
-        </div>
+        <span *ngIf="element.actived" [ngClass]="element.status">{{element.status | uppercase}}</span>
+        <span *ngIf="!element.actived">{{'Deactivated' | uppercase}}</span>
+        <button *ngIf="!element.actived || element.status == 'rejected'" mat-icon-button (click)="showReason(element)">
+          <mat-icon class='error'>info_outline</mat-icon>
+        </button>
 
       </mat-cell>
     </ng-container>
@@ -77,7 +87,7 @@
           </button>
 
           <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="openDialog(element)" [disabled]="!element.actived || element.status!='new'">
+            <button mat-menu-item (click)="openDialog(element)" [disabled]="!element.actived || (element.status!='new' && element.status!='rejected')">
               <mat-icon>edit</mat-icon>
               <span>Edit</span>
             </button>
@@ -87,14 +97,9 @@
               <span>Delete</span>
             </button>
 
-            <button mat-menu-item (click)="publish(element)" *ngIf="element.status!='published'" [disabled]="!element.actived">
+            <button mat-menu-item (click)="publish(element)" *ngIf="element.status=='new' || element.status=='rejected'" [disabled]="!element.actived">
               <mat-icon>visibility</mat-icon>
-              <span>Publish</span>
-            </button>
-
-            <button mat-menu-item (click)="unpublish(element)" *ngIf="element.actived && element.status=='published'">
-              <mat-icon>visibility_off</mat-icon>
-              <span>Unpublish</span>
+              <span>Submit To Review</span>
             </button>
 
             <button mat-menu-item (click)="clone(element)">
@@ -110,6 +115,11 @@
             <a mat-menu-item routerLink="/stories/{{element.id}}/quiz">
               <mat-icon>question_answer</mat-icon>
               <span>Manage quiz</span>
+            </a>
+
+            <a mat-menu-item routerLink="/stories/{{element.id}}/preview">
+              <mat-icon>phone_android</mat-icon>
+              <span>Preview</span>
             </a>
           </mat-menu>
         </div>
@@ -133,6 +143,16 @@
               <mat-icon>phone_android</mat-icon>
               <span>Preview</span>
             </a>
+
+            <button mat-menu-item (click)="approve(element)" *ngIf="element.status=='pending'">
+              <mat-icon>check_circle_outline</mat-icon>
+              <span>Approve</span>
+            </button>
+
+            <button mat-menu-item (click)="showConfirmRecject(element)" *ngIf="element.status=='pending'">
+              <mat-icon>pan_tool</mat-icon>
+              <span>Reject</span>
+            </button>
 
             <button mat-menu-item (click)="confirmDeactivate(element)" [disabled]="element.status == 'new' || !element.actived">
               <mat-icon>delete</mat-icon>

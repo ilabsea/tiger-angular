@@ -8,8 +8,18 @@ const API_URL = environment.apiUrl;
 export class StoryService {
   constructor(private http: HttpClient) { }
 
-  getAll(page: number, perPage: number) {
-    let endpoint = `${API_URL}stories?page=${page}&per_page=${perPage}`
+  getAll(options={}) {
+    let filter = '';
+
+    if (!!options['status']) {
+      filter = `&status=${options['status']}&actived=1`;
+    }
+
+    if (options['status'] == 'deactivated') {
+      filter = `&actived=0`;
+    }
+
+    let endpoint = `${API_URL}stories?page=${options['page']}&per_page=${options['perPage']}${filter}`;
     return this.http.get(endpoint);
   }
 

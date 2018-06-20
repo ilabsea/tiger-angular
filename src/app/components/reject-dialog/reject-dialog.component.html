@@ -1,0 +1,24 @@
+<h1 mat-dialog-title>Confirm Reject</h1>
+
+<form (ngSubmit)="onSubmit()">
+  <div mat-dialog-content>
+    <p class="mat-typography mat-body-1">Are you sure you want to reject this story?</p>
+
+    <mat-form-field class="form">
+      <textarea
+        matInput
+        matTextareaAutosize
+        placeholder="Reason"
+        matAutosizeMaxRows="5"
+        [formControl]='reason'
+        required></textarea>
+      <mat-error *ngIf="reason.hasError('required')">can't be blank</mat-error>
+      <mat-error *ngIf="reason.hasError('server')">{{this.reason.errors.server}}</mat-error>
+    </mat-form-field>
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-raised-button type='submit' color='primary'>Yes</button>
+    <button mat-button type='button' [mat-dialog-close]=''>Cancel</button>
+  </div>
+</form>

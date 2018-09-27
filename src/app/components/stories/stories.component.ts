@@ -22,7 +22,6 @@ export class StoriesComponent implements OnInit {
   length: number;
   pageSize = 20;
   isAdmin = this.authService.isAdmin();
-  endpointUrl = environment.endpointUrl;
   statuses: any[] = [
     { label: 'All', value: '' },
     { label: 'New', value: 'new' },

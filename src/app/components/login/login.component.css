@@ -24,6 +24,11 @@
   padding: 30px;
 }
 
-.header {
+.header-wrapper {
   text-align: center;
+}
+
+.logo {
+  max-width: 100px;
+  margin-right: 10px;
 }

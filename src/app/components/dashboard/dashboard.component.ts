@@ -73,7 +73,7 @@ export class DashboardComponent implements OnInit {
         for (let tag of result['tags']) {
           this.tags.push(tag);
         }
-      }
+      })
   }
 
   _setFilterDate(numOfDayAgo) {
@@ -136,7 +136,7 @@ export class DashboardComponent implements OnInit {
 
   downloadUrl() {
     let url = `${this.apiUrl}story_downloads.xlsx?from=${this.fromDateParams()}&to=${this.toDateParams()}&Authorization=${this.authToken}`;
-    
+
     if (!!this.selectedTag) {
       url = `${url}&tag_id=${this.selectedTag}`;
     }
@@ -163,7 +163,7 @@ export class DashboardComponent implements OnInit {
     let dateRange = Object.assign({}, {from: this.fromDateParams(), to: this.toDateParams()});
 
     this.chartService.getAll({tag_id: this.selectedTag, dateRange: dateRange})
-      .subscribe(result => { 
+      .subscribe(result => {
         this.loading = false;
         this._setChartData(result['data'])
       })

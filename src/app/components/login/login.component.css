@@ -32,3 +32,10 @@
   max-width: 100px;
   margin-right: 10px;
 }
+
+.btn-signup {
+  width: 548px;
+  margin: 0 auto;
+  text-align: right;
+  margin-top: 20px;
+}

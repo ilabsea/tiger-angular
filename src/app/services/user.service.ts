@@ -8,8 +8,14 @@ const API_URL = environment.apiUrl;
 export class UserService {
   constructor(private http: HttpClient) { }
 
-  getAll(page: number, perPage: number) {
-    let endpoint = `${API_URL}users?page=${page}&per_page=${perPage}`
+  getAll(options={}) {
+    let filter = '';
+
+    if (!!options['status']) {
+      filter = `&status=${options['status']}`;
+    }
+
+    let endpoint = `${API_URL}users?page=${options['page']}&per_page=${options['perPage']}${filter}`;
     return this.http.get(endpoint);
   }
 

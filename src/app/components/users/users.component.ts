@@ -1,7 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { UserService } from '../../services/user.service';
 
-import { MatTableDataSource, MatPaginator, PageEvent, MatDialog } from '@angular/material';
+import {
+  MatTableDataSource,
+  MatPaginator,
+  PageEvent,
+  MatDialog,
+  MatSnackBar,
+} from '@angular/material';
 import { Observable } from 'rxjs/Observable';
 import { UserFormComponent } from './../user-form/user-form.component';
 
@@ -19,10 +25,18 @@ export class UsersComponent implements OnInit {
   length: number;
   pageSize = 20;
   loading: boolean = true;
+  hasData = false;
+  statuses: any[] = [
+    { label: 'All', value: '' },
+    { label: 'Pending', value: 'pending' },
+    { label: 'Actived', value: 'actived' },
+    { label: 'Inactived', value: 'inactived' }];
+  status = this.statuses[0];
 
   constructor(
     private userService: UserService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public snackBar: MatSnackBar,
   ) { }
 
   ngOnInit() {
@@ -31,11 +45,12 @@ export class UsersComponent implements OnInit {
   }
 
   getUsers(page: number, perPage: number): void {
-    this.userService.getAll(page, perPage).subscribe(response =>
+    this.userService.getAll({page: page, perPage: perPage}).subscribe(response =>
       {
         this.dataSource = response['users'];
         this.length = response['meta']['pagination']['total_objects'];
         this.loading = false;
+        this.hasData = page == 1 && !!response['users'].length;
       }
     );
   }
@@ -45,6 +60,17 @@ export class UsersComponent implements OnInit {
     var perPage = event.pageSize;
     this.pageSize = perPage;
     this.getUsers(page, perPage);
+  }
+
+  filterData() {
+    let options = {page: 1, perPage: this.pageSize, status: this.status.value};
+
+    this.userService.getAll(options)
+      .subscribe(result => {
+        this.length = result['meta']['pagination']['total_objects'];
+        this.dataSource = result['users'];
+        console.log(this.dataSource);
+      });
   }
 
   delete(user) {
@@ -58,6 +84,27 @@ export class UsersComponent implements OnInit {
       },
       err => { console.log(err); }
     );
+  }
+
+  approve(user) {
+    this.userService.update(user.id, this._buildData(user)).subscribe(
+      res => {
+        this._updateView(res.user);
+        this._openSnackBar('The user aprroved successfully!', null);
+      },
+      err => {
+        console.log(err);
+      }
+    );
+  }
+
+  _buildData(user) {
+    return {
+      user:  {
+        id: user.id,
+        status: 'actived'
+      }
+    }
   }
 
   openDialog(user): void {
@@ -99,5 +146,13 @@ export class UsersComponent implements OnInit {
 
   _deleteView = (result)=> {
     this.ngOnInit();
+  }
+
+  _openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 4000,
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+    });
   }
 }

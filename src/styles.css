@@ -10,6 +10,10 @@ body {
   flex: 1 1 auto;
 }
 
+.flex-layout {
+  display: flex;
+}
+
 mat-sidenav {
   width: 250px;
 }

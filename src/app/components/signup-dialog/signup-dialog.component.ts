@@ -24,7 +24,7 @@ export class SignupDialogComponent {
 
   constructor(public dialogRef: MatDialogRef<SignupDialogComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
-              private fb: FormBuilder, public snackBar: MatSnackBar
+              private fb: FormBuilder, public snackBar: MatSnackBar,
               public userService: UserService) { }
 
   onSubmit() {

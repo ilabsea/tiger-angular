@@ -70,7 +70,8 @@ export class UserFormComponent {
         email: this.form.value.email,
         password: this.form.value.password,
         password_confirmation: this.form.value.passwordConfirmation,
-        role: this.form.value.role
+        role: this.form.value.role,
+        status: 'actived'
       }
     }
   }

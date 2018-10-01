@@ -3,38 +3,27 @@
   flex-direction: column;
 }
 
-.login-form > * {
-  width: 100%;
-}
-
-.container > .login-card {
-  margin: 0 auto;
-  width: 500px;
-}
-
-.test{
-  border: 1px solid red;
-}
-
 .actions {
   margin-top: 24px;
 }
 
-.container {
+.my-container {
+  display: flex;
+  flex-direction: 'column';
+  justify-content: center;
   padding: 30px;
 }
 
 .header-wrapper {
-  text-align: center;
+  margin-right: 24px;
 }
 
 .logo {
-  max-width: 100px;
-  margin-right: 10px;
+  max-width: 150px;
 }
 
 .btn-signup {
-  width: 548px;
+  width: 400px;
   margin: 0 auto;
   text-align: right;
   margin-top: 20px;

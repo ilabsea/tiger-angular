@@ -89,7 +89,7 @@ export class UsersComponent implements OnInit {
   approve(user) {
     this.userService.update(user.id, this._buildData(user)).subscribe(
       res => {
-        this._updateView(res.user);
+        this._updateView(res['user']);
         this._openSnackBar('The user aprroved successfully!', null);
       },
       err => {

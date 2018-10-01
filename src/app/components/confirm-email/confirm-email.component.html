@@ -1,0 +1,7 @@
+<div class="mat-typography my-containter" *ngIf='!loading'>
+  <div>Email {{errors.email}}</div>
+  <div style="margin: 24px">
+    <span>Go to </span>
+    <button mat-button mat-raised-button color='primary' (click)="goTo('/login')">Login</button>
+  </div>
+</div>

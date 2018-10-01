@@ -24,6 +24,11 @@ export class UserService {
     return this.http.post(endpoint, body);
   }
 
+  confirm(body) {
+    let endpoint = API_URL + 'confirmations';
+    return this.http.post(endpoint, body);
+  }
+
   update(id, body) {
     let endpoint = API_URL + 'users/' + id;
     return this.http.put(endpoint, body);

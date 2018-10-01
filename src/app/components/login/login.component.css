@@ -11,15 +11,19 @@
   display: flex;
   flex-direction: 'column';
   justify-content: center;
-  padding: 30px;
+  padding-top: 100px;
+}
+
+.content {
+  display: flex;
 }
 
 .header-wrapper {
-  margin-right: 24px;
+  margin-right: 100px;
 }
 
 .logo {
-  max-width: 150px;
+  max-width: 270px;
 }
 
 .btn-signup {
@@ -27,4 +31,15 @@
   margin: 0 auto;
   text-align: right;
   margin-top: 20px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-top: 1px solid #eee;
 }

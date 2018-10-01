@@ -1,37 +1,41 @@
 <div class="my-container mat-typography">
 
-  <mat-card class="login-card col-3">
-    <mat-card-content style="display: flex;">
+  <div style="display: flex;">
+    <div  class='header-wrapper'>
+      <img src='../../../assets/images/logo.png' class='logo' />
+    </div>
 
-      <div  class='header-wrapper'>
-        <img src='../../../assets/images/logo.png' class='logo' />
+    <div>
+      <h1 class='mat-title header' class='header-title'>TIGER PROJECT</h1>
+      <form [formGroup]="form" (ngSubmit)="onSubmit()" class="login-form">
+        <mat-form-field>
+          <input matInput placeholder="Email" formControlName="email" required>
+          <mat-error *ngIf="form.controls.email.hasError('email') && !form.controls.email.hasError('required')">
+            Please enter a valid email address
+          </mat-error>
+          <mat-error *ngIf="form.controls.email.hasError('required')">
+            Email is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput placeholder="Enter your password" type="password" formControlName="password" required>
+          <mat-error>Password is required</mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" class='actions'>Login</button>
+      </form>
+
+      <div class="btn-signup">
+        <button mat-button (click)="openDialog()">Want to be a publisher?</button>
       </div>
+    </div>
+  </div>
 
-      <div>
-        <h1 class='mat-title header' class='header-title'>TIGER PROJECT</h1>
-        <form [formGroup]="form" (ngSubmit)="onSubmit()" class="login-form">
-          <mat-form-field>
-            <input matInput placeholder="Email" formControlName="email" required>
-            <mat-error *ngIf="form.controls.email.hasError('email') && !form.controls.email.hasError('required')">
-              Please enter a valid email address
-            </mat-error>
-            <mat-error *ngIf="form.controls.email.hasError('required')">
-              Email is <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
+  <div class="footer">
+    <div>Copy right: Instedd iLabSEA</div>
+    <div>Version 1.0.0</div>
+  </div>
 
-          <mat-form-field>
-            <input matInput placeholder="Enter your password" type="password" formControlName="password" required>
-            <mat-error>Password is required</mat-error>
-          </mat-form-field>
-
-          <button mat-raised-button color="primary" type="submit" class='actions'>Login</button>
-        </form>
-
-        <div class="btn-signup">
-          <button mat-button (click)="openDialog()">Want to be a publisher?</button>
-        </div>
-      </div>
-    </mat-card-content>
-  </mat-card>
 </div>
+

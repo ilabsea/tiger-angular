@@ -50,6 +50,14 @@ export class DashboardComponent implements OnInit {
   lineChartOptions: any = { responsive: true };
   totalDownload: number;
   totalRead: number;
+  userTypes: any = [
+    {label: 'All User', value: ''},
+    {label: 'Teacher', value: 'teacher'},
+    {label: 'Guardian', value: 'guardian'},
+    {label: 'Student', value: 'student'},
+    {label: 'Other', value: 'other'}
+  ];
+  selectedUserType: any = '';
 
   constructor(
     private chartService: ChartService,
@@ -62,6 +70,7 @@ export class DashboardComponent implements OnInit {
     this.selectedTime = this.times[0];
     this.previousTime = this.selectedTime;
     this.selectedTag = this.tags[0].id;
+    this.selectedUserType = this.userTypes[0];
     this._setFilterDate(this.times[0].period);
     this.loadRefData();
     this.fetchData();
@@ -159,10 +168,20 @@ export class DashboardComponent implements OnInit {
     this.fetchData();
   }
 
+  userTypeChanged(event) {
+    this.selectedUserType = event.value;
+    this.fetchData();
+  }
+
   fetchData() {
     let dateRange = Object.assign({}, {from: this.fromDateParams(), to: this.toDateParams()});
+    let params = {
+      tag_id: this.selectedTag,
+      dateRange: dateRange,
+      user_type: this.selectedUserType['value']
+    };
 
-    this.chartService.getAll({tag_id: this.selectedTag, dateRange: dateRange})
+    this.chartService.getAll(params)
       .subscribe(result => {
         this.loading = false;
         this._setChartData(result['data'])

@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  endpointUrl: 'http://110.74.204.121:8282/',
-  apiUrl: 'http://110.74.204.121:8282/api/v1/'
+  endpointUrl: 'http://192.168.1.249/',
+  apiUrl: 'http://192.168.1.249/api/v1/'
 };

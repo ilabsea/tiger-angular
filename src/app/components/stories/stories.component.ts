@@ -18,7 +18,6 @@ export class StoriesComponent implements OnInit {
   displayedColumns = ['name', 'description', 'tags', 'image', 'status', 'actions'];
   dataSource: any=[];
   loading: boolean = true;
-  pageEvent: PageEvent;
   length: number;
   pageSize = 20;
   isAdmin = this.authService.isAdmin();
@@ -56,7 +55,7 @@ export class StoriesComponent implements OnInit {
         this.length = result['meta']['pagination']['total_objects'];
         this.dataSource = result['stories'];
         this.loading = false;
-        this.hasData = page == 1 && !!result['stories'].length;
+        this.hasData = this.hasData || (page == 1 && !!result['stories'].length);
       });
   }
 

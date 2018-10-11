@@ -21,7 +21,7 @@ export class UsersComponent implements OnInit {
 
   displayedColumns = ['email', 'role', 'status', 'actions'];
   dataSource: any = [];
-  pageEvent: PageEvent;
+  // pageEvent: PageEvent;
   length: number;
   pageSize = 20;
   loading: boolean = true;
@@ -50,7 +50,7 @@ export class UsersComponent implements OnInit {
         this.dataSource = response['users'];
         this.length = response['meta']['pagination']['total_objects'];
         this.loading = false;
-        this.hasData = page == 1 && !!response['users'].length;
+        this.hasData = this.hasData || (page == 1 && !!response['users'].length);
       }
     );
   }
@@ -107,7 +107,7 @@ export class UsersComponent implements OnInit {
     }
   }
 
-  openDialog(user): void {
+  openDialog(user=null) {
     if (!!user) {
       this._showDialog(user, this._updateView)
     } else {

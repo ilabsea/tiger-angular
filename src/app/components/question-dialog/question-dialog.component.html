@@ -13,7 +13,7 @@
     </h2>
 
     <div class="example-radio-group" formArrayName="choices">
-      <div *ngFor="let choice of myForm.controls.choices.controls; let i=index">
+      <div *ngFor="let choice of myForm['controls'].choices['controls']; let i=index">
         <div [formGroupName]="i">
           <mat-checkbox formControlName='answered'></mat-checkbox>
 

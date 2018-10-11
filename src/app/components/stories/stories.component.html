@@ -169,7 +169,7 @@
   <mat-paginator [length]="length"
                 [pageSize]="pageSize"
                 [pageSizeOptions]="[20, 50, 100]"
-                (page)="pageEvent = getNextData($event)"
+                (page)="getNextData($event)"
                 style='margin-bottom: 24px;'>
   </mat-paginator>
 </div>

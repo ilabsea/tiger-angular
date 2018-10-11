@@ -2,8 +2,13 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import './assets/css/dragula.min.css';
 
+html {
+  height: 100%;
+}
+
 body {
   margin: 0;
+  height: 100%;
 }
 
 .spacer {
@@ -33,7 +38,7 @@ mat-toolbar {
 
 .content-wrapper {
   width: 80%;
-  margin: 64px auto;
+  margin: 64px auto 0;
   margin-top: 80px;
 }
 

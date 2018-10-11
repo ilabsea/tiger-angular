@@ -9,9 +9,12 @@
 
 .my-container {
   display: flex;
-  flex-direction: 'column';
+  flex-direction: column;
   justify-content: center;
-  padding-top: 100px;
+  width: 770px;
+  margin: 0 auto;
+  height: 100%;
+  box-sizing: border-box;
 }
 
 .content {
@@ -31,15 +34,4 @@
   margin: 0 auto;
   text-align: right;
   margin-top: 20px;
-}
-
-.footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  display: flex;
-  justify-content: space-between;
-  padding: 10px;
-  border-top: 1px solid #eee;
 }

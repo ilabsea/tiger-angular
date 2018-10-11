@@ -77,6 +77,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { RejectDialogComponent } from './components/reject-dialog/reject-dialog.component';
 import { SignupDialogComponent } from './components/signup-dialog/signup-dialog.component';
 import { ConfirmEmailComponent } from './components/confirm-email/confirm-email.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -106,6 +107,7 @@ import { ConfirmEmailComponent } from './components/confirm-email/confirm-email.
     RejectDialogComponent,
     SignupDialogComponent,
     ConfirmEmailComponent,
+    FooterComponent,
   ],
   imports: [
     NoopAnimationsModule,

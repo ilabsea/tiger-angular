@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormControl, Validators } from '@angular/forms';
 import { SceneService } from '../../services/scene.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-scene-form',
@@ -20,6 +21,7 @@ export class SceneFormComponent {
   previewUrl: any;
   isSubmitted: boolean = false;
   remove_image: boolean = false;
+  endpointUrl = environment.endpointUrl;
 
   constructor(
     public dialogRef: MatDialogRef<SceneFormComponent>,
@@ -28,7 +30,7 @@ export class SceneFormComponent {
 
     if(!!this.data.image) {
       // this.previewUrl = 'http://192.168.1.107:3000' + this.data.image;
-      this.previewUrl = this.data.image;
+      this.previewUrl = this.endpointUrl + this.data.image;
     }
   }
 

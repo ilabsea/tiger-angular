@@ -29,6 +29,7 @@ export class StoriesComponent implements OnInit {
     { label: 'Rejected', value: 'rejected' }];
   status = this.statuses[0];
   hasData = false;
+  endpointUrl = environment.endpointUrl;
 
   constructor(
     public dialog: MatDialog,

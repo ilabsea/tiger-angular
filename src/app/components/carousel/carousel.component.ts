@@ -65,6 +65,7 @@ export class CarouselItemElement {
       flex: 1;
       display: flex;
       flex-direction: column;
+      overflow: scroll;
     }
   `]
 })

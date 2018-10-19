@@ -2,6 +2,7 @@ import { Component, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { FormControl, Validators } from '@angular/forms';
 import { StoryService } from '../../services/story.service';
+import { environment } from '../../../environments/environment';
 
 import { MatChipInputEvent } from '@angular/material';
 import { ENTER, COMMA } from '@angular/cdk/keycodes';
@@ -25,6 +26,7 @@ export class StoryDialogComponent {
   removedTags: any = [];
   showError: boolean = false;
   isSubmitted: boolean = false;
+  endpointUrl = environment.endpointUrl;
 
   constructor(
     public dialogRef: MatDialogRef<StoryDialogComponent>,
@@ -33,7 +35,7 @@ export class StoryDialogComponent {
 
     if(!!this.data.image) {
       // this.previewUrl = 'http://192.168.1.107:3000' + this.data.image;
-      this.previewUrl = this.data.image;
+      this.previewUrl = this.endpointUrl + this.data.image;
     }
   }
 

@@ -7,3 +7,21 @@
   margin-left: 20px;
   padding-top: 20px;
 }
+
+.pending {
+  color: orange;
+}
+
+.actived {
+  font-weight: 500;
+  color: green;
+}
+
+.inactived {
+  color: red;
+}
+
+.approved {
+  color: #ff4081;
+}
+

@@ -65,6 +65,7 @@ export class CarouselItemElement {
       flex: 1;
       display: flex;
       flex-direction: column;
+      overflow: scroll;
     }
   `]
 })
@@ -79,8 +80,8 @@ export class CarouselComponent implements AfterViewInit {
   private player : AnimationPlayer;
   private itemWidth : number;
   private currentSlide = 0;
-  private carouselWrapperStyle = {}
-  private ulStyle = {}
+  public carouselWrapperStyle = {}
+  public ulStyle = {}
   private buildAnimation( offset ) {
     return this.builder.build([
       animate(this.timing, style({ transform: `translateX(-${offset}%)` }))

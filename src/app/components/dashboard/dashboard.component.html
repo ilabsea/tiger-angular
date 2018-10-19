@@ -6,6 +6,15 @@
 <div class="content-wrapper" [hidden]="loading">
   <div class='flex-layout'>
     <span class="spacer"></span>
+
+    <mat-form-field style='margin-right: 10px;'>
+      <mat-select placeholder="" [(ngModel)]="selectedUserType" name='user_type' (selectionChange)="userTypeChanged($event)">
+        <mat-option *ngFor="let userType of userTypes" [value]="userType">
+          <span>{{ userType.label }}</span>
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
     <mat-form-field style='margin-right: 10px;'>
       <mat-select placeholder="" [(ngModel)]="selectedTag" name='tag_id' (selectionChange)="tagChanged($event)">
         <mat-option *ngFor="let tag of tags" [value]="tag.id">

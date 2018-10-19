@@ -19,6 +19,10 @@ export class ChartService {
       params = `${params}tag_id=${options['tag_id']}&`;
     }
 
+    if (!!options['user_type']) {
+      params = `${params}user_type=${options['user_type']}&`;
+    }
+
     if (!!options['dateRange']) {
       params = `${params}${this._serialize(options['dateRange'])}`;
     }

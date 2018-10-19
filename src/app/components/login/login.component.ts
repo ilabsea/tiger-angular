@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatSnackBar,
+} from '@angular/material';
 import { AuthService } from './../../services/auth.service';
+import { SignupDialogComponent } from '../signup-dialog/signup-dialog.component';
 
 @Component({
   selector: 'app-login',
@@ -18,6 +24,7 @@ export class LoginComponent implements OnInit {
   );
 
   constructor(
+    public dialog: MatDialog,
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
@@ -50,6 +57,13 @@ export class LoginComponent implements OnInit {
       }
     );
   }
+
+  openDialog(): void {
+      const dialogRef = this.dialog.open(SignupDialogComponent, {
+        width: '500px',
+        data: {}
+      });
+    }
 
   _openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {

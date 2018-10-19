@@ -1,0 +1,56 @@
+<h1 mat-dialog-title>Request to be a publisher</h1>
+
+<form [formGroup]="form">
+  <div class="mat-dialog-content">
+    <mat-form-field class='form'>
+      <input matInput type="email" placeholder="Email" formControlName="email" required>
+
+      <mat-error *ngIf="form.controls.email.hasError('email') && !form.controls.email.hasError('required')">
+        is invalid email
+      </mat-error>
+      <mat-error *ngIf="form.controls.email.hasError('required')">
+        can't be blank
+      </mat-error>
+      <mat-error *ngIf="form.controls.email.hasError('server')">
+        {{form.controls.email.errors.server}}
+      </mat-error>
+
+    </mat-form-field>
+
+    <mat-form-field class='form'>
+      <input matInput placeholder="Role" disabled value='Publisher' >
+    </mat-form-field>
+
+    <mat-form-field class='form'>
+      <input matInput type="password" placeholder="Password"
+      formControlName="password" required
+      validateEqual="passwordConfirmation">
+
+      <mat-error *ngIf="form.controls.password.hasError('required')">
+        can't be blank
+      </mat-error>
+      <mat-error *ngIf="form.controls.password.hasError('server')">
+        {{form.controls.password.errors.server}}
+      </mat-error>
+
+    </mat-form-field>
+
+    <mat-form-field class='form'>
+      <input matInput type="password" placeholder="Password confirmation"
+       formControlName="passwordConfirmation" required >
+
+      <mat-error *ngIf="form.controls.passwordConfirmation.hasError('required')">
+        can't be blank
+      </mat-error>
+      <mat-error *ngIf="form.controls.passwordConfirmation.hasError('mismatch')">
+        is miss matched
+      </mat-error>
+
+    </mat-form-field>
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-raised-button color='primary' type='submit' (click)='onSubmit()'>Save</button>
+    <button mat-button type='button' [mat-dialog-close]=''>Cancel</button>
+  </div>
+</form>

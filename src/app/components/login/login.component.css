@@ -3,27 +3,35 @@
   flex-direction: column;
 }
 
-.login-form > * {
-  width: 100%;
-}
-
-.container > .login-card {
-  margin: 0 auto;
-  width: 500px;
-}
-
-.test{
-  border: 1px solid red;
-}
-
 .actions {
   margin-top: 24px;
 }
 
-.container {
-  padding: 30px;
+.my-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 770px;
+  margin: 0 auto;
+  height: 100%;
+  box-sizing: border-box;
 }
 
-.header {
-  text-align: center;
+.content {
+  display: flex;
+}
+
+.header-wrapper {
+  margin-right: 100px;
+}
+
+.logo {
+  max-width: 270px;
+}
+
+.btn-signup {
+  width: 400px;
+  margin: 0 auto;
+  text-align: right;
+  margin-top: 20px;
 }

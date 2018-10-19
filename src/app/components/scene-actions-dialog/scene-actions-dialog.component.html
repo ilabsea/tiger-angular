@@ -8,8 +8,8 @@
 
     <h2 class='mat-typography mat-body-2'>Scene actions</h2>
 
-    <div formArrayName="scene_actions" [dragula]="actions-bag" [dragulaModel]='myForm.value.scene_actions'>
-      <div *ngFor="let scene_action of myForm.controls.scene_actions.controls; let i=index">
+    <div formArrayName="scene_actions" [dragula]="'actions-bag'" [dragulaModel]='myForm.value.scene_actions'>
+      <div *ngFor="let scene_action of myForm['controls'].scene_actions['controls']; let i=index">
         <div [formGroupName]="i">
           <button mat-icon-button type="button" tabindex="-1">
             <mat-icon>open_with</mat-icon>

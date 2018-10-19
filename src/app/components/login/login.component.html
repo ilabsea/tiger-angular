@@ -1,8 +1,12 @@
-<div class="container mat-typography">
-  <h1 class='mat-title header'>Tiger</h1>
+<div class="my-container mat-typography">
 
-  <mat-card class="login-card col-3">
-    <mat-card-content>
+  <div style="display: flex; flex-grow: 1; padding-top: 100px">
+    <div  class='header-wrapper'>
+      <img src='../../../assets/images/logo.png' class='logo' />
+    </div>
+
+    <div>
+      <h1 class='mat-title header' class='header-title'>TIGER PROJECT</h1>
       <form [formGroup]="form" (ngSubmit)="onSubmit()" class="login-form">
         <mat-form-field>
           <input matInput placeholder="Email" formControlName="email" required>
@@ -21,6 +25,13 @@
 
         <button mat-raised-button color="primary" type="submit" class='actions'>Login</button>
       </form>
-    </mat-card-content>
-  </mat-card>
+
+      <div class="btn-signup">
+        <button mat-button (click)="openDialog()">Want to be a publisher?</button>
+      </div>
+    </div>
+  </div>
+
+  <app-footer></app-footer>
 </div>
+

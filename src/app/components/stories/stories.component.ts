@@ -18,11 +18,9 @@ export class StoriesComponent implements OnInit {
   displayedColumns = ['name', 'description', 'tags', 'image', 'status', 'actions'];
   dataSource: any=[];
   loading: boolean = true;
-  pageEvent: PageEvent;
   length: number;
   pageSize = 20;
   isAdmin = this.authService.isAdmin();
-  endpointUrl = environment.endpointUrl;
   statuses: any[] = [
     { label: 'All', value: '' },
     { label: 'New', value: 'new' },
@@ -31,6 +29,7 @@ export class StoriesComponent implements OnInit {
     { label: 'Rejected', value: 'rejected' }];
   status = this.statuses[0];
   hasData = false;
+  endpointUrl = environment.endpointUrl;
 
   constructor(
     public dialog: MatDialog,
@@ -57,7 +56,7 @@ export class StoriesComponent implements OnInit {
         this.length = result['meta']['pagination']['total_objects'];
         this.dataSource = result['stories'];
         this.loading = false;
-        this.hasData = page == 1 && !!result['stories'].length;
+        this.hasData = this.hasData || (page == 1 && !!result['stories'].length);
       });
   }
 

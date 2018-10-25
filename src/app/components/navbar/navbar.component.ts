@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from './../../services/auth.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-navbar',
@@ -12,6 +13,7 @@ export class NavBarComponent implements OnInit {
 
   currentUser = this.authService.getCurrentUser();
   isAdmin = this.authService.isAdmin();
+  userGuideUrl = environment.endpointUrl + '/download_web_guide';
 
   constructor(private router: Router, private authService: AuthService) { }
 

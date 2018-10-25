@@ -53,6 +53,16 @@
       </mat-form-field>
 
       <mat-form-field class="example-full-width">
+        <mat-select placeholder="License *" [formControl]='license'>
+          <mat-option *ngFor="let license of licenses" [value]="license" >
+            {{license}}
+          </mat-option>
+        </mat-select>
+
+        <mat-error>can't be blank</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
         <input
           matInput
           pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)"

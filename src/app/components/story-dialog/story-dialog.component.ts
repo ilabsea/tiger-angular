@@ -13,11 +13,19 @@ import { ENTER, COMMA } from '@angular/cdk/keycodes';
   styleUrls: ['./story-dialog.component.css']
 })
 export class StoryDialogComponent {
+  licenses: any = [
+    'Creative Commons license family - cc',
+    'Creative Commons Zero v1.0 Universal - cc0-1.0',
+    'Creative Commons Attribution 4.0 - cc-by-4.0',
+    'Creative Commons Attribution Share Alike 4.0 - cc-by-sa-4.0'
+  ];
+
   title = new FormControl(this.data.title, [Validators.required]);
   description = new FormControl(this.data.description, [Validators.required]);
   author = new FormControl(this.data.author);
   source_link = new FormControl(this.data.source_link);
   image = new FormControl(this.data.image, [Validators.required]);
+  license = new FormControl(this.data.license || this.licenses[0], [Validators.required]);
 
   fileToUpload: File = null;
   previewUrl: any;
@@ -34,7 +42,6 @@ export class StoryDialogComponent {
     private storyService: StoryService) {
 
     if(!!this.data.image) {
-      // this.previewUrl = 'http://192.168.1.107:3000' + this.data.image;
       this.previewUrl = this.endpointUrl + this.data.image;
     }
   }
@@ -96,6 +103,7 @@ export class StoryDialogComponent {
 
     if (this.title.invalid ||
         this.description.invalid ||
+        this.license.invalid ||
         !this.previewUrl ||
         !this.tags.length) {
       return;
@@ -148,6 +156,7 @@ export class StoryDialogComponent {
         story_id: this.data.story_id,
         tags_attributes: this.tags.concat(this.removedTags),
         author: this.author.value,
+        license: this.license.value,
         source_link: this.source_link.value
       }
     };

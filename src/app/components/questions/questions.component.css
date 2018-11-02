@@ -2,3 +2,7 @@
   width: 100%;
   display: flex;
 }
+
+.tap {
+  margin-left: 10px;
+}

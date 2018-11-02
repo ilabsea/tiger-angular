@@ -1,11 +1,11 @@
 <h1 mat-dialog-title>{{data.header}}</h1>
 
-<form (ngSubmit)="handleSubmit()">
+<form (ngSubmit)="handleSubmit()" class='mat-typography'>
   <div mat-dialog-content>
     <div class="example-form">
       <div class='name-wrapper'>
         <mat-form-field class="example-full-width">
-          <input matInput placeholder="Name" [formControl]='name' required>
+          <input matInput placeholder="Title" [formControl]='name' required>
           <mat-error *ngIf="name.hasError('required')">Can't be blank</mat-error>
         </mat-form-field>
 
@@ -25,28 +25,35 @@
 
       <mat-slide-toggle color='accent' [formControl]='is_end' style='margin: 20px 0;'>End Scene</mat-slide-toggle>
 
-      <div class="example-full-width img-section">
-        <div class="img-wrapper">
-          <div class="thumbnail">
-            <img *ngIf='!!this.previewUrl' [src]="this.previewUrl" />
-            <mat-icon *ngIf='!this.previewUrl' class='default-image'>image</mat-icon>
-          </div>
-
-          <button mat-raised-button type='button' (click)='imgFileInput.click()' class='img-btn'>
-            <mat-icon>camera</mat-icon>
-            <span>Choose image</span>
-          </button>
-
-          <button mat-icon-button type='button' (click)='deleteImage()' class='btn-delete' *ngIf='!!this.previewUrl'>
-            <mat-icon>close</mat-icon>
-          </button>
+      <div class="example-full-width" style='margin-top: 10px;'>
+        <div>
+          <span>Scene Image</span>
+          <span class='mat-caption'>(Portrait: 500 x 1024 or Landscape: 1024 x 500)</span>
         </div>
 
-        <mat-slide-toggle color='accent' [formControl]='image_as_background'>
-          Display as background
-        </mat-slide-toggle>
+        <div class="img-section">
+          <div class="img-wrapper">
+            <div class="thumbnail">
+              <img *ngIf='!!this.previewUrl' [src]="this.previewUrl" />
+              <mat-icon *ngIf='!this.previewUrl' class='default-image'>image</mat-icon>
+            </div>
 
-        <input hidden type='file' #imgFileInput (change)="handleFileInput($event.target.files)"/>
+            <button mat-raised-button type='button' (click)='imgFileInput.click()' class='img-btn'>
+              <mat-icon>camera</mat-icon>
+              <span>Select File</span>
+            </button>
+
+            <button mat-icon-button type='button' (click)='deleteImage()' class='btn-delete' *ngIf='!!this.previewUrl'>
+              <mat-icon>close</mat-icon>
+            </button>
+          </div>
+
+          <mat-slide-toggle color='accent' [formControl]='image_as_background'>
+            Display as background
+          </mat-slide-toggle>
+
+          <input hidden type='file' #imgFileInput (change)="handleFileInput($event.target.files)"/>
+        </div>
       </div>
     </div>
   </div>

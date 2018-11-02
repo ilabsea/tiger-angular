@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>{{data.header}}</h1>
 
-<form (ngSubmit)="handleSubmit()">
+<form (ngSubmit)="handleSubmit()" class='mat-typography'>
   <div mat-dialog-content>
     <div class="example-form">
       <mat-form-field class="example-full-width">
@@ -65,24 +65,29 @@
       <mat-form-field class="example-full-width">
         <input
           matInput
-          pattern="https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)"
-          placeholder='Source Link'
+          placeholder='Acknowledgement / Source Link'
           [formControl]='source_link'>
-        <mat-error *ngIf="source_link.hasError('pattern')">Invalid url</mat-error>
       </mat-form-field>
 
-      <div class="example-full-width" style='margin-top: 20px; margin-bottom: 1px;'>
+      <div class="example-full-width img-section">
+        <div style='margin-bottom: 4px;'>
+          <span>Cover Image* </span>
+          <span class='mat-caption'>(512 x 512)</span>
+        </div>
+
         <div class="img-wrapper" [ngClass]="{'error': isSubmitted && !previewUrl}">
           <div class="thumbnail">
             <img *ngIf='!!this.previewUrl' [src]="this.previewUrl" />
             <mat-icon *ngIf='!this.previewUrl' class='default-image'>image</mat-icon>
           </div>
 
-          <button mat-raised-button type='button' (click)='imgFileInput.click()'>
+          <button mat-raised-button type='button' (click)='imgFileInput.click()' style='width: 100%;'>
             <mat-icon>camera</mat-icon>
-            <span>Choose image*</span>
+            <span>Select File</span>
           </button>
         </div>
+
+        <mat-error style='font-size: 75%' *ngIf="isSubmitted && !previewUrl">can't be blank</mat-error>
 
         <input hidden type='file' #imgFileInput (change)="handleFileInput($event.target.files)"/>
       </div>

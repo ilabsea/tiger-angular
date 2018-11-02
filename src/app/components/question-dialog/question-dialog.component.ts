@@ -27,6 +27,7 @@ export class QuestionDialogComponent implements OnInit {
   ngOnInit() {
     this.myForm = this._fb.group({
       label: [this.data.label, [Validators.required]],
+      message: [this.data.message],
       choices: this._fb.array([])
     });
 
@@ -125,6 +126,7 @@ export class QuestionDialogComponent implements OnInit {
     let obj = {
       id: this.data.id,
       label: this.myForm.value.label,
+      message: this.myForm.value.message,
       choices_attributes: choices,
       story_id: this.data.story_id,
     }

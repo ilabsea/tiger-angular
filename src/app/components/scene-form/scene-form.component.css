@@ -27,7 +27,8 @@
 }
 
 .img-section {
-  margin-top: 20px;
+  margin-top: 4px;
+  margin-bottom: 20px;
   display: flex;
   align-items: center;
 }

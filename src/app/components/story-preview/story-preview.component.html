@@ -26,7 +26,6 @@
 
             <div class="thumbnail bg" *ngIf='(!!scene.image && scene.image_as_background) || !scene.image'>
               <img [src]="endpointUrl + scene.image" *ngIf='!!scene.image && scene.image_as_background' />
-              <img [src]="scene.default_image" *ngIf='!scene.image' />
             </div>
 
             <div class="thumbnail">

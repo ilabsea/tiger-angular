@@ -17,7 +17,7 @@
   <mat-spinner diameter='40' *ngIf='loading' color='accent'></mat-spinner>
 </section>
 
-<div class="content-wrapper" *ngIf="!!dataSource.length">
+<div class="content-wrapper " *ngIf="!!dataSource.length">
   <div class="header-row">
     <div class="header-cell">Question</div>
   </div>
@@ -34,10 +34,18 @@
           </mat-panel-description>
         </mat-expansion-panel-header>
 
-        <div *ngFor='let choice of item.choices; let j = index'>
-          <span>{{j+1}})</span>
-          <span>{{ choice.label}}</span>
-          <strong *ngIf='choice.answered'>(answer)</strong>
+        <div>
+          <div class='mat-caption'>Answers</div>
+          <div *ngFor='let choice of item.choices; let j = index' class='tap'>
+            <span>{{j+1}})</span>
+            <span>{{ choice.label}}</span>
+            <strong *ngIf='choice.answered'>(answer)</strong>
+          </div>
+
+          <div *ngIf='!!item.message' style="margin-top: 10px">
+            <div class='mat-caption'>Educational Message</div>
+            <div class='tap'>{{item.message}}</div>
+          </div>
         </div>
 
         <mat-action-row *ngIf='!isAdmin && story.status == "new"'>

@@ -41,6 +41,11 @@
   color: #ccc;
 }
 
+.img-section {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
 .error {
   border-color: #f44336;
 }

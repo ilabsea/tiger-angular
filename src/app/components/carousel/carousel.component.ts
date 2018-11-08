@@ -34,7 +34,7 @@ export class CarouselItemElement {
   exportAs: 'carousel',
   template: `
     <section class="carousel-wrapper" [ngStyle]="carouselWrapperStyle">
-      <ul class="carousel-inner" #carousel [ngStyle]="ulStyle">
+      <ul class="carousel-inner" #carousel [ngStyle]="getUlStyle()">
         <li *ngFor="let item of items;" class="carousel-item">
           <ng-container [ngTemplateOutlet]="item.tpl"></ng-container>
         </li>
@@ -81,7 +81,6 @@ export class CarouselComponent implements AfterViewInit {
   private itemWidth : number;
   private currentSlide = 0;
   public carouselWrapperStyle = {}
-  public ulStyle = {}
   private buildAnimation( offset ) {
     return this.builder.build([
       animate(this.timing, style({ transform: `translateX(-${offset}%)` }))
@@ -119,12 +118,13 @@ export class CarouselComponent implements AfterViewInit {
     this.player.play();
   }
 
+  getUlStyle() {
+    return { width: `${100 * this.items.length}%` };
+  }
+
   ngAfterViewInit() {
-    // For some reason only here I need to add setTimeout, in my local env it's working without this.
     setTimeout(() => {
-      // this.itemWidth = this.itemsElements.first.nativeElement.getBoundingClientRect().width;
-      this.ulStyle = { width: `${100 * this.items.length}%` }
       this.carouselWrapperStyle = { opacity: 1 };
-    }, 500);
+    }, 300);
   }
 }

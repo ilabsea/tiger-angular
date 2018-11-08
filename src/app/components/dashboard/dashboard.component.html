@@ -34,7 +34,7 @@
 
   <div class="mat-typography label-wrapper">
     <div class='mat-body-2' [hidden]='!!(selectedTime.period == -1)'>
-      {{selectedTime.label}} (From <strong>{{fromDateStr()}}</strong> To <strong>{{toDateStr()}}</strong>)
+      {{selectedTime.label}} (From <strong>{{fromDateStr() | date: 'MMMM dd, yyyy'}}</strong> To <strong>{{toDateStr() | date: 'MMMM dd, yyyy'}}</strong>)
     </div>
 
     <div *ngIf='!!(selectedTime.period == -1)'>

@@ -88,7 +88,7 @@ export class DashboardComponent implements OnInit {
   _setFilterDate(numOfDayAgo) {
     this.toDate = new Date();
     this.toDate.setHours(23,59,59,999);
-    this.fromDate = new Date(this.toDate.getFullYear(), this.toDate.getMonth(), this.toDate.getDate() - numOfDayAgo)
+    this.fromDate = new Date(this.toDate.getFullYear(), this.toDate.getMonth(), this.toDate.getDate() - numOfDayAgo+1)
     this.fromDate.setHours(0,0,0,0);
   }
 
@@ -115,11 +115,12 @@ export class DashboardComponent implements OnInit {
   }
 
   fromDateStr() {
-    return this.fromDate.toLocaleDateString("km-kh");
+    return this.fromDate.toISOString().split('T')[0];
+
   }
 
   toDateStr() {
-    return this.toDate.toLocaleDateString("km-kh");
+    return this.toDate.toISOString().split('T')[0];
   }
 
   showDialog() {

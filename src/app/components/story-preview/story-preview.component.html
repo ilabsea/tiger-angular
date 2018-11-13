@@ -36,10 +36,10 @@
 
             <div class='description'>{{scene.description}}</div>
 
-            <div class='actions flex-column' *ngIf='!scene.is_end'>
-              <a *ngFor="let action of scene.scene_actions" mat-raised-button (click)="slideTo(carousel, action.link_scene.id)" [hidden]='!action.link_scene.id && !this.questions.length'>
-                <span *ngIf='!!action.link_scene.id'>{{action.name}}</span>
-                <span *ngIf='!action.link_scene.id'>Go to quiz</span>
+            <div class='actions flex-column' *ngIf='!scene.is_end' style='max-width: 100%;'>
+              <a *ngFor="let action of scene.scene_actions" mat-raised-button (click)="slideTo(carousel, action.link_scene_id)" [hidden]='!action.link_scene_id && !this.questions.length'>
+                <span *ngIf='!!action.link_scene_id'>{{action.name}}</span>
+                <span *ngIf='!action.link_scene_id'>Go to quiz</span>
               </a>
             </div>
 
@@ -55,7 +55,7 @@
     <ng-container *ngFor="let question of questions; let i = index">
       <ng-container *carouselItem>
         <div class='flow-row flex1'>
-          <div class="item flex-column flex1">
+          <div class="item flex-column flex1" style='max-width: 100%;'>
             <div class='mat-title name'>Quiz: question {{i + 1}}/{{questions.length}}</div>
             <div class='flex1 flex-center description'>{{question.label}}</div>
 

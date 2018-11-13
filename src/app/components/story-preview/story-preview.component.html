@@ -55,12 +55,12 @@
     <ng-container *ngFor="let question of questions; let i = index">
       <ng-container *carouselItem>
         <div class='flow-row flex1'>
-          <div class="item flex-column flex1" style='max-width: 100%;'>
+          <div class="item flex-column flex1">
             <div class='mat-title name'>Quiz: question {{i + 1}}/{{questions.length}}</div>
             <div class='flex1 flex-center description'>{{question.label}}</div>
 
             <div class='actions flex-column'>
-              <a *ngFor="let choice of question.choices" mat-raised-button class="btn btn-success" (click)='slideQuizTo(carousel, i+1, choice)'>{{choice.label}}</a>
+              <a *ngFor="let choice of question.choices" mat-raised-button class="btn btn-success" (click)='slideQuizTo(carousel, i+1, choice)' style='white-space: normal;'>{{choice.label}}</a>
             </div>
           </div>
         </div>

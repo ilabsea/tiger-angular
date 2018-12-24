@@ -14,6 +14,7 @@ export class NavBarComponent implements OnInit {
   currentUser = this.authService.getCurrentUser();
   isAdmin = this.authService.isAdmin();
   userGuideUrl = environment.endpointUrl + '/download_web_guide';
+  mobileAppUrl = 'https://play.google.com/store/apps/details?id=com.tigermobile&hl=en';
 
   constructor(private router: Router, private authService: AuthService) { }
 

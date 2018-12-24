@@ -37,13 +37,13 @@
             <div class='description'>{{scene.description}}</div>
 
             <div class='actions flex-column' *ngIf='!scene.is_end' style='max-width: 100%;'>
-              <a *ngFor="let action of scene.scene_actions" mat-raised-button (click)="slideTo(carousel, action.link_scene_id)" [hidden]='!action.link_scene_id && !this.questions.length'>
-                <span *ngIf='!!action.link_scene_id'>{{action.name}}</span>
-                <span *ngIf='!action.link_scene_id'>Go to quiz</span>
+              <a *ngFor="let action of scene.scene_actions"  mat-raised-button (click)="hanleActionClick(action, carousel)">
+                <span *ngIf="(action.link_scene | json) == '{}' && questions.length">Go to quiz</span>
+                <span *ngIf="(action.link_scene | json) != '{}'">{{action.name}}</span>
               </a>
             </div>
 
-            <div class='actions flex-column' *ngIf='scene.is_end && this.questions.length'>
+            <div class='actions flex-column' *ngIf='scene.is_end && questions.length'>
               <a mat-raised-button (click)="slideTo(carousel, null)"> Go to quiz </a>
             </div>
 

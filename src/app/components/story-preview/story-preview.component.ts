@@ -83,6 +83,18 @@ export class StoryPreviewComponent implements OnInit {
     carousel.slideTo(next);
   }
 
+  hanleActionClick(action, carousel) {
+    if (JSON.stringify(action.link_scene) == '{}') {
+      return this.slideTo(carousel, null);
+    }
+
+    if (!!action.link_scene_id) {
+      return this.slideTo(carousel, action.link_scene_id);
+    }
+
+    this.slideTo(carousel, action.link_scene.id);
+  }
+
   _setAnswer(index, choice) {
     this.questions[index]['user_choice'] = choice;
   }

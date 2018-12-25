@@ -53,7 +53,7 @@
       </mat-form-field>
 
       <mat-form-field class="example-full-width">
-        <mat-select placeholder="License *" [formControl]='license'>
+        <mat-select placeholder="License (Creative Commons) *" [formControl]='license'>
           <mat-option *ngFor="let license of licenses" [value]="license" >
             {{license}}
           </mat-option>

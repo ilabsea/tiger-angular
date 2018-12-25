@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
       password: ['', Validators.required]
     }
   );
+  mobileAppUrl = 'https://play.google.com/store/apps/details?id=com.tigermobile&hl=en';
 
   constructor(
     public dialog: MatDialog,

@@ -191,7 +191,7 @@ export class StoriesComponent implements OnInit {
     }
 
     let dialogRef = this.dialog.open(StoryDialogComponent, {
-      width: '500px',
+      width: '548px',
       data: myData
     });
 

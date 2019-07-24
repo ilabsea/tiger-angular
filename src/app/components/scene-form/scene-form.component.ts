@@ -17,11 +17,13 @@ export class SceneFormComponent {
   visible_name = new FormControl(this.data.visible_name);
   image_as_background = new FormControl(this.data.image_as_background);
   is_end = new FormControl(this.data.is_end);
-  fileToUpload: File = null;
-  previewUrl: any;
+  imageToUpload: File = null;
+  audioToUpload: File = null;
+  previewImage: any;
   isSubmitted: boolean = false;
   remove_image: boolean = false;
   endpointUrl = environment.endpointUrl;
+  previewAudio: any;
 
   constructor(
     public dialogRef: MatDialogRef<SceneFormComponent>,
@@ -29,9 +31,13 @@ export class SceneFormComponent {
     private sceneService: SceneService) {
 
     if(!!this.data.image) {
-      // this.previewUrl = 'http://192.168.1.107:3000' + this.data.image;
-      this.previewUrl = this.endpointUrl + this.data.image;
+      this.previewImage = this.endpointUrl + this.data.image;
     }
+
+    if(!!this.data.audio) {
+      this.previewAudio = this.endpointUrl + this.data.audio;
+    }
+
   }
 
   handleFileInput(files: FileList) {
@@ -40,19 +46,38 @@ export class SceneFormComponent {
       var reader = new FileReader();
 
       reader.onload = (event:any) => {
-        this.previewUrl = event.target.result;
+        this.previewImage = event.target.result;
       }
 
       reader.readAsDataURL(files[0]);
     }
 
-    this.fileToUpload = files.item(0);
+    this.imageToUpload = files.item(0);
+  }
+
+  handleAudioUpload(files: FileList){
+    if (files && files[0]) {
+      var reader = new FileReader();
+
+      reader.onload = (event:any) => {
+        this.previewAudio = event.target.result;
+      }
+
+      reader.readAsDataURL(files[0]);
+    }
+
+    this.audioToUpload = files.item(0);
   }
 
   deleteImage() {
-    this.previewUrl = null;
-    this.fileToUpload = null;
+    this.previewImage = null;
+    this.imageToUpload = null;
     this.remove_image = true;
+  }
+
+  deleteAudio() {
+    this.previewAudio = null;
+    this.audioToUpload = null;
   }
 
   handleSubmit(): void {
@@ -113,8 +138,12 @@ export class SceneFormComponent {
       ];
     }
 
-    if (!!this.fileToUpload) {
-      formData.append('file', this.fileToUpload, this.fileToUpload.name);
+    if (!!this.imageToUpload) {
+      formData.append('image', this.imageToUpload, this.imageToUpload.name);
+    }
+
+    if (!!this.audioToUpload) {
+      formData.append('audio', this.audioToUpload, this.audioToUpload.name);
     }
 
     formData.append("data", JSON.stringify(data));

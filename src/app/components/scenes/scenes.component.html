@@ -21,7 +21,8 @@
   <div class="header-row">
     <div class="header-cell">Title</div>
     <div class="header-cell">Description</div>
-    <div class="header-cell">Image</div>
+    <div class="header-cell cell-center">Image</div>
+    <div class="header-cell cell-center cell-audio">Audio</div>
     <div class="header-cell">Actions</div>
     <div class="header-cell">End Scene</div>
     <div class="header-cell"></div>
@@ -34,10 +35,17 @@
           <strong *ngIf='i==0'>(root)</strong>
         </div>
         <div class='cell'>{{ item.description}}</div>
-        <div class='cell'>
+        <div class='cell cell-center'>
           <div class="thumbnail" *ngIf='!!item.image'>
             <img [src]="endpointUrl + item.image" />
           </div>
+        </div>
+
+        <div class="cell cell-center cell-audio">
+          <audio controls *ngIf='!!item.audio'>
+            <source [src]="endpointUrl + item.audio" type="audio/mpeg">
+              Your browser does not support this audio format.
+          </audio>
         </div>
 
         <div class="cell"> {{item.scene_actions.length}} (links) </div>

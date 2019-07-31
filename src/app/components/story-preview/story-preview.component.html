@@ -22,7 +22,17 @@
         <div class='flow-row flex1' style='position: relative;'>
           <div class="item flex-column flex1">
 
-            <div class='mat-subheading-2 name' *ngIf='scene.visible_name'>{{scene.name}}</div>
+            <div class='flex-column mat-subheading-2 name'>
+              <div class="flex1" *ngIf='scene.visible_name'>
+                {{scene.name}}
+              </div>
+              <div class="flex-end">
+                <audio controls *ngIf='!!scene.audio'>
+                  <source [src]="endpointUrl + scene.audio" type="audio/mpeg">
+                    Your browser does not support this audio format.
+                </audio>
+              </div>
+            </div>
 
             <div class="thumbnail bg" *ngIf='(!!scene.image && scene.image_as_background) || !scene.image'>
               <img [src]="endpointUrl + scene.image" *ngIf='!!scene.image && scene.image_as_background' />

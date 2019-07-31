@@ -22,6 +22,7 @@ export class SceneFormComponent {
   previewImage: any;
   isSubmitted: boolean = false;
   remove_image: boolean = false;
+  remove_audio: boolean = false;
   endpointUrl = environment.endpointUrl;
   previewAudio: any;
 
@@ -56,6 +57,7 @@ export class SceneFormComponent {
   }
 
   handleAudioUpload(files: FileList){
+    this.remove_audio = false;
     if (files && files[0]) {
       var reader = new FileReader();
 
@@ -78,6 +80,7 @@ export class SceneFormComponent {
   deleteAudio() {
     this.previewAudio = null;
     this.audioToUpload = null;
+    this.remove_audio = true;
   }
 
   handleSubmit(): void {
@@ -128,6 +131,7 @@ export class SceneFormComponent {
         visible_name: this.visible_name.value,
         image_as_background: this.image_as_background.value,
         remove_image: this.remove_image,
+        remove_audio: this.remove_audio,
         is_end: this.is_end.value,
       }
     };

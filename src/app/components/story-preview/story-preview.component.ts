@@ -14,13 +14,14 @@ import { Location } from '@angular/common';
 })
 
 export class StoryPreviewComponent implements OnInit {
-  dataSource: any=[];
+  dataSource: any = [];
   questions: any = [];
   loading: boolean = true;
   story_id: string = this.route.snapshot.paramMap.get('id');
   totalSlides: number = 0;
   story: any={};
   endpointUrl = environment.endpointUrl;
+  audioIcon = 'play_arrow';
 
   constructor(
     private route: ActivatedRoute,
@@ -84,7 +85,7 @@ export class StoryPreviewComponent implements OnInit {
   }
 
   hanleActionClick(action, carousel) {
-    if (JSON.stringify(action.link_scene) == '{}') {
+    if (JSON.stringify(action.link_scene) === '{}') {
       return this.slideTo(carousel, null);
     }
 
@@ -97,5 +98,17 @@ export class StoryPreviewComponent implements OnInit {
 
   _setAnswer(index, choice) {
     this.questions[index]['user_choice'] = choice;
+  }
+
+  togglePlayAudio(audioId) {
+    const audio = <HTMLVideoElement> document.getElementById(`audio-preview-${audioId}`);
+
+    if (this.audioIcon === 'play_arrow') {
+      this.audioIcon = 'pause';
+      audio.play();
+    } else {
+      this.audioIcon = 'play_arrow';
+      audio.pause();
+    }
   }
 }

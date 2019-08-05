@@ -17,17 +17,19 @@
 
   <carousel #carousel="carousel" [showControls]="false" class='slide-wrapper'>
 
-    <ng-container *ngFor="let scene of dataSource">
+    <ng-container *ngFor="let scene of dataSource; let i = index">
       <ng-container *carouselItem>
         <div class='flow-row flex1' style='position: relative;'>
           <div class="item flex-column flex1">
 
-            <div class='flex-column mat-subheading-2 name'>
-              <div class="flex1" *ngIf='scene.visible_name'>
-                {{scene.name}}
+            <div class='scene-toolbar'>
+              <div *ngIf='scene.visible_name'>
+                <span>{{scene.name}}</span>
               </div>
-              <div class="flex-end">
-                <audio controls *ngIf='!!scene.audio'>
+              <div class="push-right">
+                <mat-icon aria-hidden="false" aria-label="" (click)="togglePlayAudio(i)" *ngIf='!!scene.audio'>{{audioIcon}}</mat-icon>
+                <mat-icon class="" aria-hidden="false" aria-label="">text_fields</mat-icon>
+                <audio id="audio-preview-{{i}}" *ngIf='!!scene.audio'>
                   <source [src]="endpointUrl + scene.audio" type="audio/mpeg">
                     Your browser does not support this audio format.
                 </audio>

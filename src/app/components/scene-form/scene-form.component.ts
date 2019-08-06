@@ -122,7 +122,7 @@ export class SceneFormComponent {
   _buildData() {
     const formData: FormData = new FormData();
 
-    let data = {
+    const data = {
       scene: {
         id: this.data.id,
         name: this.name.value,

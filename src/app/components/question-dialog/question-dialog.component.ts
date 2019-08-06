@@ -5,6 +5,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Validators, FormGroup, FormArray, FormBuilder } from '@angular/forms';
 import { QuestionService } from '../../services/question.service';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-question-dialog',
@@ -16,13 +17,21 @@ export class QuestionDialogComponent implements OnInit {
   submmited: boolean = false;
   archiveChoices: any = [];
   count: number = 0;
+  remove_audio = false;
+  previewAudio: any;
+  audioToUpload: File = null;
+  endpointUrl = environment.endpointUrl;
 
   constructor(
     public dialogRef: MatDialogRef<QuestionDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
     private questionService: QuestionService,
     private _fb: FormBuilder,
-  ) { }
+  ) {
+    if (!!this.data.audio) {
+      this.previewAudio = this.endpointUrl + this.data.audio;
+    }
+  }
 
   ngOnInit() {
     this.myForm = this._fb.group({
@@ -120,19 +129,50 @@ export class QuestionDialogComponent implements OnInit {
   }
 
   _buildData() {
+    const formData: FormData = new FormData();
+
     let choices = this.myForm.value.choices.slice();
     choices = choices.concat(this.archiveChoices);
 
-    let obj = {
-      id: this.data.id,
-      label: this.myForm.value.label,
-      message: this.myForm.value.message,
-      choices_attributes: choices,
-      story_id: this.data.story_id,
+    const data = {
+      question: {
+        id: this.data.id,
+        label: this.myForm.value.label,
+        message: this.myForm.value.message,
+        choices_attributes: choices,
+        story_id: this.data.story_id,
+        remove_audio: this.remove_audio
+      }
+    };
+
+    if (!!this.audioToUpload) {
+      formData.append('audio', this.audioToUpload, this.audioToUpload.name);
     }
 
-    return {
-      question: obj
+    formData.append('data', JSON.stringify(data));
+
+    return formData;
+  }
+
+  handleAudioUpload(files: FileList) {
+    this.remove_audio = false;
+
+    if (files && files[0]) {
+      const reader = new FileReader();
+
+      reader.onload = (event: any) => {
+        this.previewAudio = event.target.result;
+      };
+
+      reader.readAsDataURL(files[0]);
     }
+
+    this.audioToUpload = files.item(0);
+  }
+
+  deleteAudio() {
+    this.previewAudio = null;
+    this.audioToUpload = null;
+    this.remove_audio = true;
   }
 }

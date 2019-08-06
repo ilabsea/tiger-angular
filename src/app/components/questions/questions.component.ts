@@ -7,6 +7,7 @@ import { Subject } from 'rxjs/Subject';
 import { AuthService } from './../../services/auth.service';
 import { QuestionService } from '../../services/question.service';
 import { QuestionDialogComponent } from '../question-dialog/question-dialog.component';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-questions',
@@ -19,6 +20,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
   story_id: string = this.route.snapshot.paramMap.get('id');
   isAdmin = this.authService.isAdmin();
   story: any = {};
+  endpointUrl = environment.endpointUrl;
   private destroy$ = new Subject();
 
   constructor(

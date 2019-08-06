@@ -40,7 +40,40 @@
     <button mat-button color="primary" type='button' (click)='addChoice()'>
       Add another choice +
     </button>
+
+    <div class="example-full-width">
+      <div>
+        <span class='mat-body-2'>Answer choices</span>
+      </div>
+      <div class="audio-section" *ngIf='!!this.previewAudio'>
+        <div class="audio-wrapper">
+          <button mat-icon-button aria-label="Remove" class="btn-remove-audio" (click)='deleteAudio()'>
+            <mat-icon>close</mat-icon>
+          </button>
+          <audio controls>
+            <source [src]="this.previewAudio" type="audio/mpeg">
+              Your browser does not support this audio format.
+          </audio>
+        </div>
+
+        <div class="btn-upload">
+          <button mat-raised-button type='button' (click)='audioFileInput.click()' class='img-btn'>
+            <mat-icon>refresh</mat-icon>
+            <span>Change File</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="audio-section" *ngIf='!this.previewAudio'>
+        <button mat-raised-button type='button' (click)='audioFileInput.click()' class='img-btn'>
+          <mat-icon>cloud_upload</mat-icon>
+          <span>Select File</span>
+        </button>
+      </div> 
+      <input hidden type='file' #audioFileInput (change)="handleAudioUpload($event.target.files)" accept=".mp3, .wav, .wma, .ogg"/>
+    </div>
   </div>
+
 
   <div mat-dialog-actions>
     <button mat-raised-button color='primary' type='submit'>Save</button>

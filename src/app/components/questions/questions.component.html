@@ -46,6 +46,14 @@
             <div class='mat-caption'>Educational Message</div>
             <div class='tap'>{{item.message}}</div>
           </div>
+
+          <div *ngIf='!!item.audio'>
+            <audio controls>
+              <source [src]="endpointUrl + item.audio" type="audio/mpeg">
+                Your browser does not support this audio format.
+            </audio>
+          </div>
+
         </div>
 
         <mat-action-row *ngIf='!isAdmin && story.status == "new"'>

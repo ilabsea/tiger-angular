@@ -87,7 +87,7 @@
         </div>
 
 
-        <input hidden type='file' #audioFileInput (change)="handleAudioUpload($event.target.files)"/>
+        <input hidden type='file' #audioFileInput (change)="handleAudioUpload($event.target.files)" accept=".mp3, .wav, .wma, .ogg"/>
       </div>
     </div>
   </div>

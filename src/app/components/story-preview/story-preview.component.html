@@ -27,7 +27,7 @@
                 <span>{{scene.name}}</span>
               </div>
               <div class="push-right">
-                <mat-icon aria-hidden="false" aria-label="" (click)="togglePlayAudio(i)" *ngIf='!!scene.audio'>{{audioIcon}}</mat-icon>
+                <mat-icon aria-hidden="false" aria-label="" (click)="togglePlayAudio('audio-preview-' +i)" *ngIf='!!scene.audio'>{{audioIcon}}</mat-icon>
                 <mat-icon class="" aria-hidden="false" aria-label="">text_fields</mat-icon>
                 <audio id="audio-preview-{{i}}" *ngIf='!!scene.audio'>
                   <source [src]="endpointUrl + scene.audio" type="audio/mpeg">
@@ -68,7 +68,18 @@
       <ng-container *carouselItem>
         <div class='flow-row flex1'>
           <div class="item flex-column flex1">
-            <div class='mat-title name'>Quiz: question {{i + 1}}/{{questions.length}}</div>
+            <div class='mat-title scene-toolbar'>
+              <div><span>Quiz: question {{i + 1}}/{{questions.length}}</span></div>
+              <div class="push-right">
+                <mat-icon aria-hidden="false" aria-label="" (click)="togglePlayAudio('question-audio-preview-' + i)" *ngIf='!!question.audio'>{{audioIcon}}</mat-icon>
+                <mat-icon class="" aria-hidden="false" aria-label="">text_fields</mat-icon>
+                <audio id="question-audio-preview-{{i}}" *ngIf='!!question.audio'>
+                  <source [src]="endpointUrl + question.audio" type="audio/mpeg">
+                    Your browser does not support this audio format.
+                </audio>
+              </div>
+            </div>
+
             <div class='flex1 flex-center description'>{{question.label}}</div>
 
             <div class='actions flex-column'>

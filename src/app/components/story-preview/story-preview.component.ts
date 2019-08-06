@@ -19,7 +19,7 @@ export class StoryPreviewComponent implements OnInit {
   loading: boolean = true;
   story_id: string = this.route.snapshot.paramMap.get('id');
   totalSlides: number = 0;
-  story: any={};
+  story: any = {};
   endpointUrl = environment.endpointUrl;
   audioIcon = 'play_arrow';
 
@@ -100,8 +100,8 @@ export class StoryPreviewComponent implements OnInit {
     this.questions[index]['user_choice'] = choice;
   }
 
-  togglePlayAudio(audioId) {
-    const audio = <HTMLVideoElement> document.getElementById(`audio-preview-${audioId}`);
+  togglePlayAudio(audioId: string) {
+    const audio = <HTMLVideoElement> document.getElementById(audioId);
 
     if (this.audioIcon === 'play_arrow') {
       this.audioIcon = 'pause';

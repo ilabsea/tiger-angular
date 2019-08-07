@@ -13,10 +13,9 @@
   <mat-spinner diameter='40' *ngIf='loading' color='accent'></mat-spinner>
 </section>
 
+
 <div class="content-wrapper demo-phone mat-typography" [hidden]="(!dataSource.length && !questions.length) || loading">
-
   <carousel #carousel="carousel" [showControls]="false" class='slide-wrapper'>
-
     <ng-container *ngFor="let scene of dataSource; let i = index">
       <ng-container *carouselItem>
         <div class='flow-row flex1' style='position: relative;'>
@@ -26,13 +25,9 @@
               <div *ngIf='scene.visible_name'>
                 <span>{{scene.name}}</span>
               </div>
-              <div class="push-right">
-                <mat-icon aria-hidden="false" aria-label="" (click)="togglePlayAudio('audio-preview-' +i)" *ngIf='!!scene.audio'>{{audioIcon}}</mat-icon>
+              <div class="push-right" *ngIf='!isStopAudio'>
+                <mat-icon aria-hidden="false" aria-label="" (click)="togglePlayAudio(scene.audio)" *ngIf='!!scene.audio'>{{audioIcon}}</mat-icon>
                 <mat-icon class="" aria-hidden="false" aria-label="">text_fields</mat-icon>
-                <audio id="audio-preview-{{i}}" *ngIf='!!scene.audio'>
-                  <source [src]="endpointUrl + scene.audio" type="audio/mpeg">
-                    Your browser does not support this audio format.
-                </audio>
               </div>
             </div>
 
@@ -71,12 +66,8 @@
             <div class='mat-title scene-toolbar'>
               <div><span>Quiz: question {{i + 1}}/{{questions.length}}</span></div>
               <div class="push-right">
-                <mat-icon aria-hidden="false" aria-label="" (click)="togglePlayAudio('question-audio-preview-' + i)" *ngIf='!!question.audio'>{{audioIcon}}</mat-icon>
+                <mat-icon aria-hidden="false" aria-label="" (click)="togglePlayAudio(question.audio)" *ngIf='!!question.audio'>{{audioIcon}}</mat-icon>
                 <mat-icon class="" aria-hidden="false" aria-label="">text_fields</mat-icon>
-                <audio id="question-audio-preview-{{i}}" *ngIf='!!question.audio'>
-                  <source [src]="endpointUrl + question.audio" type="audio/mpeg">
-                    Your browser does not support this audio format.
-                </audio>
               </div>
             </div>
 

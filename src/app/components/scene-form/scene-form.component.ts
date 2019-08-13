@@ -31,11 +31,11 @@ export class SceneFormComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private sceneService: SceneService) {
 
-    if(!!this.data.image) {
+    if (!!this.data.image) {
       this.previewImage = this.endpointUrl + this.data.image;
     }
 
-    if(!!this.data.audio) {
+    if (!!this.data.audio) {
       this.previewAudio = this.endpointUrl + this.data.audio;
     }
 
@@ -44,11 +44,11 @@ export class SceneFormComponent {
   handleFileInput(files: FileList) {
     this.remove_image = false;
     if (files && files[0]) {
-      var reader = new FileReader();
+      const reader = new FileReader();
 
-      reader.onload = (event:any) => {
+      reader.onload = (event: any) => {
         this.previewImage = event.target.result;
-      }
+      };
 
       reader.readAsDataURL(files[0]);
     }
@@ -56,14 +56,14 @@ export class SceneFormComponent {
     this.imageToUpload = files.item(0);
   }
 
-  handleAudioUpload(files: FileList){
+  handleAudioUpload(files: FileList) {
     this.remove_audio = false;
     if (files && files[0]) {
-      var reader = new FileReader();
+      const reader = new FileReader();
 
-      reader.onload = (event:any) => {
+      reader.onload = (event: any) => {
         this.previewAudio = event.target.result;
-      }
+      };
 
       reader.readAsDataURL(files[0]);
     }

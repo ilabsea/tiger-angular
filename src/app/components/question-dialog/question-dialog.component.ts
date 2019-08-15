@@ -14,12 +14,15 @@ import { environment } from '../../../environments/environment';
 })
 export class QuestionDialogComponent implements OnInit {
   myForm: FormGroup;
-  submmited: boolean = false;
+  submmited = false;
   archiveChoices: any = [];
-  count: number = 0;
+  count = 0;
   remove_audio = false;
+  remove_educational_message_audio = false;
   previewAudio: any;
+  previewEducationalMessageAudio: any;
   audioToUpload: File = null;
+  educationalMessageAudioToUpload: File = null;
   endpointUrl = environment.endpointUrl;
 
   constructor(
@@ -30,6 +33,10 @@ export class QuestionDialogComponent implements OnInit {
   ) {
     if (!!this.data.audio) {
       this.previewAudio = this.endpointUrl + this.data.audio;
+    }
+
+    if (!!this.data.educational_message_audio) {
+      this.previewEducationalMessageAudio = this.endpointUrl + this.data.educational_message_audio;
     }
   }
 
@@ -48,12 +55,12 @@ export class QuestionDialogComponent implements OnInit {
   }
 
   _handleSetChoice() {
-    for(let i=0; i<this.data.choices.length; i++) {
+    for (let i = 0; i < this.data.choices.length; i++) {
       this.addChoice(this.data.choices[i]);
     }
   }
 
-  initChoice(obj={}) {
+  initChoice(obj= {}) {
     this.count++;
 
     return this._fb.group({
@@ -78,7 +85,7 @@ export class QuestionDialogComponent implements OnInit {
 
   _handleArchivedChoice(i) {
     if (!!this.myForm.value.choices[i].id) {
-      let obj = this.myForm.value.choices[i];
+      const obj = this.myForm.value.choices[i];
       obj['_destroy'] = true;
 
       this.archiveChoices.push(obj);
@@ -99,7 +106,7 @@ export class QuestionDialogComponent implements OnInit {
   }
 
   noAnswerSelected() {
-    let arr = this.myForm.value.choices.filter(obj => !!obj.answered);
+    const arr = this.myForm.value.choices.filter(obj => !!obj.answered);
 
     return !arr.length;
   }
@@ -141,12 +148,17 @@ export class QuestionDialogComponent implements OnInit {
         message: this.myForm.value.message,
         choices_attributes: choices,
         story_id: this.data.story_id,
-        remove_audio: this.remove_audio
+        remove_audio: this.remove_audio,
+        remove_educational_message_audio: this.remove_educational_message_audio
       }
     };
 
     if (!!this.audioToUpload) {
       formData.append('audio', this.audioToUpload, this.audioToUpload.name);
+    }
+
+    if (!!this.educationalMessageAudioToUpload) {
+      formData.append('educational_message_audio', this.educationalMessageAudioToUpload, this.educationalMessageAudioToUpload.name);
     }
 
     formData.append('data', JSON.stringify(data));
@@ -170,9 +182,31 @@ export class QuestionDialogComponent implements OnInit {
     this.audioToUpload = files.item(0);
   }
 
+  handleEducationalMessageAudioUpload(files: FileList) {
+    this.remove_educational_message_audio = false;
+
+    if (files && files[0]) {
+      const reader = new FileReader();
+
+      reader.onload = (event: any) => {
+        this.previewEducationalMessageAudio = event.target.result;
+      };
+
+      reader.readAsDataURL(files[0]);
+    }
+
+    this.educationalMessageAudioToUpload = files.item(0);
+  }
+
   deleteAudio() {
     this.previewAudio = null;
     this.audioToUpload = null;
     this.remove_audio = true;
+  }
+
+  deleteEducationalMessageAudio() {
+    this.previewEducationalMessageAudio = null;
+    this.educationalMessageAudioToUpload = null;
+    this.remove_educational_message_audio = true;
   }
 }

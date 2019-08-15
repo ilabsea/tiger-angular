@@ -17,6 +17,38 @@
       ></textarea>
     </mat-form-field>
 
+    <div class="example-full-width">
+      <div>
+        <span class='mat-body-2'>Educational Message Audio (mp3, wav, wma, ogg)</span>
+      </div>
+      <div class="audio-section" *ngIf='!!this.previewEducationalMessageAudio'>
+        <div class="audio-wrapper">
+          <button mat-icon-button aria-label="Remove" class="btn-remove-audio" (click)='deleteEducationalMessageAudio()'>
+            <mat-icon>close</mat-icon>
+          </button>
+          <audio controls>
+            <source [src]="this.previewEducationalMessageAudio" type="audio/mpeg">
+              Your browser does not support this audio format.
+          </audio>
+        </div>
+
+        <div class="btn-upload">
+          <button mat-raised-button type='button' (click)='audioFileInput.click()' class='img-btn'>
+            <mat-icon>refresh</mat-icon>
+            <span>Change File</span>
+          </button>
+        </div>
+      </div>
+      <div class="audio-section" *ngIf='!this.previewEducationalMessageAudio'>
+        <button mat-raised-button type='button' (click)='audioEducationalMessageFileInput.click()' class='img-btn'>
+          <mat-icon>cloud_upload</mat-icon>
+          <span>Select File</span>
+        </button>
+      </div>
+      <input hidden type='file' #audioEducationalMessageFileInput (change)="handleEducationalMessageAudioUpload($event.target.files)" accept=".mp3, .wav, .wma, .ogg"/>
+
+    </div>
+
     <h2 class='mat-typography answer-title'>
       <span class='mat-body-2'>Answer choices</span>
       <span class='error mat-body-1' *ngIf="submmited && noAnswerSelected()">(Please select at least one choice)</span>
@@ -43,7 +75,7 @@
 
     <div class="example-full-width">
       <div>
-        <span class='mat-body-2'>Answer choices</span>
+        <span class='mat-body-2'>Audio (mp3, wav, wma, ogg)</span>
       </div>
       <div class="audio-section" *ngIf='!!this.previewAudio'>
         <div class="audio-wrapper">
@@ -69,7 +101,7 @@
           <mat-icon>cloud_upload</mat-icon>
           <span>Select File</span>
         </button>
-      </div> 
+      </div>
       <input hidden type='file' #audioFileInput (change)="handleAudioUpload($event.target.files)" accept=".mp3, .wav, .wma, .ogg"/>
     </div>
   </div>

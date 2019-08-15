@@ -19,7 +19,8 @@
 
     <div class="example-full-width">
       <div>
-        <span class='mat-body-2'>Educational Message Audio (mp3, wav, wma, ogg)</span>
+        <span>Educational Message Audio</span>
+        <span class='mat-caption'>(mp3, wav, wma, ogg)</span>
       </div>
       <div class="audio-section" *ngIf='!!this.previewEducationalMessageAudio'>
         <div class="audio-wrapper">
@@ -50,7 +51,7 @@
     </div>
 
     <h2 class='mat-typography answer-title'>
-      <span class='mat-body-2'>Answer choices</span>
+      <span>Answer choices</span>
       <span class='error mat-body-1' *ngIf="submmited && noAnswerSelected()">(Please select at least one choice)</span>
     </h2>
 
@@ -73,9 +74,10 @@
       Add another choice +
     </button>
 
-    <div class="example-full-width">
+    <div class="example-full-width" style='margin-top: 10px;'>
       <div>
-        <span class='mat-body-2'>Audio (mp3, wav, wma, ogg)</span>
+        <span>Audio</span>
+        <span class='mat-caption'>(mp3, wav, wma, ogg)</span>
       </div>
       <div class="audio-section" *ngIf='!!this.previewAudio'>
         <div class="audio-wrapper">

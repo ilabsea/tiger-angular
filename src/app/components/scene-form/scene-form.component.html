@@ -52,7 +52,7 @@
             Display as background
           </mat-slide-toggle>
 
-          <input hidden type='file' #imgFileInput (change)="handleFileInput($event.target.files)"/>
+          <input hidden type='file' accept="image/*" #imgFileInput (change)="handleFileInput($event.target.files)"/>
         </div>
       </div>
 

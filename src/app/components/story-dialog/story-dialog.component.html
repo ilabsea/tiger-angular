@@ -89,7 +89,7 @@
 
         <mat-error style='font-size: 75%' *ngIf="isSubmitted && !previewUrl">can't be blank</mat-error>
 
-        <input hidden type='file' #imgFileInput (change)="handleFileInput($event.target.files)"/>
+        <input hidden type='file' accept='image/*' #imgFileInput (change)="handleFileInput($event.target.files)"/>
       </div>
     </div>
   </div>

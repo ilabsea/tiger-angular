@@ -7,6 +7,7 @@ import { QuestionService } from '../../services/question.service';
 import { QuizAnswerDialogComponent } from '../quiz-answer-dialog/quiz-answer-dialog.component';
 import { Location } from '@angular/common';
 import { Scene } from '../../models/scene';
+import { SSL_OP_ALL } from 'constants';
 
 @Component({
   selector: 'app-story-preview',
@@ -57,13 +58,15 @@ export class StoryPreviewComponent implements OnInit {
       });
   }
 
-  _showDialog() {
-    const myData = Object.assign({}, { questions: this.questions, header: 'Quiz Result' });
+  showDialog(question: any) {
+    if (!!question.message) {
+      const myData = Object.assign({}, { question: question });
 
-    this.dialog.open(QuizAnswerDialogComponent, {
-      width: '500px',
-      data: myData
-    });
+      this.dialog.open(QuizAnswerDialogComponent, {
+        width: '500px',
+        data: myData
+      });
+    }
   }
 
   slideTo(carousel, link_scene_id) {
@@ -83,10 +86,6 @@ export class StoryPreviewComponent implements OnInit {
   slideQuizTo(carousel, index, choice) {
     const next = this.dataSource.length + index;
     this._setAnswer(index - 1, choice);
-
-    if ( next === this.totalSlides) {
-      return this._showDialog();
-    }
 
     this.audio.pause();
     this.audioIcon = 'play_arrow';
@@ -126,5 +125,20 @@ export class StoryPreviewComponent implements OnInit {
     this.audio.src = audioUrl;
     this.audio.load();
     this.audio.play();
+  }
+
+  isCorrectAnswer(id, choices): boolean {
+    const arr = this._answers(choices).filter( obj => obj.id === id);
+
+    return !!arr.length;
+  }
+
+  getAnswers(choices) {
+    const arr = this._answers(choices).map(choice => choice.label);
+    return arr.join(' / ');
+  }
+
+  private _answers(choices) {
+    return choices.filter(obj => !!obj.answered);
   }
 }

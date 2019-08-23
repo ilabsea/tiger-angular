@@ -81,6 +81,41 @@
       </ng-container>
     </ng-container>
 
+    <ng-container *carouselItem>
+      <div class='flow-row'>
+        <div class="flex-column flex1">
+          <div class='mat-title scene-toolbar'>
+            <div>
+              <span>{{story.title}}</span>
+            </div>
+          </div>
+
+          <div class='flex-row cell-center'>Quiz result</div>
+
+          <div *ngFor='let question of questions; let i = index' class='question-wrapper description'>
+            <div> {{i+1}}) {{question.label}} </div>
+
+            <div class='flex'>
+              <span>Answer:&nbsp;</span>
+
+              <div (click)="showDialog(question)" style="display: inline-block">
+
+                <span *ngIf='!isCorrectAnswer(question.user_choice?.id, question.choices)'>
+                  <span class='wrong'>{{question.user_choice?.label}}</span>
+                  <br />
+                </span>
+
+                <span class='correct'>[{{this.getAnswers(question.choices)}}]</span>
+                <mat-icon *ngIf="!!question.educational_message_audio" class="correct" aria-hidden="false" aria-label="">volume_up</mat-icon>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </ng-container>
+
   </carousel>
 
 </div>

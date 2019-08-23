@@ -3,6 +3,10 @@
   display: flex;
 }
 
+.flex {
+  display: flex;
+}
+
 .flow-row {
   display: flex;
   flex-direction: row;
@@ -97,4 +101,13 @@
 
 .push-right {
   margin-left: auto;
+}
+
+.correct {
+  color: green;
+}
+
+.wrong {
+  color: red;
+  text-decoration: line-through;
 }

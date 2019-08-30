@@ -96,17 +96,19 @@
             <div> {{i+1}}) {{question.label}} </div>
 
             <div class='flex'>
-              <span>Answer:&nbsp;</span>
+              <div>Answer:&nbsp;</div>
 
               <div (click)="showDialog(question)" style="display: inline-block">
 
-                <span *ngIf='!isCorrectAnswer(question.user_choice?.id, question.choices)'>
+                <div *ngIf='!isCorrectAnswer(question.user_choice?.id, question.choices)'>
                   <span class='wrong'>{{question.user_choice?.label}}</span>
                   <br />
-                </span>
+                </div>
 
-                <span class='correct'>[{{this.getAnswers(question.choices)}}]</span>
-                <mat-icon *ngIf="!!question.educational_message_audio" class="correct" aria-hidden="false" aria-label="">volume_up</mat-icon>
+                <div class='flex'>
+                  <span class='correct'>[{{this.getAnswers(question.choices)}}]</span>
+                  <mat-icon *ngIf="!!question.educational_message_audio" class="correct" aria-hidden="false" aria-label="">volume_up</mat-icon>
+                </div>
 
               </div>
             </div>

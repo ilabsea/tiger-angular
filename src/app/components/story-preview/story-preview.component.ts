@@ -6,8 +6,6 @@ import { SceneService } from '../../services/scene.service';
 import { QuestionService } from '../../services/question.service';
 import { QuizAnswerDialogComponent } from '../quiz-answer-dialog/quiz-answer-dialog.component';
 import { Location } from '@angular/common';
-import { Scene } from '../../models/scene';
-import { SSL_OP_ALL } from 'constants';
 
 @Component({
   selector: 'app-story-preview',

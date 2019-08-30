@@ -93,10 +93,11 @@ export class QuestionDialogComponent implements OnInit {
   }
 
   handleSubmit(): void {
-    this.submmited = true;
     if (this.myForm.invalid || this.noAnswerSelected()) {
       return;
     }
+
+    this.submmited = true;
 
     if (this.data.id) {
       return this._update();
@@ -118,6 +119,7 @@ export class QuestionDialogComponent implements OnInit {
           this.dialogRef.close(res);
         },
         err => {
+          this.submmited = false;
           console.log(err);
         }
       );
@@ -130,6 +132,7 @@ export class QuestionDialogComponent implements OnInit {
           this.dialogRef.close(res);
         },
         err => {
+          this.submmited = false;
           console.log(err);
         }
       );

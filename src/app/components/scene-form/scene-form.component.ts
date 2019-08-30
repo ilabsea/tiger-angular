@@ -20,7 +20,7 @@ export class SceneFormComponent {
   imageToUpload: File = null;
   audioToUpload: File = null;
   previewImage: any;
-  isSubmitted: boolean = false;
+  isSubmitted = false;
   remove_image: boolean = false;
   remove_audio: boolean = false;
   endpointUrl = environment.endpointUrl;
@@ -84,11 +84,11 @@ export class SceneFormComponent {
   }
 
   handleSubmit(): void {
-    this.isSubmitted = true;
-
     if (this.name.invalid || this.description.invalid) {
       return;
     }
+
+    this.isSubmitted = true;
 
     if (this.data.id) {
       return this._update();
@@ -103,7 +103,8 @@ export class SceneFormComponent {
         this.dialogRef.close(res);
       },
       err => {
-        console.log("Error occured");
+        this.isSubmitted = false;
+        console.log('Error occured');
       }
     );
   }
@@ -114,6 +115,7 @@ export class SceneFormComponent {
         this.dialogRef.close(res);
       },
       err => {
+        this.isSubmitted = false;
         console.log("Error occured");
       }
     );

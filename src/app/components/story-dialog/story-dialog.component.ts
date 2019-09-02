@@ -35,7 +35,7 @@ export class StoryDialogComponent {
   tags = (this.data.tags || []).slice();
   removedTags: any = [];
   showError: boolean = false;
-  isSubmitted: boolean = false;
+  isSubmitted = false;
   endpointUrl = environment.endpointUrl;
 
   constructor(
@@ -55,7 +55,7 @@ export class StoryDialogComponent {
   add(event: MatChipInputEvent): void {
     let input = event.input;
     let value = event.value;
-    let isTagExisted = !!this.tags.filter(tag => tag.title == value).length
+    let isTagExisted = !!this.tags.filter(tag => tag.title == value).length;
 
     // Add our tag
     if ((value || '').trim() && !isTagExisted) {
@@ -101,7 +101,6 @@ export class StoryDialogComponent {
 
   handleSubmit(): void {
     this.onBlur();
-    this.isSubmitted = true;
 
     if (this.title.invalid ||
         this.description.invalid ||
@@ -110,6 +109,8 @@ export class StoryDialogComponent {
         !this.tags.length) {
       return;
     }
+
+    this.isSubmitted = true;
 
     if (this.data.id) {
       return this._update();
@@ -124,6 +125,7 @@ export class StoryDialogComponent {
         this.dialogRef.close(res['story']);
       },
       err => {
+        this.isSubmitted = false;
         this._handleError(err.error);
       }
     );
@@ -142,6 +144,7 @@ export class StoryDialogComponent {
       },
       err => {
         console.log(err);
+        this.isSubmitted = false;
         this._handleError(err.error);
       }
     );

@@ -2,15 +2,6 @@
   flex-direction: row-reverse;
 }
 
-.correct {
-  color: green;
-}
-
-.wrong {
-  color: red;
-  text-decoration: line-through;
-}
-
 .question-wrapper {
   margin-bottom: 10px;
 }

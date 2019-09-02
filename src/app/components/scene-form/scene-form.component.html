@@ -34,8 +34,8 @@
         <div class="img-section">
           <div class="img-wrapper">
             <div class="thumbnail">
-              <img *ngIf='!!this.previewUrl' [src]="this.previewUrl" />
-              <mat-icon *ngIf='!this.previewUrl' class='default-image'>image</mat-icon>
+              <img *ngIf='!!this.previewImage' [src]="this.previewImage" />
+              <mat-icon *ngIf='!this.previewImage' class='default-image'>image</mat-icon>
             </div>
 
             <button mat-raised-button type='button' (click)='imgFileInput.click()' class='img-btn'>
@@ -43,7 +43,7 @@
               <span>Select File</span>
             </button>
 
-            <button mat-icon-button type='button' (click)='deleteImage()' class='btn-delete' *ngIf='!!this.previewUrl'>
+            <button mat-icon-button type='button' (click)='deleteImage()' class='btn-delete' *ngIf='!!this.previewImage'>
               <mat-icon>close</mat-icon>
             </button>
           </div>
@@ -52,14 +52,49 @@
             Display as background
           </mat-slide-toggle>
 
-          <input hidden type='file' #imgFileInput (change)="handleFileInput($event.target.files)"/>
+          <input hidden type='file' accept="image/*" #imgFileInput (change)="handleFileInput($event.target.files)"/>
         </div>
+      </div>
+
+      <div class="example-full-width">
+        <div>
+          <span>Scene audio</span>
+          <span class='mat-caption'>(mp3, wav, wma, ogg)</span>
+        </div>
+        <div class="audio-section" *ngIf='!!this.previewAudio'>
+          <div class="audio-wrapper">
+            <button mat-icon-button aria-label="Remove" class="btn-remove-audio" (click)='deleteAudio()'>
+              <mat-icon>close</mat-icon>
+            </button>
+            <audio controls>
+              <source [src]="this.previewAudio" type="audio/mpeg">
+                Your browser does not support this audio format.
+            </audio>
+          </div>
+
+          <div class="btn-upload">
+            <button mat-raised-button type='button' (click)='audioFileInput.click()' class='img-btn'>
+              <mat-icon>refresh</mat-icon>
+              <span>Change File</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="audio-section" *ngIf='!this.previewAudio'>
+          <button mat-raised-button type='button' (click)='audioFileInput.click()' class='img-btn'>
+            <mat-icon>cloud_upload</mat-icon>
+            <span>Select File</span>
+          </button>
+        </div>
+
+
+        <input hidden type='file' #audioFileInput (change)="handleAudioUpload($event.target.files)" accept=".mp3, .wav, .wma, .ogg"/>
       </div>
     </div>
   </div>
 
   <div mat-dialog-actions>
-    <button mat-raised-button color='primary' type='submit' cdkFocusInitial>Save</button>
+    <button mat-raised-button color='primary' type='submit' cdkFocusInitial [disabled]="isSubmitted">Save</button>
     <button mat-button type='button' [mat-dialog-close]=''>Cancel</button>
   </div>
 </form>

@@ -89,13 +89,13 @@
 
         <mat-error style='font-size: 75%' *ngIf="isSubmitted && !previewUrl">can't be blank</mat-error>
 
-        <input hidden type='file' #imgFileInput (change)="handleFileInput($event.target.files)"/>
+        <input hidden type='file' accept='image/*' #imgFileInput (change)="handleFileInput($event.target.files)"/>
       </div>
     </div>
   </div>
 
   <div mat-dialog-actions>
-    <button mat-raised-button color='primary' type='submit' cdkFocusInitial>Save</button>
+    <button mat-raised-button color='primary' type='submit' cdkFocusInitial [disabled]="isSubmitted">Save</button>
     <button mat-button type='button' [mat-dialog-close]=''>Cancel</button>
   </div>
 </form>

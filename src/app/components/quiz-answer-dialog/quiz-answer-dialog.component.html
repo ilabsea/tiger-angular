@@ -1,20 +1,14 @@
-<h1 mat-dialog-title>{{data.header}}</h1>
-
 <div mat-dialog-content class="mat-typography mat-body-1">
-  <div *ngFor='let question of data.questions; let i = index' class='question-wrapper'>
-    <div> {{i+1}}) {{question.label}} </div>
+  <h4>Educational message</h4>
 
-    <div>
-      <strong>Answer: </strong>
-
-      <span *ngIf='!isCorrect(question.user_choice.id, question.choices)'>
-        <span class='wrong'>{{question.user_choice.label}}</span>
-        <span> / </span>
-      </span>
-
-      <span class='correct'>[{{this.getAnswers(question.choices)}}]</span>
-    </div>
+  <div>
+    <audio controls *ngIf='!!data.question.educational_message_audio'>
+      <source [src]="endpointUrl + data.question.educational_message_audio" type="audio/mpeg">
+        Your browser does not support this audio format.
+    </audio>
   </div>
+
+  <div><pre>{{data.question.message}}</pre></div>
 </div>
 
 <div mat-dialog-actions>

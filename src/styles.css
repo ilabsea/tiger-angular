@@ -110,6 +110,10 @@ mat-toolbar {
   font-size: 14px;
 }
 
+.cell-center{
+  text-align: center;
+}
+
 /*======= dragula-specific example page styles ========*/
 .drag-wrapper {
   display: table;

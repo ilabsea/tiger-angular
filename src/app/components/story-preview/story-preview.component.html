@@ -13,16 +13,23 @@
   <mat-spinner diameter='40' *ngIf='loading' color='accent'></mat-spinner>
 </section>
 
+
 <div class="content-wrapper demo-phone mat-typography" [hidden]="(!dataSource.length && !questions.length) || loading">
-
   <carousel #carousel="carousel" [showControls]="false" class='slide-wrapper'>
-
-    <ng-container *ngFor="let scene of dataSource">
+    <ng-container *ngFor="let scene of dataSource; let i = index">
       <ng-container *carouselItem>
         <div class='flow-row flex1' style='position: relative;'>
           <div class="item flex-column flex1">
 
-            <div class='mat-subheading-2 name' *ngIf='scene.visible_name'>{{scene.name}}</div>
+            <div class='scene-toolbar'>
+              <div *ngIf='scene.visible_name'>
+                <span>{{scene.name}}</span>
+              </div>
+              <div class="push-right" *ngIf='!isStopAudio'>
+                <mat-icon aria-hidden="false" aria-label="" (click)="togglePlayAudio(scene.audio)" *ngIf='!!scene.audio'>{{audioIcon}}</mat-icon>
+                <mat-icon class="" aria-hidden="false" aria-label="">text_fields</mat-icon>
+              </div>
+            </div>
 
             <div class="thumbnail bg" *ngIf='(!!scene.image && scene.image_as_background) || !scene.image'>
               <img [src]="endpointUrl + scene.image" *ngIf='!!scene.image && scene.image_as_background' />
@@ -56,7 +63,14 @@
       <ng-container *carouselItem>
         <div class='flow-row flex1'>
           <div class="item flex-column flex1">
-            <div class='mat-title name'>Quiz: question {{i + 1}}/{{questions.length}}</div>
+            <div class='mat-title scene-toolbar'>
+              <div><span>Quiz: question {{i + 1}}/{{questions.length}}</span></div>
+              <div class="push-right">
+                <mat-icon aria-hidden="false" aria-label="" (click)="togglePlayAudio(question.audio)" *ngIf='!!question.audio'>{{audioIcon}}</mat-icon>
+                <mat-icon class="" aria-hidden="false" aria-label="">text_fields</mat-icon>
+              </div>
+            </div>
+
             <div class='flex1 flex-center description'>{{question.label}}</div>
 
             <div class='actions flex-column'>
@@ -65,6 +79,43 @@
           </div>
         </div>
       </ng-container>
+    </ng-container>
+
+    <ng-container *carouselItem>
+      <div class='flow-row'>
+        <div class="flex-column flex1">
+          <div class='mat-title scene-toolbar'>
+            <div>
+              <span>{{story.title}}</span>
+            </div>
+          </div>
+
+          <div class='flex-row cell-center'>Quiz result</div>
+
+          <div *ngFor='let question of questions; let i = index' class='question-wrapper description'>
+            <div> {{i+1}}) {{question.label}} </div>
+
+            <div class='flex'>
+              <div>Answer:&nbsp;</div>
+
+              <div (click)="showDialog(question)" style="display: inline-block">
+
+                <div *ngIf='!isCorrectAnswer(question.user_choice?.id, question.choices)'>
+                  <span class='wrong'>{{question.user_choice?.label}}</span>
+                  <br />
+                </div>
+
+                <div class='flex'>
+                  <span class='correct'>[{{this.getAnswers(question.choices)}}]</span>
+                  <mat-icon *ngIf="!!question.educational_message_audio" class="correct" aria-hidden="false" aria-label="">volume_up</mat-icon>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </ng-container>
 
   </carousel>

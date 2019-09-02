@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  web-client:
+    container_name: web-client
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - '.:/app'
+      - '/app/node_modules'
+    ports:
+      - '4200:4200'

@@ -3,6 +3,10 @@
   display: flex;
 }
 
+.flex {
+  display: flex;
+}
+
 .flow-row {
   display: flex;
   flex-direction: row;
@@ -80,4 +84,30 @@
   background: url("../../../assets/images/mobile.png") top center no-repeat;
   background-size: 443px 885px;
   width: 443px;
+}
+
+.scene-toolbar {
+  color: #fff;
+  background-color: #ef6c00;
+  height: 43px;
+  padding: 14px 14px 0 14px;
+  text-align: left;
+  display: flex;
+}
+
+.preview-toolbar-icon {
+  float: right;
+}
+
+.push-right {
+  margin-left: auto;
+}
+
+.correct {
+  color: green;
+}
+
+.wrong {
+  color: red;
+  text-decoration: line-through;
 }

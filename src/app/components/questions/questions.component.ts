@@ -7,6 +7,7 @@ import { Subject } from 'rxjs/Subject';
 import { AuthService } from './../../services/auth.service';
 import { QuestionService } from '../../services/question.service';
 import { QuestionDialogComponent } from '../question-dialog/question-dialog.component';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-questions',
@@ -14,11 +15,12 @@ import { QuestionDialogComponent } from '../question-dialog/question-dialog.comp
   styleUrls: ['./questions.component.css']
 })
 export class QuestionsComponent implements OnInit, OnDestroy {
-  dataSource: any[]=[];
-  loading: boolean = true;
+  dataSource: any[] = [];
+  loading = true;
   story_id: string = this.route.snapshot.paramMap.get('id');
   isAdmin = this.authService.isAdmin();
   story: any = {};
+  endpointUrl = environment.endpointUrl;
   private destroy$ = new Subject();
 
   constructor(
@@ -55,11 +57,11 @@ export class QuestionsComponent implements OnInit, OnDestroy {
 
     let ids = this.dataSource.map(obj => obj['id']);
     this.questionService.updateOrder(this.story_id, ids)
-      .subscribe(res => { console.log(res) });
+      .subscribe(res => { console.log(res); });
   }
 
   remove(question) {
-    var result = confirm("Are you sure you want to delete this question?");
+    const result = confirm('Are you sure you want to delete this question?');
 
     if (result) {
       this.questionService.delete(this.story_id, question.id).subscribe(
@@ -68,7 +70,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
           this.dataSource = this.dataSource.slice();
         },
         err => {
-          console.log("Error occured");
+          console.log('Error occured');
         }
       );
     }

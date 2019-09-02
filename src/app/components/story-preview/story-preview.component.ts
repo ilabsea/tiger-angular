@@ -14,13 +14,16 @@ import { Location } from '@angular/common';
 })
 
 export class StoryPreviewComponent implements OnInit {
-  dataSource: any=[];
+  dataSource: any = [];
   questions: any = [];
-  loading: boolean = true;
+  loading = true;
   story_id: string = this.route.snapshot.paramMap.get('id');
-  totalSlides: number = 0;
-  story: any={};
+  totalSlides = 0;
+  story: any = {};
   endpointUrl = environment.endpointUrl;
+  audioIcon = 'play_arrow';
+  audioSource = '';
+  audio = new Audio();
 
   constructor(
     private route: ActivatedRoute,
@@ -53,38 +56,43 @@ export class StoryPreviewComponent implements OnInit {
       });
   }
 
-  _showDialog() {
-    let myData = Object.assign({}, { questions: this.questions, header: 'Quiz Result' });
+  showDialog(question: any) {
+    if (!!question.message) {
+      const myData = Object.assign({}, { question: question });
 
-    let dialogRef = this.dialog.open(QuizAnswerDialogComponent, {
-      width: '500px',
-      data: myData
-    });
+      this.dialog.open(QuizAnswerDialogComponent, {
+        width: '500px',
+        data: myData
+      });
+    }
   }
 
   slideTo(carousel, link_scene_id) {
+    this.audio.pause();
+    this.audioIcon = 'play_arrow';
+
     if (!link_scene_id) {
       carousel.slideTo(this.dataSource.length);
       return;
     }
 
-    let index = this.dataSource.findIndex(scene => scene.id == link_scene_id);
+    const index = this.dataSource.findIndex(scene => scene.id === link_scene_id);
+
     carousel.slideTo(index);
   }
 
   slideQuizTo(carousel, index, choice) {
-    let next = this.dataSource.length + index;
-    this._setAnswer(index-1, choice);
+    const next = this.dataSource.length + index;
+    this._setAnswer(index - 1, choice);
 
-    if ( next == this.totalSlides) {
-      return this._showDialog();
-    }
+    this.audio.pause();
+    this.audioIcon = 'play_arrow';
 
     carousel.slideTo(next);
   }
 
   hanleActionClick(action, carousel) {
-    if (JSON.stringify(action.link_scene) == '{}') {
+    if (JSON.stringify(action.link_scene) === '{}') {
       return this.slideTo(carousel, null);
     }
 
@@ -97,5 +105,38 @@ export class StoryPreviewComponent implements OnInit {
 
   _setAnswer(index, choice) {
     this.questions[index]['user_choice'] = choice;
+  }
+
+  togglePlayAudio(audioUrl: string) {
+    const audioSource = this.endpointUrl + audioUrl;
+
+    if (this.audioIcon === 'play_arrow') {
+      this.audioIcon = 'pause';
+      this._playAudio(audioSource);
+    } else {
+      this.audioIcon = 'play_arrow';
+      this.audio.pause();
+    }
+  }
+
+  _playAudio(audioUrl: string) {
+    this.audio.src = audioUrl;
+    this.audio.load();
+    this.audio.play();
+  }
+
+  isCorrectAnswer(id, choices): boolean {
+    const arr = this._answers(choices).filter( obj => obj.id === id);
+
+    return !!arr.length;
+  }
+
+  getAnswers(choices) {
+    const arr = this._answers(choices).map(choice => choice.label);
+    return arr.join(' / ');
+  }
+
+  private _answers(choices) {
+    return choices.filter(obj => !!obj.answered);
   }
 }

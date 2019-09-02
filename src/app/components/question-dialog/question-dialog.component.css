@@ -18,3 +18,26 @@
   margin-top: 20px;
   margin-bottom: 0;
 }
+
+.audio-section {
+  margin-top: 4px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.btn-upload {
+  margin-left: 10px;
+}
+
+.audio-wrapper {
+  padding: 0px 5px;
+  background-color: lightgray;
+}
+
+.audio-wrapper > .btn-remove-audio {
+  float: right;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+}

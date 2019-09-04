@@ -1,0 +1,23 @@
+# Rails configuration
+HOST=localhost:3000
+
+# Database
+DATABASE_URL=mysql2://root@db/tiger?pool=5
+SECRET_KEY_BASE=change_me
+RAILS_MAX_THREADS=5
+
+# TOKEN EXPIRED DATE
+TOKEN_EXPIRED_IN_DAY=30
+
+# SMTP
+SETTINGS__SMTP__ADDRESS=smtp
+SETTINGS__SMTP__PORT=1025
+SETTINGS__SMTP__USER_NAME=smtp
+SETTINGS__SMTP__PASSWORD=smtp
+
+# Redis configuration
+REDIS_URL=redis://redis:6379/12
+
+# Shell with unicode support
+LANG=C.UTF-8
+

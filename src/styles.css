@@ -143,3 +143,14 @@ mat-toolbar {
 .gu-transit {
   background-color: rgba(0, 0, 0, 0.2);
 }
+
+/*========override material form=======*/
+input.mat-input-element,
+textarea.mat-input-element {
+  line-height: 29px !important;
+  font-size: 14px !important;
+}
+
+input.mat-chip-input {
+  margin-bottom: 0 !important;
+}

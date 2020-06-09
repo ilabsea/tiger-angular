@@ -25,7 +25,7 @@ export class NotificationTemplateComponent implements OnInit {
   notifications: any = [];
   isAdmin = this.authService.isAdmin();
   totalCount: number;
-  displayedColumns = ['uuid', 'title', 'body', 'by'];
+  displayedColumns = ['uuid', 'created_at', 'title', 'body', 'by', 'success_count', 'failure_count'];
   pageSize: number = 20;
 
   constructor(
@@ -68,6 +68,14 @@ export class NotificationTemplateComponent implements OnInit {
     var perPage = event.pageSize;
     this.pageSize = perPage;
     this.getNotifications(page, perPage);
+  }
+
+  renderCount(count) {
+    if (count == 0 || count > 0) {
+      return count;
+    }
+
+    return '-';
   }
 
   _updateView = (result) => {

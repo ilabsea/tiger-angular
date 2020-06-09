@@ -1,0 +1,35 @@
+<h1 mat-dialog-title>{{data.header}}</h1>
+
+<form [formGroup]="form">
+  <div class="mat-dialog-content">
+    <mat-form-field class='form'>
+      <input matInput type="title" placeholder="Title" formControlName="title" required>
+
+      <mat-error *ngIf="form.controls.title.hasError('required')">
+        can't be blank
+      </mat-error>
+
+      <mat-error *ngIf="form.controls.title.hasError('server')">
+        {{form.controls.title.errors.server}}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class='form'>
+      <input matInput type="body" placeholder="Body" formControlName="body" required>
+
+      <mat-error *ngIf="form.controls.body.hasError('required')">
+        can't be blank
+      </mat-error>
+
+      <mat-error *ngIf="form.controls.body.hasError('server')">
+        {{form.controls.body.errors.server}}
+      </mat-error>
+    </mat-form-field>
+
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-raised-button color='primary' type='submit' (click)='onSubmit()'>Save</button>
+    <button mat-button type='button' [mat-dialog-close]=''>Cancel</button>
+  </div>
+</form>

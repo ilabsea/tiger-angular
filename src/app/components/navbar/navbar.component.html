@@ -24,6 +24,11 @@
     <span>Users</span>
   </a>
 
+  <a mat-list-item (click)="goTo('/notification_template')" *ngIf='isAdmin' [class.active]="isActive('/notification_template')">
+    <mat-icon class='nav-icon'>notifications</mat-icon>
+    <span>Push Notifications</span>
+  </a>
+
   <a mat-list-item target="_blank" [href]="userGuideUrl">
     <mat-icon class='nav-icon'>contact_support</mat-icon>
     <span>How to use</span>

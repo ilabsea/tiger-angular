@@ -53,7 +53,12 @@
         </button>
 
         <mat-menu #menu="matMenu">
-          <button mat-menu-item (click)="approve(user)" [disabled]="user.status != 'pending'">
+          <button mat-menu-item (click)="copyConfirmLink(user)" *ngIf="user.status == 'approved'">
+            <mat-icon>file_copy</mat-icon>
+            <span>Copy Confirm Link</span>
+          </button>
+
+          <button mat-menu-item (click)="approve(user)" *ngIf="user.status == 'pending'">
             <mat-icon>check_circle_outline</mat-icon>
             <span>Approve</span>
           </button>

@@ -1,0 +1,55 @@
+<h1 mat-dialog-title>Story Push Notification Setting</h1>
+
+<form [formGroup]="form" *ngIf="!loading">
+  <div class="mat-dialog-content">
+    <div style='display: flex;'>
+      <div style='flex:1; margin-right: 12px;'>
+        <div style="margin-bottom: 16px;">
+          <mat-slide-toggle formControlName="story_enable_pushing">Enable push published story notification</mat-slide-toggle>
+        </div>
+
+        <mat-form-field class='form'>
+          <input matInput placeholder="Notification title" formControlName="story_notification_title" required>
+
+          <mat-error *ngIf="form.controls.story_notification_title.hasError('required')">
+            can't be blank
+          </mat-error>
+
+          <mat-error *ngIf="form.controls.story_notification_title.hasError('server')">
+            {{form.controls.story_notification_title.errors.server}}
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class='form'>
+          <textarea matInput placeholder="Notification text" formControlName="story_notification_body" required></textarea>
+          <mat-hint>{{renderHint()}} <div [innerHTML]="story_name"></div></mat-hint>
+
+          <mat-error *ngIf="form.controls.story_notification_body.hasError('required')">
+            can't be blank
+          </mat-error>
+
+          <mat-error *ngIf="form.controls.story_notification_body.hasError('server')">
+            {{form.controls.story_notification_body.errors.server}}
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div>
+        <div class="demo-phone">
+          <mat-card class='banner-card'>
+            <div>
+              <div class='mat-body-strong notification-title'>{{renderTitle()}}</div>
+              <div class="mat-body notification-body">{{renderBody()}}</div>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-raised-button color='primary' type='submit' (click)='onSubmit()'>Save</button>
+    <button mat-button type='button' [mat-dialog-close]=''>Cancel</button>
+  </div>
+</form>

@@ -7,6 +7,7 @@ import { StoryDialogComponent } from '../story-dialog/story-dialog.component';
 import { PopupDialogComponent } from '../popup-dialog/popup-dialog.component';
 import { DeactivateDialogComponent } from '../deactivate-dialog/deactivate-dialog.component';
 import { RejectDialogComponent } from '../reject-dialog/reject-dialog.component';
+import { NotificationSettingDialogComponent } from '../notification-setting-dialog/notification-setting-dialog.component';
 
 @Component({
   selector: 'app-stories',
@@ -181,6 +182,13 @@ export class StoriesComponent implements OnInit {
     } else {
       this._showDialog({}, this._appendView);
     }
+  }
+
+  openPushNotificationSettingDialog() {
+    let dialogRef = this.dialog.open(NotificationSettingDialogComponent, {
+      width: '800px',
+      data: {}
+    });
   }
 
   _showDialog(data, callback) {

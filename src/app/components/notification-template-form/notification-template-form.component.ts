@@ -29,7 +29,6 @@ export class NotificationTemplateFormComponent {
   }
 
   _create() {
-    // console.log(this._buildData())
     this.notificationService.create(this._buildData()).subscribe(
       res => {
         this.dialogRef.close(res);

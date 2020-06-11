@@ -82,6 +82,7 @@ import { FooterComponent } from './components/footer/footer.component';
 
 import { NotificationTemplateComponent } from './components/notification-template/notification-template.component';
 import { NotificationTemplateFormComponent } from './components/notification-template-form/notification-template-form.component';
+import { NotificationSettingDialogComponent } from './components/notification-setting-dialog/notification-setting-dialog.component';
 
 @NgModule({
   declarations: [
@@ -114,6 +115,7 @@ import { NotificationTemplateFormComponent } from './components/notification-tem
     FooterComponent,
     NotificationTemplateComponent,
     NotificationTemplateFormComponent,
+    NotificationSettingDialogComponent,
   ],
   imports: [
     NoopAnimationsModule,
@@ -161,6 +163,7 @@ import { NotificationTemplateFormComponent } from './components/notification-tem
     RejectDialogComponent,
     SignupDialogComponent,
     NotificationTemplateFormComponent,
+    NotificationSettingDialogComponent,
   ],
   providers: [
     StoryService,

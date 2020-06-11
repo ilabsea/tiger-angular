@@ -23,4 +23,14 @@ export class NotificationTemplateService {
     let endpoint = API_URL + 'notifications/' + id;
     return this.http.put(endpoint, body);
   }
+
+  getSetting() {
+    let endpoint = API_URL + 'settings';
+    return this.http.get(endpoint);
+  }
+
+  createSetting(body) {
+    let endpoint = API_URL + 'settings';
+    return this.http.post(endpoint, body);
+  }
 }

@@ -32,7 +32,7 @@ export class NotificationSettingDialogComponent implements OnInit {
         this.loading = false;
       },
       err => {
-        // this._handleError(err.error);
+
       }
     );
   }

@@ -43,7 +43,6 @@ export class NotificationTemplateComponent implements OnInit {
       .subscribe(result => {
         this.totalCount = result['meta']['pagination']['total_objects'];
         this.notifications = result['notifications'];
-        console.log(this.notifications);
         this.loading = false;
       });
   }

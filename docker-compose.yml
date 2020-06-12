@@ -1,13 +1,56 @@
 version: '3.7'
 
 services:
-  web-client:
-    container_name: web-client
+  db:
+    image: mysql:5.7
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    volumes:
+      - ./tmp/db:/var/lib/mysql
+  
+  redis:
+    image: redis:latest
+    volumes:
+      - ./tmp/redis:/data
+
+  smtp:
+    image: 'djfarrelly/maildev:latest'
+    command: 'bin/maildev --web 3080 --smtp 1025 --incoming-user smtp --incoming-pass smtp'
+    ports:
+      - '3080:3080'
+
+  angular:
     build:
       context: .
       dockerfile: Dockerfile.dev
+    depends_on:
+      - rails
     volumes:
-      - '.:/app'
-      - '/app/node_modules'
+      - .:/app
+      - /app/node_modules
+    command: ng serve --host 0.0.0.0
     ports:
       - '4200:4200'
+
+  rails: &rails
+    image: ilabsea/tiger-web:latest
+    env_file: docker-env
+    volumes:
+      - ./tmp/rails:/var/lib/tiger-rails
+    depends_on:
+      - db
+      - redis
+      - sidekiq
+      - smtp
+    command: bundle exec rails s -e production -b '0.0.0.0'
+    ports:
+      - '3000:3000'
+
+  sidekiq:
+    <<: *rails
+    depends_on:
+      - db
+      - redis
+      - smtp
+    command: bundle exec sidekiq -e production
+    ports: []

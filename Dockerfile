@@ -12,3 +12,9 @@ RUN npm install
 RUN npm install -g @angular/cli@7.3.9
 
 COPY . /app
+
+RUN ng build --prod --base-href=/
+
+EXPOSE 80
+
+CMD ["ng", "serve", "--prod", "--host", "0.0.0.0", "--port", "80"]

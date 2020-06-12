@@ -53,4 +53,12 @@ export class NotificationTemplateFormComponent {
       this.form.controls[name].setErrors({server: error.errors[name]})
     }
   }
+
+  renderTitle() {
+    return this.form.value.title || 'Notification title';
+  }
+
+  renderBody() {
+    return this.form.value.body || 'Notification text';
+  }
 }

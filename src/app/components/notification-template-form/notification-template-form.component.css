@@ -10,3 +10,29 @@
 .mat-dialog-actions {
   flex-direction: row-reverse;
 }
+
+.demo-phone {
+  background: url("../../../assets/images/mobile_head.png") top center no-repeat;
+  padding: 15% 4.6632124352% 0;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  display: flex;
+  margin: 4px;
+  width: 300px;
+  box-sizing: border-box;
+}
+
+.banner-card {
+  border-radius: 0px;
+  margin: 4px;
+  padding: 8px;
+  width: 100%;
+}
+
+.notification-title {
+  word-break: break-word;
+}
+
+.notification-body {
+  word-break: break-word;
+}

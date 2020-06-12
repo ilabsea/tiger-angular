@@ -39,7 +39,7 @@ export class NotificationTemplateComponent implements OnInit {
   }
 
   getNotifications(page: number, pageSize: number): void {
-    this.notificationService.getAll({page: page})
+    this.notificationService.getAll({page: page, pageSize: pageSize})
       .subscribe(result => {
         this.totalCount = result['meta']['pagination']['total_objects'];
         this.notifications = result['notifications'];
@@ -49,10 +49,10 @@ export class NotificationTemplateComponent implements OnInit {
   }
 
   openDialog() {
-    let myData = Object.assign({}, { header: 'New Notification' });
+    let myData = Object.assign({}, { header: 'New Push Notification' });
 
     let dialogRef = this.dialog.open(NotificationTemplateFormComponent, {
-      width: '500px',
+      width: '800px',
       data: myData
     });
 

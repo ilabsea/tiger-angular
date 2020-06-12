@@ -76,14 +76,14 @@ export class NotificationSettingDialogComponent implements OnInit {
     let title = this.form.value.story_notification_title
     title = title.replace(/\{title\}/g, "វាសនានាងមាលា");
 
-    return title || 'Title';
+    return title || 'Notification title';
   }
 
   renderBody() {
     let body = this.form.value.story_notification_body
     body = body.replace(/\{title\}/g, "វាសនានាងមាលា");
 
-    return body || 'Body';
+    return body || 'Notification text';
   }
 
   renderHint() {

@@ -1,0 +1,60 @@
+<h1 mat-dialog-title>{{data.header}}</h1>
+
+<form [formGroup]="form">
+  <div class="mat-dialog-content">
+    <div style='display: flex;'>
+      <div style='flex:1; margin-right: 12px;'>
+        <div style="margin-bottom: 16px;">
+          <mat-form-field class='form'>
+            <input matInput placeholder="Notification title (max70)" formControlName="title" required>
+
+            <mat-error *ngIf="form.controls.title.hasError('required')">
+              can't be blank
+            </mat-error>
+
+            <mat-error *ngIf="form.controls.title.hasError('maxlength')">
+              Over limited {{form.controls.title.errors.maxlength.actualLength}} / {{form.controls.title.errors.maxlength.requiredLength}}
+            </mat-error>
+
+            <mat-error *ngIf="form.controls.title.hasError('server')">
+              {{form.controls.title.errors.server}}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field class='form'>
+            <textarea matInput placeholder="Notification text (max140)" formControlName="body" required > </textarea>
+
+            <mat-error *ngIf="form.controls.body.hasError('required')">
+              can't be blank
+            </mat-error>
+
+            <mat-error *ngIf="form.controls.body.hasError('maxlength')">
+              Over limited {{form.controls.body.errors.maxlength.actualLength}} / {{form.controls.body.errors.maxlength.requiredLength}}
+            </mat-error>
+
+            <mat-error *ngIf="form.controls.body.hasError('server')">
+              {{form.controls.body.errors.server}}
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div>
+        <div class="demo-phone">
+          <mat-card class='banner-card'>
+            <div>
+              <div class='mat-body-strong notification-title'>{{renderTitle()}}</div>
+              <div class="mat-body notification-body">{{renderBody()}}</div>
+            </div>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div mat-dialog-actions>
+    <button mat-raised-button color='primary' type='submit' (click)='onSubmit()'>Save</button>
+    <button mat-button type='button' [mat-dialog-close]=''>Cancel</button>
+  </div>
+</form>

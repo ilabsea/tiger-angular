@@ -46,6 +46,7 @@ import { SharedEventService } from './services/shared-event.service';
 import { QuestionService } from './services/question.service';
 import { ChartService } from './services/chart.service';
 import { TagService } from './services/tag.service';
+import { NotificationTemplateService } from './services/notification-template.service';
 
 // Dialog
 import { StoryDialogComponent } from './components/story-dialog/story-dialog.component';
@@ -79,6 +80,10 @@ import { SignupDialogComponent } from './components/signup-dialog/signup-dialog.
 import { ConfirmEmailComponent } from './components/confirm-email/confirm-email.component';
 import { FooterComponent } from './components/footer/footer.component';
 
+import { NotificationTemplateComponent } from './components/notification-template/notification-template.component';
+import { NotificationTemplateFormComponent } from './components/notification-template-form/notification-template-form.component';
+import { NotificationSettingDialogComponent } from './components/notification-setting-dialog/notification-setting-dialog.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -108,6 +113,9 @@ import { FooterComponent } from './components/footer/footer.component';
     SignupDialogComponent,
     ConfirmEmailComponent,
     FooterComponent,
+    NotificationTemplateComponent,
+    NotificationTemplateFormComponent,
+    NotificationSettingDialogComponent,
   ],
   imports: [
     NoopAnimationsModule,
@@ -154,6 +162,8 @@ import { FooterComponent } from './components/footer/footer.component';
     QuizAnswerDialogComponent,
     RejectDialogComponent,
     SignupDialogComponent,
+    NotificationTemplateFormComponent,
+    NotificationSettingDialogComponent,
   ],
   providers: [
     StoryService,
@@ -166,6 +176,7 @@ import { FooterComponent } from './components/footer/footer.component';
     QuestionService,
     ChartService,
     TagService,
+    NotificationTemplateService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,

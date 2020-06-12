@@ -115,6 +115,26 @@ export class UsersComponent implements OnInit {
     }
   }
 
+  copyConfirmLink(user) {
+    let str = `${window.location.host}/confirm_email?confirmation_token=${user.confirmation_token}`;
+    this.copyToClipboard(str);
+    this._openSnackBar('Copied!', null);
+  }
+
+  copyToClipboard(val: string){
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = val;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+  }
+
   _showDialog(data, callback) {
     let myData = Object.assign({}, data, { header: 'New User' });
 

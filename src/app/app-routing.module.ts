@@ -13,6 +13,8 @@ import { QuestionsComponent } from './components/questions/questions.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { ConfirmEmailComponent } from './components/confirm-email/confirm-email.component';
 
+import { NotificationTemplateComponent } from './components/notification-template/notification-template.component';
+
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
@@ -26,6 +28,7 @@ const routes: Routes = [
       { path: 'stories/:id/preview', component: StoryPreviewComponent },
       { path: 'stories/:id/quiz', component: QuestionsComponent },
       { path: 'dashboard', component: DashboardComponent },
+      { path: 'notification_template', component: NotificationTemplateComponent },
     ]
   },
   { path: 'confirm_email', component: ConfirmEmailComponent },

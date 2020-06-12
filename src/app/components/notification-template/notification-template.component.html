@@ -1,0 +1,84 @@
+<mat-toolbar color="primary">
+  <app-menu-button></app-menu-button>
+  <span>Push Notifications</span>
+</mat-toolbar>
+
+<section class="mat-typography flex-center" *ngIf='!loading && !notifications.length'>
+  <div class='no-item-available'>
+    <h3 class='mat-title'>No Notification Available.</h3>
+    <div class="mat-body-1">
+      Use <strong>+</strong> button at the bottom-right corner.
+    </div>
+  </div>
+</section>
+
+<section class="mat-typography flex-center" *ngIf='loading'>
+  <mat-spinner diameter='40' color='accent'></mat-spinner>
+</section>
+
+<div class="content-wrapper" *ngIf="!loading && !!notifications.length">
+  <mat-table #table [dataSource]="notifications">
+    <ng-container matColumnDef="uuid">
+      <mat-header-cell *matHeaderCellDef class='flex-2'> ID </mat-header-cell>
+      <mat-cell *matCellDef="let element" class='flex-2'>
+        {{element.uuid}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="created_at">
+      <mat-header-cell *matHeaderCellDef> Created Date </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span>{{element.created_at | date:'medium'}}</span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef class='flex-2'> Title </mat-header-cell>
+      <mat-cell *matCellDef="let element" class='flex-2'>
+        {{element.title}}
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="body">
+      <mat-header-cell *matHeaderCellDef class='flex-2'>Body</mat-header-cell>
+      <mat-cell *matCellDef="let element" class='flex-2'> {{element.body}} </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="by">
+      <mat-header-cell *matHeaderCellDef> Created By </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <span>{{element.creator.email}}</span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="success_count">
+      <mat-header-cell *matHeaderCellDef> Success Count </mat-header-cell>
+      <mat-cell *matCellDef="let element" class='text-center'>
+        <span>{{renderCount(element.success_count)}}</span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="failure_count">
+      <mat-header-cell *matHeaderCellDef> Failure Count </mat-header-cell>
+      <mat-cell *matCellDef="let element" class='text-center'>
+        <span>{{renderCount(element.failure_count)}}</span>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator [length]="totalCount"
+                [pageSize]="pageSize"
+                [pageSizeOptions]="[20, 50, 100]"
+                (page)="getNextData($event)"
+                style='margin-bottom: 24px;'>
+  </mat-paginator>
+</div>
+
+
+<button mat-fab class='add-button' (click)="openDialog()" *ngIf='!loading'>
+  <mat-icon>add</mat-icon>
+</button>

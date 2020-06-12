@@ -6,10 +6,14 @@
       <div style='flex:1; margin-right: 12px;'>
         <div style="margin-bottom: 16px;">
           <mat-form-field class='form'>
-            <input matInput placeholder="Notification title" formControlName="title" required>
+            <input matInput placeholder="Notification title (max70)" formControlName="title" required>
 
             <mat-error *ngIf="form.controls.title.hasError('required')">
               can't be blank
+            </mat-error>
+
+            <mat-error *ngIf="form.controls.title.hasError('maxlength')">
+              Over limited {{form.controls.title.errors.maxlength.actualLength}} / {{form.controls.title.errors.maxlength.requiredLength}}
             </mat-error>
 
             <mat-error *ngIf="form.controls.title.hasError('server')">
@@ -18,10 +22,14 @@
           </mat-form-field>
 
           <mat-form-field class='form'>
-            <textarea matInput placeholder="Notification text" formControlName="body" required > </textarea>
+            <textarea matInput placeholder="Notification text (max140)" formControlName="body" required > </textarea>
 
             <mat-error *ngIf="form.controls.body.hasError('required')">
               can't be blank
+            </mat-error>
+
+            <mat-error *ngIf="form.controls.body.hasError('maxlength')">
+              Over limited {{form.controls.body.errors.maxlength.actualLength}} / {{form.controls.body.errors.maxlength.requiredLength}}
             </mat-error>
 
             <mat-error *ngIf="form.controls.body.hasError('server')">

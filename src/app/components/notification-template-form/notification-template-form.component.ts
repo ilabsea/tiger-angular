@@ -12,8 +12,8 @@ import { NotificationTemplateService } from '../../services/notification-templat
 export class NotificationTemplateFormComponent {
   form: FormGroup = this.fb.group(
     {
-      title: [this.data.title, [Validators.required]],
-      body: [this.data.body, [Validators.required]],
+      title: [this.data.title, [Validators.required, Validators.maxLength(70)]],
+      body: [this.data.body, [Validators.required, Validators.maxLength(140)]],
     }
   );
 

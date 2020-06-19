@@ -24,9 +24,9 @@ export class NotificationSettingDialogComponent implements OnInit {
         let data = res['notification_options'];
         this.form = this.fb.group(
           {
-            story_enable_pushing: [data.story_enable_pushing, [Validators.required]],
+            story_enable_pushing: [data.story_enable_pushing],
             story_notification_title: [data.story_notification_title, [Validators.required, Validators.maxLength(70)]],
-            story_notification_body: [data.story_notification_body, [Validators.required, Validators.maxLength(140)]]
+            story_notification_body: [data.story_notification_body, [Validators.maxLength(140)]]
           }
         );
         this.loading = false;
@@ -87,6 +87,6 @@ export class NotificationSettingDialogComponent implements OnInit {
   }
 
   renderHint() {
-    return "Example: We've just published a new story title as story {title}";
+    return "Example: {title} has just published";
   }
 }

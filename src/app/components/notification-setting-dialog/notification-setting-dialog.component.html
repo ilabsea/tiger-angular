@@ -9,14 +9,12 @@
         </div>
 
         <mat-form-field class='form'>
-          <input matInput placeholder="Notification title (max 70)" formControlName="story_notification_title" required>
+          <input matInput placeholder="Notification title" formControlName="story_notification_title" [maxLength]="70" required>
+
+          <mat-hint align="end">{{form.value.story_notification_title?.length || 0}}/70</mat-hint>
 
           <mat-error *ngIf="form.controls.story_notification_title.hasError('required')">
             can't be blank
-          </mat-error>
-
-          <mat-error *ngIf="form.controls.story_notification_title.hasError('maxlength')">
-            Over limited {{form.controls.story_notification_title.errors.maxlength.actualLength}} / {{form.controls.story_notification_title.errors.maxlength.requiredLength}}
           </mat-error>
 
           <mat-error *ngIf="form.controls.story_notification_title.hasError('server')">
@@ -24,17 +22,10 @@
           </mat-error>
         </mat-form-field>
 
-        <mat-form-field class='form'>
-          <textarea matInput placeholder="Notification text (max 140)" formControlName="story_notification_body" required></textarea>
-          <mat-hint>{{renderHint()}} <div [innerHTML]="story_name"></div></mat-hint>
+        <mat-form-field class='form' hintLabel={{renderHint()}}>
+          <textarea matInput [maxLength]="140" placeholder="Notification text" formControlName="story_notification_body"></textarea>
 
-          <mat-error *ngIf="form.controls.story_notification_body.hasError('required')">
-            can't be blank
-          </mat-error>
-
-          <mat-error *ngIf="form.controls.story_notification_body.hasError('maxlength')">
-            Over limited {{form.controls.story_notification_body.errors.maxlength.actualLength}} / {{form.controls.story_notification_body.errors.maxlength.requiredLength}}
-          </mat-error>
+          <mat-hint align="end">{{form.value.story_notification_body?.length || 0}}/140</mat-hint>
 
           <mat-error *ngIf="form.controls.story_notification_body.hasError('server')">
             {{form.controls.story_notification_body.errors.server}}

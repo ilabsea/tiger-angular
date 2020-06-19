@@ -13,7 +13,7 @@ export class NotificationTemplateFormComponent {
   form: FormGroup = this.fb.group(
     {
       title: [this.data.title, [Validators.required, Validators.maxLength(70)]],
-      body: [this.data.body, [Validators.required, Validators.maxLength(140)]],
+      body: [this.data.body, [Validators.maxLength(140)]],
     }
   );
 

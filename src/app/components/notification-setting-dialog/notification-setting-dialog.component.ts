@@ -25,8 +25,8 @@ export class NotificationSettingDialogComponent implements OnInit {
         this.form = this.fb.group(
           {
             story_enable_pushing: [data.story_enable_pushing],
-            story_notification_title: [data.story_notification_title, [Validators.required, Validators.maxLength(70)]],
-            story_notification_body: [data.story_notification_body, [Validators.maxLength(140)]]
+            story_notification_title: [data.story_notification_title, [Validators.maxLength(70)]],
+            story_notification_body: [data.story_notification_body, [Validators.required, Validators.maxLength(140)]]
           }
         );
         this.loading = false;

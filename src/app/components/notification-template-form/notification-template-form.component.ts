@@ -12,10 +12,12 @@ import { NotificationTemplateService } from '../../services/notification-templat
 export class NotificationTemplateFormComponent {
   form: FormGroup = this.fb.group(
     {
-      title: [this.data.title, [Validators.required, Validators.maxLength(70)]],
-      body: [this.data.body, [Validators.maxLength(140)]],
+      title: [this.data.title, [Validators.maxLength(70)]],
+      body: [this.data.body, [Validators.required, Validators.maxLength(140)]],
     }
   );
+
+  submitting: boolean = false;
 
   constructor(public dialogRef: MatDialogRef<NotificationTemplateFormComponent>,
               @Inject(MAT_DIALOG_DATA) public data: any,
@@ -25,6 +27,7 @@ export class NotificationTemplateFormComponent {
   onSubmit() {
     if (this.form.invalid) { return; }
 
+    this.submitting = true;
     this._create();
   }
 

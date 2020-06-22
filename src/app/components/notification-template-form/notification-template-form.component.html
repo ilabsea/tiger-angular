@@ -6,11 +6,9 @@
       <div style='flex:1; margin-right: 12px;'>
         <div style="margin-bottom: 16px;">
           <mat-form-field class='form'>
-            <input matInput placeholder="Notification title" formControlName="title" [maxLength]="70" required>
+            <input matInput placeholder="Notification title" formControlName="title" [maxLength]="70">
 
             <mat-hint align="end">{{form.value.title?.length || 0}}/70</mat-hint>
-
-            <mat-error *ngIf="form.controls.title.hasError('required')">can't be blank</mat-error>
 
             <mat-error *ngIf="form.controls.title.hasError('server')">
               {{form.controls.title.errors.server}}
@@ -18,7 +16,7 @@
           </mat-form-field>
 
           <mat-form-field class='form'>
-            <textarea matInput [maxLength]="140" placeholder="Notification text" formControlName="body"></textarea>
+            <textarea matInput [maxLength]="140" placeholder="Notification text" formControlName="body" required></textarea>
 
             <mat-hint align="end">{{form.value.body?.length || 0}}/140</mat-hint>
 
@@ -46,7 +44,7 @@
   </div>
 
   <div mat-dialog-actions>
-    <button mat-raised-button color='primary' type='submit' (click)='onSubmit()'>Save</button>
+    <button mat-raised-button color='primary' type='submit' (click)='onSubmit()' [disabled]="submitting">Save</button>
     <button mat-button type='button' [mat-dialog-close]=''>Cancel</button>
   </div>
 </form>

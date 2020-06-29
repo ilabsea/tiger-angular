@@ -112,7 +112,7 @@ export class ScenesComponent implements OnInit, OnDestroy {
     if (!!scene) {
       this._showDialog(scene, this._updateScene)
     } else {
-      let data = { story_id: this.story_id, visible_name: true, image_as_background: false }
+      let data = { story_id: this.story_id, visible_name: false, image_as_background: false }
       this._showDialog(data, this._appendScene);
     }
   }
